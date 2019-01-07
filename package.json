@@ -22,5 +22,8 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "https://rpidanny.github.io/goodreads-explorer"
+  "homepage": "https://rpidanny.github.io/goodreads-explorer",
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
 }
