@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "07a9662323a4b98fd177",
-    "url": "/goodreads-explorer/static/css/main.3f5df6c2.chunk.css"
+    "revision": "ec58ff2f808c8b49f5a4",
+    "url": "/goodreads-explorer/static/css/main.8cc9a204.chunk.css"
   },
   {
-    "revision": "07a9662323a4b98fd177",
-    "url": "/goodreads-explorer/static/js/main.07a96623.chunk.js"
+    "revision": "ec58ff2f808c8b49f5a4",
+    "url": "/goodreads-explorer/static/js/main.ec58ff2f.chunk.js"
   },
   {
     "revision": "fa92c112869d3657d47b",
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/goodreads-explorer/static/media/logo.5d5d9eef.svg"
   },
   {
-    "revision": "95bd4d74ee790977515f325118807595",
+    "revision": "d707c1a4a18700873bb91c3f458ff55b",
     "url": "/goodreads-explorer/index.html"
   }
 ];
