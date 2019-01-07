@@ -27,3 +27,12 @@ deploy:
     name: $NAME
     on:
       branch: master
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: gre-dev.abhishek.pro.np
+    region: $AWS_REGION
+    skip_cleanup: true
+    local_dir: build
+    on:
+      branch: develop
