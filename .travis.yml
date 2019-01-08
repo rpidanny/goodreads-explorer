@@ -27,13 +27,13 @@ deploy:
     name: $NAME
     on:
       branch: master
-  - provider: pages
-    target-branch: gh-pages-dev
-    skip-cleanup: true
-    github-token: $GITHUB_TOKEN
-    keep-history: true
-    local-dir: build
-    email: $EMAIL
-    name: $NAME 
-    on:
-      branch: develop
+  # - provider: pages
+  #   target-branch: gh-pages-dev
+  #   skip-cleanup: true
+  #   github-token: $GITHUB_TOKEN
+  #   keep-history: true
+  #   local-dir: build
+  #   email: $EMAIL
+  #   name: $NAME 
+  #   on:
+  #     branch: develop
