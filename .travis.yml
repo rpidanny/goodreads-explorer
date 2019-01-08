@@ -33,6 +33,7 @@ deploy:
     bucket: gre-dev.abhishek.pro.np
     region: $AWS_REGION
     skip_cleanup: true
+    upload-dir: goodreads-explorer
     local_dir: build
     on:
       branch: develop
