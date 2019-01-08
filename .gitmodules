@@ -1,0 +1,3 @@
+[submodule "src/components/NetworkGraph"]
+	path = src/components/NetworkGraph
+	url = https://github.com/rpidanny/NetworkGraph.git
