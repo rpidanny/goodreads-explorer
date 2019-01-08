@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
+
+import { helloWorld } from './action'
+
 import logo from '../../assets/images/logo.svg'
 import './style.css'
 
 class App extends Component {
+  componentDidMount () {
+    helloWorld()
+  }
   render () {
     return (
       <div className='App'>

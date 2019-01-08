@@ -1,0 +1,5 @@
+export const HELLO_WORLD = 'HELLO_WORLD'
+export const FETCH_START = 'FETCH_START'
+export const ERROR_OCCURED = 'ERROR_OCCURED'
+export const NETWORK_ERROR_OCCURED = 'NETWORK_ERROR_OCCURED'
+export const FETCH_END = 'FETCH_END'
