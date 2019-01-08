@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
   getUserInfo
@@ -22,26 +23,55 @@ class App extends Component {
   render () {
     return (
       <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <p>
-            Edit <code>src/containers/App.js</code> and save to reload.
-          </p>
-          <a
-            className='App-link'
-            href='https://reactjs.org'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Learn React
-          </a>
-        </header>
+        <Switch>
+          <Route
+            exact
+            path='/'
+            render={props => (
+              <header className='App-header'>
+                <img src={logo} className='App-logo' alt='logo' />
+                <p>
+                  Edit <code>src/containers/App.js</code> and save to reload.
+                </p>
+                <a
+                  className='App-link'
+                  href='https://reactjs.org'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  Learn React
+                </a>
+              </header>
+            )}
+          />
+          <Route
+            exact
+            path='/user'
+            render={props => (
+              <Redirect to='/' />
+            )}
+          />
+          <Route
+            exact
+            path='/user/:userId'
+            render={props => (
+              <header className='App-header'>
+                <img src={logo} className='App-logo' alt='logo' />
+                <p>
+                  User Data for <code>{props.match.params.userId}</code>
+                </p>
+              </header>
+            )}
+          />
+        </Switch>
       </div>
     )
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App)
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+)
