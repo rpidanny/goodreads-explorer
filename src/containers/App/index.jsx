@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
-
-import { helloWorld } from './action'
+import { connect } from 'react-redux'
+import {
+  getUserInfo
+} from './action'
 
 import logo from '../../assets/images/logo.svg'
 import './style.css'
 
+const mapStateToProps = state => ({
+  userInfo: state.userInfo
+})
+
+const mapDispatchToProps = {
+  getUserInfo
+}
+
 class App extends Component {
   componentDidMount () {
-    helloWorld()
+    this.props.getUserInfo('88517742')
   }
   render () {
     return (
@@ -31,4 +41,7 @@ class App extends Component {
   }
 }
 
-export default App
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

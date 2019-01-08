@@ -1,5 +1,25 @@
-import * as ActionTypes from '../../utils/constants'
+import {
+  HELLO_WORLD,
+  FETCH_USER_INFO,
+  FETCH_USER_INFO_SUCCESS,
+  ERROR_OCCURED
+} from '../../utils/constants'
 
 export const helloWorld = () => ({
-  type: ActionTypes.HELLO_WORLD
+  type: HELLO_WORLD
+})
+
+export const errorOccured = err => ({
+  type: ERROR_OCCURED,
+  err
+})
+
+export const getUserInfo = userId => ({
+  type: FETCH_USER_INFO,
+  userId
+})
+
+export const getUserInfoSuccess = userInfo => ({
+  type: FETCH_USER_INFO_SUCCESS,
+  userInfo
 })
