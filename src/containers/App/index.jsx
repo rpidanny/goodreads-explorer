@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
   getUserInfo
@@ -42,6 +42,9 @@ class App extends Component {
                 >
                   Learn React
                 </a>
+                <span>
+                  <Link to='/home'>Home</Link>
+                </span>
               </header>
             )}
           />
