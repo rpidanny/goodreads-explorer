@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {
   getUserInfo
 } from './action'
+import Home from '../Home'
 
 import logo from '../../assets/images/logo.svg'
 import './style.css'
@@ -62,6 +63,11 @@ class App extends Component {
                 </p>
               </header>
             )}
+          />
+          <Route
+            exact
+            path='/home'
+            component={Home}
           />
         </Switch>
       </div>
