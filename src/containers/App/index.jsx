@@ -7,11 +7,18 @@ import {
   Link
 } from 'react-router-dom'
 import { connect } from 'react-redux'
+
+// antd components
+import Spin from 'antd/es/spin'
+import 'antd/es/spin/style'
+
+// containers
+import Home from '../Home'
+import Dashboard from '../Dashboard'
+
 import {
   getUserInfo
 } from './action'
-import Home from '../Home'
-import Dashboard from '../Dashboard'
 
 import logo from '../../assets/images/logo.svg'
 import './style.css'
@@ -41,7 +48,11 @@ class App extends Component {
 
   render () {
     return (
-      <div className='App'>
+      <Spin
+        className='App'
+        spinning={false}
+        delay={500}
+      >
         <Switch>
           <Route
             exact
@@ -89,7 +100,7 @@ class App extends Component {
           />
           <Redirect to='/' />
         </Switch>
-      </div>
+      </Spin>
     )
   }
 }
