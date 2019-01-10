@@ -11,6 +11,7 @@ import {
   getUserInfo
 } from './action'
 import Home from '../Home'
+import Dashboard from '../Dashboard'
 
 import logo from '../../assets/images/logo.svg'
 import './style.css'
@@ -75,14 +76,7 @@ class App extends Component {
           <Route
             exact
             path='/user/:userId'
-            render={props => (
-              <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
-                <p>
-                  User Data for <code>{props.match.params.userId}</code>
-                </p>
-              </header>
-            )}
+            component={Dashboard}
           />
           <Route
             exact
