@@ -24,9 +24,20 @@ const mapDispatchToProps = {
 }
 
 class App extends Component {
+  constructor () {
+    super()
+
+    this.searchHandler = this.searchHandler.bind(this)
+  }
+
+  searchHandler (userId) {
+    this.props.history.push(`/user/${userId}`)
+  }
+
   componentDidMount () {
     this.props.getUserInfo('88517742')
   }
+
   render () {
     return (
       <div className='App'>
@@ -76,7 +87,11 @@ class App extends Component {
           <Route
             exact
             path='/home'
-            component={Home}
+            component={props => (
+              <Home
+                searchHandler={this.searchHandler}
+              />
+            )}
           />
           <Redirect to='/' />
         </Switch>
