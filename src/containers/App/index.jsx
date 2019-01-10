@@ -16,19 +16,14 @@ import 'antd/dist/antd.css'
 import Home from '../Home'
 import Dashboard from '../Dashboard'
 
-import {
-  getUserInfo
-} from './action'
-
 import './style.css'
 
 const mapStateToProps = state => ({
-  isLoading: state.app.isLoading,
-  userInfo: state.app.userInfo
+  isLoading: state.app.isLoading
 })
 
 const mapDispatchToProps = {
-  getUserInfo
+
 }
 
 class App extends Component {
@@ -43,7 +38,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.props.getUserInfo('88517742')
+    // Maybe get top books from goodreads?
   }
 
   render () {
