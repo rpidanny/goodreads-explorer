@@ -9,7 +9,8 @@ import { connect } from 'react-redux'
 
 // antd components
 import Spin from 'antd/es/spin'
-import 'antd/es/spin/style'
+
+import 'antd/dist/antd.css'
 
 // containers
 import Home from '../Home'

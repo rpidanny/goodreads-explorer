@@ -4,12 +4,11 @@ import React from 'react'
 import Row from 'antd/es/row'
 import Col from 'antd/es/col'
 import Layout from 'antd/es/layout'
-import Search from 'antd/es/input/Search'
-import 'antd/dist/antd.css'
 
 import './style.css'
 
 import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
+import Search from 'antd/es/input/Search'
 
 const Home = (props) => (
   <Layout className='Home' >
@@ -30,7 +29,6 @@ const Home = (props) => (
         <Search
           placeholder='Enter user id'
           onSearch={props.searchHandler}
-          enterButton={props.searchHandler}
         />
       </Col>
       <Col span={8} />
