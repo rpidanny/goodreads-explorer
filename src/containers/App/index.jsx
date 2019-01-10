@@ -3,8 +3,7 @@ import {
   withRouter,
   Route,
   Switch,
-  Redirect,
-  Link
+  Redirect
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -20,7 +19,6 @@ import {
   getUserInfo
 } from './action'
 
-import logo from '../../assets/images/logo.svg'
 import './style.css'
 
 const mapStateToProps = state => ({
@@ -58,46 +56,16 @@ class App extends Component {
           <Route
             exact
             path='/'
-            render={props => (
-              <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
-                <p>
-                  Edit <code>src/containers/App.js</code> and save to reload.
-                </p>
-                <a
-                  className='App-link'
-                  href='https://reactjs.org'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  Learn React
-                </a>
-                <span>
-                  <Link to='/home'>Home</Link>
-                </span>
-              </header>
-            )}
-          />
-          <Route
-            exact
-            path='/user'
-            render={props => (
-              <Redirect to='/' />
+            component={props => (
+              <Home
+                searchHandler={this.searchHandler}
+              />
             )}
           />
           <Route
             exact
             path='/user/:userId'
             component={Dashboard}
-          />
-          <Route
-            exact
-            path='/home'
-            component={props => (
-              <Home
-                searchHandler={this.searchHandler}
-              />
-            )}
           />
           <Redirect to='/' />
         </Switch>
