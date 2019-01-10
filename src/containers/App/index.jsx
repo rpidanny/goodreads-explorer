@@ -24,7 +24,8 @@ import logo from '../../assets/images/logo.svg'
 import './style.css'
 
 const mapStateToProps = state => ({
-  userInfo: state.userInfo
+  isLoading: state.app.isLoading,
+  userInfo: state.app.userInfo
 })
 
 const mapDispatchToProps = {
@@ -32,8 +33,8 @@ const mapDispatchToProps = {
 }
 
 class App extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
 
     this.searchHandler = this.searchHandler.bind(this)
   }
@@ -50,7 +51,7 @@ class App extends Component {
     return (
       <Spin
         className='App'
-        spinning={false}
+        spinning={this.props.isLoading > 0}
         delay={500}
       >
         <Switch>
