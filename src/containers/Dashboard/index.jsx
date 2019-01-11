@@ -44,24 +44,34 @@ class Dashboard extends Component {
               padding: '10px',
               background: '#fff'
             }}>
-              <img
-                src={goodReadsLogo}
-                width='100%'
-                alt='Goodreads'
-              />
+              <Link to={'/'}>
+                <img
+                  src={goodReadsLogo}
+                  width='100%'
+                  alt='Goodreads'
+                />
+              </Link>
             </div>
             {
               getUserComponent(userInfo)
             }
             <Menu
               mode='inline'
-              defaultOpenKeys={['shelves']}
+              defaultOpenKeys={['explore']}
               style={{
                 // height: '100%',
                 borderRight: 0
               }}
               theme='dark'
             >
+              <SubMenu
+                key='explore'
+                title={
+                  <Link to={`/user/${this.props.match.params.userId}/explore`}>
+                    <span><Icon type='book' />Explore Books</span>
+                  </Link>
+                }
+              />
               {getBookShelves(userInfo)}
             </Menu>
           </Sider>
