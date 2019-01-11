@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch, Link } from 'react-router-dom'
-import { getUserInfo } from './action'
+import { getUserInfo, getUserData } from './action'
 
 // antd components
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
@@ -19,21 +19,23 @@ const { SubMenu } = Menu
 const { Content, Sider } = Layout
 
 const mapStorageToProps = state => ({
-  userInfo: state.dashboard.userInfo
+  userInfo: state.dashboard.userInfo,
+  userData: state.dashboard.userData
 })
 
 const mapDispatchToProps = {
-  getUserInfo
+  getUserInfo,
+  getUserData
 }
 
 class Dashboard extends Component {
   componentDidMount () {
-    this.props.getUserInfo(this.props.match.params.userId)
+    this.props.getUserData(this.props.match.params.userId)
   }
 
   render () {
-    const { userInfo } = this.props
-    console.log(userInfo)
+    const { userData } = this.props
+    console.log(userData)
     return (
       <Layout
         className='dashboard'
@@ -53,7 +55,7 @@ class Dashboard extends Component {
               </Link>
             </div>
             {
-              getUserComponent(userInfo)
+              getUserComponent(userData)
             }
             <Menu
               mode='inline'
@@ -72,7 +74,7 @@ class Dashboard extends Component {
                   </Link>
                 }
               />
-              {getBookShelves(userInfo)}
+              {getBookShelves(userData)}
             </Menu>
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
@@ -95,7 +97,7 @@ class Dashboard extends Component {
                   <Route
                     exact
                     path='/user/:userId/explore'
-                    render={() => getGraph(userInfo)}
+                    render={() => getGraph(userData)}
                   />
                   <Route
                     exact
@@ -112,8 +114,8 @@ class Dashboard extends Component {
   }
 }
 
-const getGraph = (userInfo) => {
-  if (userInfo) {
+const getGraph = (userData) => {
+  if (userData) {
     return (
       <NetworkGraph
         nodes={nodes}
@@ -124,15 +126,15 @@ const getGraph = (userInfo) => {
   return <div />
 }
 
-const getUserComponent = (userInfo) => {
-  if (userInfo) {
+const getUserComponent = (userData) => {
+  if (userData) {
     return (
       <UserProfile
         user={{
-          name: userInfo.name || '',
-          userName: userInfo.user_name || '',
-          image: userInfo.image_url || '',
-          description: typeof userInfo.about === 'string' ? userInfo.about : `Last active: ${userInfo.last_active}`
+          name: userData.name || '',
+          userName: userData.user_name || '',
+          image: userData.image_url || '',
+          description: typeof userData.about === 'string' ? userData.about : `Last active: ${userData.last_active}`
         }}
       />
     )
@@ -149,15 +151,15 @@ const getUserComponent = (userInfo) => {
   )
 }
 
-const getBookShelves = (userInfo) => {
-  if (userInfo) {
+const getBookShelves = (userData) => {
+  if (userData) {
     return (
       <SubMenu key='shelves' title={<span><Icon type='book' />Shelves</span>}>
         {
-          userInfo.user_shelves.user_shelf.map((shelf, idx) => (
+          userData.user_shelves.map((shelf, idx) => (
             <Menu.Item key={idx}>
-              <Link to={`/user/${userInfo.id}/shelf/${shelf.name}`}>
-                {`${shelf.name} (${shelf.book_count.$t})`}
+              <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
+                {`${shelf.name} (${shelf.books.book.length || 1})`}
               </Link>
             </Menu.Item>
           ))
