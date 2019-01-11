@@ -8,6 +8,7 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd'
 
 import UserProfile from '../../components/UserProfile'
 import NetworkGraph from '../../components/NetworkGraph'
+import BookLibrary from '../../components/BookLibrary'
 
 import bgImage from '../../components/NetworkGraph/examples/basic/tiny_grid.png'
 import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
@@ -64,7 +65,7 @@ class Dashboard extends Component {
                 // height: '100%',
                 borderRight: 0
               }}
-              theme='dark'
+              theme='light'
             >
               <SubMenu
                 key='explore'
@@ -102,7 +103,7 @@ class Dashboard extends Component {
                   <Route
                     exact
                     path='/user/:userId/shelf/:shelfId'
-                    render={props => getBookLibrary(props.match.params.shelfId)}
+                    render={props => getBookLibrary(userData, props.match.params.shelfId)}
                   />
                 </Switch>
               }
@@ -169,16 +170,46 @@ const getBookShelves = (userData) => {
   }
 }
 
-const getBookLibrary = (shelf) => {
-  return (
-    <p
-      style={{
-        padding: 20
-      }}
-    >
-      Books in <i>{shelf}</i> shelf.
-    </p>
-  )
+const getBookLibrary = (userData, shelf) => {
+  if (userData) {
+    let bookShelf = userData.user_shelves.find(sh => sh.name === shelf)
+    if (bookShelf) {
+      let { books } = bookShelf
+      books = books.book.length ? books.book : [ books.book ]
+      return (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            overflow: 'auto'
+          }}
+        >
+          {/* <p
+            style={{
+              padding: 20
+            }}
+          >
+            Books in <i>{shelf}</i> shelf.
+          </p> */}
+          <BookLibrary
+            books={books}
+            margin={0}
+            columns={7}
+          />
+        </div>
+      )
+    }
+    return (
+      <div
+        style={{
+          padding: 20
+        }}
+      >
+        <p>Bookshelf doesn't exist.</p>
+      </div>
+    )
+  }
+  return <div />
 }
 
 export default connect(

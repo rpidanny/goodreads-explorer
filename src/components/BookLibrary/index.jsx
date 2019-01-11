@@ -6,7 +6,7 @@ const BookLibrary = (props) => (
   <Gallery
     photos={
       props.books.map((book, idx) => ({
-        ...book,
+        // ...book,
         src: book.small_image_url.replace(/.(s\/)/g, str => {
           const tmp = str.split('s/')
           if (tmp[0] < 58) {
@@ -17,7 +17,7 @@ const BookLibrary = (props) => (
         width: 98,
         height: 148,
         alt: book.title,
-        key: idx
+        key: book.title
       }))
     }
     onClick={
@@ -26,8 +26,8 @@ const BookLibrary = (props) => (
       }
     }
     direction='column'
-    margin={this.props.margin}
-    columns={this.props.columns}
+    margin={props.margin}
+    columns={props.columns}
     ImageComponent={BookCover}
   />
 )

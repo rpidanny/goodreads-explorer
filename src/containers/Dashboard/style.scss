@@ -1,6 +1,9 @@
 .dashboard {
-  min-height: 100vh;
+  height: 100vh;
 }
 .mainContent {
-  background-image: url('../../components/NetworkGraph/examples/basic/tiny_grid.png')
+  background-image: url('../../components/NetworkGraph/examples/basic/tiny_grid.png');
+  overflow: auto;
+  width: 100%;
+  height: 100%;
 }
