@@ -31,7 +31,9 @@ const BookCover = ({
       style={{ margin, height: photo.height, width: photo.width, ...style }}
       className='lazy-image'
     >
-      {/* <LazyLoad> */}
+      <LazyLoad
+        overflow
+      >
         <img
           style={
             { ...imgStyle }
@@ -39,8 +41,9 @@ const BookCover = ({
           {...photo}
           onClick={e => onClick(e, { index, photo })}
           alt={photo.alt}
+          title={photo.alt}
         />
-      {/* </LazyLoad> */}
+      </LazyLoad>
     </div>
   )
 }
