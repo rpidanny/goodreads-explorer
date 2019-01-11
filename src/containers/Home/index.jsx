@@ -28,7 +28,7 @@ const Home = (props) => (
         <Search
           placeholder='Enter user id'
           onSearch={props.searchHandler}
-          value='88517742' // seting default userId for dev
+          // value='88517742' // seting default userId for dev
         />
       </Col>
       <Col span={8} />
