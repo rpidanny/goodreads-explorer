@@ -59,7 +59,6 @@ class App extends Component {
             )}
           />
           <Route
-            exact
             path='/user/:userId'
             component={Dashboard}
           />

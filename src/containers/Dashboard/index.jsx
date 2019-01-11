@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Route, Switch, Link } from 'react-router-dom'
 import { getUserInfo } from './action'
 
 // antd components
@@ -80,7 +81,18 @@ class Dashboard extends Component {
                 User Data for <code>{this.props.match.params.userId}</code>
               </p> */}
               {
-                getGraph(userInfo)
+                <Switch>
+                  <Route
+                    exact
+                    path='/user/:userId/explore'
+                    render={() => getGraph(userInfo)}
+                  />
+                  <Route
+                    exact
+                    path='/user/:userId/shelf/:shelfId'
+                    render={props => getBookLibrary(props.match.params.shelfId)}
+                  />
+                </Switch>
               }
             </Content>
           </Layout>
@@ -99,6 +111,7 @@ const getGraph = (userInfo) => {
       />
     )
   }
+  return <div />
 }
 
 const getUserComponent = (userInfo) => {
@@ -133,14 +146,27 @@ const getBookShelves = (userInfo) => {
         {
           userInfo.user_shelves.user_shelf.map((shelf, idx) => (
             <Menu.Item key={idx}>
-              {`${shelf.name} (${shelf.book_count.$t})`}
+              <Link to={`/user/${userInfo.id}/shelf/${shelf.name}`}>
+                {`${shelf.name} (${shelf.book_count.$t})`}
+              </Link>
             </Menu.Item>
-
           ))
         }
       </SubMenu>
     )
   }
+}
+
+const getBookLibrary = (shelf) => {
+  return (
+    <p
+      style={{
+        padding: 20
+      }}
+    >
+      Books in <i>{shelf}</i> shelf.
+    </p>
+  )
 }
 
 export default connect(
