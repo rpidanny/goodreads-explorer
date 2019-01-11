@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux'
 
 // antd components
-import Spin from 'antd/es/spin'
+import { Spin } from 'antd'
 
 import 'antd/dist/antd.css'
 

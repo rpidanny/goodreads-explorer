@@ -1,14 +1,13 @@
 import React from 'react'
 
 // antd components
-import Row from 'antd/es/row'
-import Col from 'antd/es/col'
-import Layout from 'antd/es/layout'
+import { Row, Col, Layout, Input } from 'antd'
 
 import './style.css'
 
 import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
-import Search from 'antd/es/input/Search'
+
+const { Search } = Input
 
 const Home = (props) => (
   <Layout className='Home' >
