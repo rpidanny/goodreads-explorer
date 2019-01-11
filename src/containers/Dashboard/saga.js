@@ -33,7 +33,7 @@ const getUserData = action =>
         )
         userData.user.user_shelves = bookOnShelves.map((shelf, idx) => ({
           name: shelves[idx],
-          books: shelf.books
+          books: shelf.books ? shelf.books : { book: [] }
         }))
         yield put(Actions.getUserDataSuccess(userData))
       } else {

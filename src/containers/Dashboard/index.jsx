@@ -10,9 +10,10 @@ import UserProfile from '../../components/UserProfile'
 import NetworkGraph from '../../components/NetworkGraph'
 import BookLibrary from '../../components/BookLibrary'
 
+import { getGraphData } from '../../utils/graphHelper'
+
 import bgImage from '../../components/NetworkGraph/examples/basic/tiny_grid.png'
 import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
-import { nodes, links } from '../../components/NetworkGraph/examples/basic/books-data.json'
 
 import './style.css'
 
@@ -58,25 +59,9 @@ class Dashboard extends Component {
             {
               getUserComponent(userData)
             }
-            <Menu
-              mode='inline'
-              defaultOpenKeys={['explore']}
-              style={{
-                // height: '100%',
-                borderRight: 0
-              }}
-              theme='light'
-            >
-              <SubMenu
-                key='explore'
-                title={
-                  <Link to={`/user/${this.props.match.params.userId}/explore`}>
-                    <span><Icon type='book' />Explore Books</span>
-                  </Link>
-                }
-              />
-              {getBookShelves(userData)}
-            </Menu>
+            {
+              getMenu(this.props)
+            }
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
@@ -117,6 +102,7 @@ class Dashboard extends Component {
 
 const getGraph = (userData) => {
   if (userData) {
+    const { nodes, links } = getGraphData(userData)
     return (
       <NetworkGraph
         nodes={nodes}
@@ -152,20 +138,40 @@ const getUserComponent = (userData) => {
   )
 }
 
-const getBookShelves = (userData) => {
+const getMenu = (props) => {
+  const { userData } = props
+  console.log(userData)
   if (userData) {
     return (
-      <SubMenu key='shelves' title={<span><Icon type='book' />Shelves</span>}>
-        {
-          userData.user_shelves.map((shelf, idx) => (
-            <Menu.Item key={idx}>
-              <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
-                {`${shelf.name} (${shelf.books.book.length || 1})`}
-              </Link>
-            </Menu.Item>
-          ))
-        }
-      </SubMenu>
+      <Menu
+        mode='inline'
+        defaultOpenKeys={['explore']}
+        style={{
+          // height: '100%',
+          borderRight: 0
+        }}
+        theme='light'
+      >
+        <SubMenu
+          key='explore'
+          title={
+            <Link to={`/user/${props.match.params.userId}/explore`}>
+              <span><Icon type='book' />Explore Books</span>
+            </Link>
+          }
+        />
+        <SubMenu key='shelves' title={<span><Icon type='book' />Shelves</span>}>
+          {
+            userData.user_shelves.map((shelf, idx) => (
+              <Menu.Item key={idx}>
+                <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
+                  {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
+                </Link>
+              </Menu.Item>
+            ))
+          }
+        </SubMenu>
+      </Menu>
     )
   }
 }
@@ -175,6 +181,7 @@ const getBookLibrary = (userData, shelf) => {
     let bookShelf = userData.user_shelves.find(sh => sh.name === shelf)
     if (bookShelf) {
       let { books } = bookShelf
+      if (!books.book) return <div />
       books = books.book.length ? books.book : [ books.book ]
       return (
         <div
@@ -184,13 +191,6 @@ const getBookLibrary = (userData, shelf) => {
             overflow: 'auto'
           }}
         >
-          {/* <p
-            style={{
-              padding: 20
-            }}
-          >
-            Books in <i>{shelf}</i> shelf.
-          </p> */}
           <BookLibrary
             books={books}
             margin={0}
