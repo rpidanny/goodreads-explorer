@@ -106,7 +106,7 @@ class Dashboard extends Component {
         className='dashboard'
       >
         <Layout>
-          <Sider width={250} >
+          <Sider className='sider' width={270} >
             <div className='logo' style={{
               padding: '10px',
               background: '#fff'
@@ -217,6 +217,7 @@ const getMenu = (context) => {
             checkable
             onSelect={context.onSelect}
             onCheck={context.onCheck}
+            className='shelves'
           >
             {
               userData.user_shelves.map(shelf => {

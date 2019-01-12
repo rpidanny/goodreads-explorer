@@ -139,6 +139,7 @@ class Settings extends Component {
                     cluster: checked.indexOf('cluster') > -1
                   })
                 }}
+                className='settingsCheckbox'
               />
             </div>
           </li>

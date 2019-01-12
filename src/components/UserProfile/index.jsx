@@ -2,14 +2,15 @@ import React from 'react'
 
 // antd components
 import { Avatar, Card } from 'antd'
+
+import './style.css'
+
 const { Meta } = Card
 
 const UserProfile = props => (
   <Card
-    style={{
-      borderRadius: '0px'
-    }}
     bordered={false}
+    className='userCard'
   >
     <Meta
       avatar={
