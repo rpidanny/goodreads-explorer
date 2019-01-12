@@ -1,70 +1,70 @@
 import React, { Component } from 'react'
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
-import { connect } from 'react-redux'
 import {
-  getUserInfo
-} from './action'
+  withRouter,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import logo from '../../assets/images/logo.svg'
+// antd components
+import { Spin } from 'antd'
+
+import 'antd/dist/antd.css'
+
+// containers
+import Home from '../Home'
+import Dashboard from '../Dashboard'
+
 import './style.css'
 
 const mapStateToProps = state => ({
-  userInfo: state.userInfo
+  isLoading: state.app.isLoading
 })
 
 const mapDispatchToProps = {
-  getUserInfo
+
 }
 
 class App extends Component {
-  componentDidMount () {
-    this.props.getUserInfo('88517742')
+  constructor (props) {
+    super(props)
+
+    this.searchHandler = this.searchHandler.bind(this)
   }
+
+  searchHandler (userId) {
+    this.props.history.push(`/user/${userId}`)
+  }
+
+  componentDidMount () {
+    // Maybe get top books from goodreads?
+  }
+
   render () {
     return (
-      <div className='App'>
+      <Spin
+        className='App'
+        spinning={this.props.isLoading > 0}
+        delay={500}
+      >
         <Switch>
           <Route
             exact
             path='/'
-            render={props => (
-              <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
-                <p>
-                  Edit <code>src/containers/App.js</code> and save to reload.
-                </p>
-                <a
-                  className='App-link'
-                  href='https://reactjs.org'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  Learn React
-                </a>
-              </header>
+            component={props => (
+              <Home
+                searchHandler={this.searchHandler}
+              />
             )}
           />
           <Route
-            exact
-            path='/user'
-            render={props => (
-              <Redirect to='/' />
-            )}
-          />
-          <Route
-            exact
             path='/user/:userId'
-            render={props => (
-              <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
-                <p>
-                  User Data for <code>{props.match.params.userId}</code>
-                </p>
-              </header>
-            )}
+            component={Dashboard}
           />
+          <Redirect to='/' />
         </Switch>
-      </div>
+      </Spin>
     )
   }
 }
