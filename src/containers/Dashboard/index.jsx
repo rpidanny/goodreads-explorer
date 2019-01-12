@@ -194,6 +194,7 @@ const getUserComponent = (userData) => {
 const getMenu = (context) => {
   const { userData } = context.props
   if (userData) {
+    console.log(userData)
     return (
       <Menu
         mode='inline'
@@ -218,12 +219,19 @@ const getMenu = (context) => {
             onCheck={context.onCheck}
           >
             {
-              userData.user_shelves.map((shelf, idx) => {
-                const books = shelf.books.book.length ? shelf.books.book : [shelf.books.book]
+              userData.user_shelves.map(shelf => {
+                if (shelf.books.book) {
+                  const books = shelf.books.book.length ? shelf.books.book : [shelf.books.book]
+                  return (
+                    <TreeNode
+                      title={`${shelf.name} (${books.length})`}
+                      key={shelf.name}
+                    />
+                  )
+                }
                 return (
                   <TreeNode
-                    // checkable
-                    title={`${shelf.name} (${books.length})`}
+                    title={`${shelf.name} (0)`}
                     key={shelf.name}
                   />
                 )
