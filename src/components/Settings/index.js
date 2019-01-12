@@ -117,7 +117,8 @@ class Settings extends Component {
                 options={plainOptions}
                 value={this.defaultOptions}
                 onChange={(checked) => {
-                  this.setState({
+                  this.defaultOptions = checked
+                  this.updateState({
                     animation: checked.indexOf('animation') > -1,
                     cluster: checked.indexOf('cluster') > -1
                   })
