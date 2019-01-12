@@ -41,7 +41,8 @@ const defaultGraphSettings = {
   chargeStrength: -100,
   collisionStrength: 0.5,
   collisionRadiusOffset: 15,
-  attraceForceStrength: -100
+  attraceForceStrength: -100,
+  clusterRadiusScale: 2
 }
 
 class Dashboard extends Component {
