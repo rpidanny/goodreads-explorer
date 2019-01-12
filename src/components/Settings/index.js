@@ -146,7 +146,7 @@ class Settings extends Component {
             FPS ({fps})
             <Slider
               defaultValue={fps}
-              max={500}
+              max={120}
               min={1}
               step={1}
               onAfterChange={this.updateFps}
