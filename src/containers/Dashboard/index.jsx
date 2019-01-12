@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route, Switch, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { getUserInfo, getUserData } from './action'
 
 // antd components
-import { Layout, Menu, Breadcrumb, Icon } from 'antd'
+import { Layout, Menu, Breadcrumb, Icon, Tree } from 'antd'
 
 import UserProfile from '../../components/UserProfile'
 import NetworkGraph from '../../components/NetworkGraph'
 import BookLibrary from '../../components/BookLibrary'
+import Settings from '../../components/Settings'
 
 import { getGraphData } from '../../utils/graphHelper'
 
@@ -19,6 +20,7 @@ import './style.css'
 
 const { SubMenu } = Menu
 const { Content, Sider } = Layout
+const { TreeNode } = Tree
 
 const mapStorageToProps = state => ({
   userInfo: state.dashboard.userInfo,
@@ -31,13 +33,36 @@ const mapDispatchToProps = {
 }
 
 class Dashboard extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      selectedShelf: null,
+      selectedShelves: [],
+      selectedMenu: 0
+    }
+
+    this.onSelect = this.onSelect.bind(this)
+    this.onCheck = this.onCheck.bind(this)
+  }
+
   componentDidMount () {
     this.props.getUserData(this.props.match.params.userId)
   }
 
+  onSelect (selectedKeys, info) {
+    console.log('selected', selectedKeys, info)
+  }
+
+  onCheck (checkedKeys, info) {
+    console.log('onCheck', checkedKeys, info)
+    this.setState({
+      selectedShelves: checkedKeys
+    })
+  }
+
   render () {
     const { userData } = this.props
-    console.log(userData)
+    // console.log(userData)
     return (
       <Layout
         className='dashboard'
@@ -60,7 +85,7 @@ class Dashboard extends Component {
               getUserComponent(userData)
             }
             {
-              getMenu(this.props)
+              getMenu(this)
             }
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
@@ -75,23 +100,7 @@ class Dashboard extends Component {
                 backgroundImage: { bgImage }, padding: 0, margin: 0, height: '100%'
               }}
             >
-              {/* <p>
-                User Data for <code>{this.props.match.params.userId}</code>
-              </p> */}
-              {
-                <Switch>
-                  <Route
-                    exact
-                    path='/user/:userId/explore'
-                    render={() => getGraph(userData)}
-                  />
-                  <Route
-                    exact
-                    path='/user/:userId/shelf/:shelfId'
-                    render={props => getBookLibrary(userData, props.match.params.shelfId)}
-                  />
-                </Switch>
-              }
+              { getContent(this) }
             </Content>
           </Layout>
         </Layout>
@@ -100,9 +109,21 @@ class Dashboard extends Component {
   }
 }
 
-const getGraph = (userData) => {
+const getContent = (context) => {
+  const { selectedMenu, selectedShelves, selectedShelf } = context.state
+  const { userData } = context.props
+
+  if (selectedMenu === 0) {
+    return getGraph(userData, selectedShelves)
+  } else if (selectedMenu === 1) {
+    return getBookLibrary(userData, selectedShelf)
+  }
+}
+
+const getGraph = (userData, shelves) => {
   if (userData) {
-    const { nodes, links } = getGraphData(userData)
+    const { nodes, links } = getGraphData(userData, shelves)
+    console.log('GraphData', nodes)
     return (
       <NetworkGraph
         nodes={nodes}
@@ -138,8 +159,8 @@ const getUserComponent = (userData) => {
   )
 }
 
-const getMenu = (props) => {
-  const { userData } = props
+const getMenu = (context) => {
+  const { userData } = context.props
   console.log(userData)
   if (userData) {
     return (
@@ -151,17 +172,43 @@ const getMenu = (props) => {
           borderRight: 0
         }}
         theme='light'
+        selectable
       >
         <SubMenu
-          key='explore'
+          key='shelves'
           title={
-            <Link to={`/user/${props.match.params.userId}/explore`}>
-              <span><Icon type='book' />Explore Books</span>
-            </Link>
+            <span><Icon type='book' />Shelves</span>
           }
-        />
-        <SubMenu key='shelves' title={<span><Icon type='book' />Shelves</span>}>
-          {
+          selectable
+          onClick={(event) => console.log(event)}
+        >
+          <Tree
+            checkable
+            onSelect={context.onSelect}
+            onCheck={context.onCheck}
+          >
+            {
+              userData.user_shelves.map((shelf, idx) => {
+                const books = shelf.books.book.length ? shelf.books.book : [shelf.books.book]
+                return (
+                  <TreeNode
+                    checkable
+                    title={`${shelf.name} (${books.length})`}
+                    key={shelf.name}
+                  />
+                )
+              })
+            }
+          </Tree>
+        </SubMenu>
+        <SubMenu
+          key='settings'
+          title={<span><Icon type='setting' />Settings</span>}
+        >
+          <Settings
+            onChange={(value) => console.log('Settings', value)}
+          />
+          {/* {
             userData.user_shelves.map((shelf, idx) => (
               <Menu.Item key={idx}>
                 <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
@@ -169,7 +216,7 @@ const getMenu = (props) => {
                 </Link>
               </Menu.Item>
             ))
-          }
+          } */}
         </SubMenu>
       </Menu>
     )
