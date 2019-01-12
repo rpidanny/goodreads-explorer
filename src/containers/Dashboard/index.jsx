@@ -153,7 +153,6 @@ const getContent = (context) => {
   if (context.props.userData) {
     if (selectedMenu === 0) {
       const { nodes, links } = getGraphData(context.props.userData, context.state.selectedShelves)
-      console.log('GraphData', nodes)
       return (
         <NetworkGraph
           nodes={nodes}
@@ -194,7 +193,6 @@ const getUserComponent = (userData) => {
 
 const getMenu = (context) => {
   const { userData } = context.props
-  console.log(userData)
   if (userData) {
     return (
       <Menu
@@ -213,7 +211,6 @@ const getMenu = (context) => {
             <span><Icon type='book' />Shelves</span>
           }
           selectable
-          // onClick={(event) => console.log(event)}
         >
           <Tree
             checkable
