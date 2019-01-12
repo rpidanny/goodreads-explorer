@@ -28,6 +28,7 @@ class Settings extends Component {
     this.updateVelocityDecay = this.updateVelocityDecay.bind(this)
     this.updateChargeStrength = this.updateChargeStrength.bind(this)
     this.updateCollisionStrength = this.updateCollisionStrength.bind(this)
+    this.updateClusterRadiusScale = this.updateClusterRadiusScale.bind(this)
     this.updateCollisionRadiusOffset = this.updateCollisionRadiusOffset.bind(this)
     this.updateAttracForceStrength = this.updateAttracForceStrength.bind(this)
   }
@@ -89,6 +90,12 @@ class Settings extends Component {
     })
   }
 
+  updateClusterRadiusScale (val) {
+    this.updateState({
+      clusterRadiusScale: val
+    })
+  }
+
   updateCollisionRadiusOffset (val) {
     this.updateState({
       collisionRadiusOffset: val
@@ -109,6 +116,7 @@ class Settings extends Component {
       attraceForceStrength,
       collisionStrength,
       collisionRadiusOffset,
+      clusterRadiusScale,
       chargeStrength
     } = this.state.settings
 
@@ -204,6 +212,16 @@ class Settings extends Component {
               onAfterChange={this.updateAttracForceStrength}
             />
           </li>
+          <li>
+            Cluster Radius Scale ({clusterRadiusScale})
+            <Slider
+              defaultValue={clusterRadiusScale}
+              max={10}
+              min={0.5}
+              step={0.5}
+              onAfterChange={this.updateClusterRadiusScale}
+            />
+          </li>
           <div
             style={{
               padding: 10
@@ -231,6 +249,7 @@ Settings.defaultProps = {
     animation: true,
     velocityDecay: 0.1,
     chargeStrength: -100,
+    clusterRadiusScale: 2,
     collisionStrength: 0.5,
     collisionRadiusOffset: 15,
     attraceForceStrength: -100
@@ -247,6 +266,7 @@ Settings.propTypes = {
     animation: PropTypes.bool,
     velocityDecay: PropTypes.number,
     chargeStrength: PropTypes.number,
+    clusterRadiusScale: PropTypes.number,
     collisionStrength: PropTypes.number,
     collisionRadiusOffset: PropTypes.number,
     attraceForceStrength: PropTypes.number
