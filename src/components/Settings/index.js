@@ -207,11 +207,11 @@ Settings.defaultProps = {
   cluster: true,
   alphaStart: 1,
   animation: true,
-  velocityDecay: 0.4,
-  chargeStrength: -10,
+  velocityDecay: 0.1,
+  chargeStrength: -100,
   collisionStrength: 0.5,
   collisionRadiusOffset: 15,
-  attraceForceStrength: 10
+  attraceForceStrength: -100
 }
 
 Settings.propTypes = {
