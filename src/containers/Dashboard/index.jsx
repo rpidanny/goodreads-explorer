@@ -39,7 +39,17 @@ class Dashboard extends Component {
       selectedShelf: null,
       selectedShelves: [],
       selectedMenu: 0,
-      graphSettings: {}
+      graphSettings: {
+        fps: 60,
+        cluster: true,
+        alphaStart: 1,
+        animation: true,
+        velocityDecay: 0.1,
+        chargeStrength: -100,
+        collisionStrength: 0.5,
+        collisionRadiusOffset: 15,
+        attraceForceStrength: -100
+      }
     }
 
     this.onSelect = this.onSelect.bind(this)
@@ -183,7 +193,7 @@ const getMenu = (context) => {
             <span><Icon type='book' />Shelves</span>
           }
           selectable
-          onClick={(event) => console.log(event)}
+          // onClick={(event) => console.log(event)}
         >
           <Tree
             checkable
@@ -195,7 +205,7 @@ const getMenu = (context) => {
                 const books = shelf.books.book.length ? shelf.books.book : [shelf.books.book]
                 return (
                   <TreeNode
-                    checkable
+                    // checkable
                     title={`${shelf.name} (${books.length})`}
                     key={shelf.name}
                   />
@@ -210,6 +220,7 @@ const getMenu = (context) => {
         >
           <Settings
             onChange={context.onSettingsChange}
+            defaults={context.graphSettings}
           />
           {/* {
             userData.user_shelves.map((shelf, idx) => (
