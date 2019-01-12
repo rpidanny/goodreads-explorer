@@ -38,11 +38,13 @@ class Dashboard extends Component {
     this.state = {
       selectedShelf: null,
       selectedShelves: [],
-      selectedMenu: 0
+      selectedMenu: 0,
+      graphSettings: {}
     }
 
     this.onSelect = this.onSelect.bind(this)
     this.onCheck = this.onCheck.bind(this)
+    this.onSettingsChange = this.onSettingsChange.bind(this)
   }
 
   componentDidMount () {
@@ -57,6 +59,12 @@ class Dashboard extends Component {
     console.log('onCheck', checkedKeys, info)
     this.setState({
       selectedShelves: checkedKeys
+    })
+  }
+
+  onSettingsChange (settings) {
+    this.setState({
+      graphSettings: settings
     })
   }
 
@@ -110,28 +118,23 @@ class Dashboard extends Component {
 }
 
 const getContent = (context) => {
-  const { selectedMenu, selectedShelves, selectedShelf } = context.state
+  const { selectedMenu, selectedShelf, graphSettings } = context.state
   const { userData } = context.props
-
-  if (selectedMenu === 0) {
-    return getGraph(userData, selectedShelves)
-  } else if (selectedMenu === 1) {
-    return getBookLibrary(userData, selectedShelf)
+  if (context.props.userData) {
+    if (selectedMenu === 0) {
+      const { nodes, links } = getGraphData(context.props.userData, context.state.selectedShelves)
+      console.log('GraphData', nodes)
+      return (
+        <NetworkGraph
+          nodes={nodes}
+          links={links}
+          {...graphSettings}
+        />
+      )
+    } else if (selectedMenu === 1) {
+      return getBookLibrary(userData, selectedShelf)
+    }
   }
-}
-
-const getGraph = (userData, shelves) => {
-  if (userData) {
-    const { nodes, links } = getGraphData(userData, shelves)
-    console.log('GraphData', nodes)
-    return (
-      <NetworkGraph
-        nodes={nodes}
-        links={links}
-      />
-    )
-  }
-  return <div />
 }
 
 const getUserComponent = (userData) => {
@@ -206,7 +209,7 @@ const getMenu = (context) => {
           title={<span><Icon type='setting' />Settings</span>}
         >
           <Settings
-            onChange={(value) => console.log('Settings', value)}
+            onChange={context.onSettingsChange}
           />
           {/* {
             userData.user_shelves.map((shelf, idx) => (
