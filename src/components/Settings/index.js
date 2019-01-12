@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Checkbox, Slider } from 'antd'
+import { Checkbox, Slider, Button } from 'antd'
 
 import './style.css'
 
@@ -16,7 +16,7 @@ class Settings extends Component {
       ...props
     }
 
-    this.defaultOptions = plainOptions.filter((option) => this.props[option])
+    this.defaultOptions = plainOptions.filter((option) => this.props.settings[option])
 
     this.updateState = this.updateState.bind(this)
 
@@ -34,9 +34,17 @@ class Settings extends Component {
 
   updateState (val) {
     // update local state and trigger parent onChange function
-    this.setState(val,
-      () => this.props.onChange(this.state)
-    )
+    this.setState({
+      settings: {
+        ...this.state.settings,
+        ...val
+      }
+    },
+    () => this.props.onChange(this.state.settings))
+  }
+
+  clearLocalStorage () {
+
   }
 
   updateFps (val) {
@@ -102,7 +110,7 @@ class Settings extends Component {
       collisionStrength,
       collisionRadiusOffset,
       chargeStrength
-    } = this.state
+    } = this.state.settings
 
     // this.props.onChange(this.state)
 
@@ -196,6 +204,19 @@ class Settings extends Component {
               onAfterChange={this.updateAttracForceStrength}
             />
           </li>
+          <div
+            style={{
+              padding: 10
+            }}
+          >
+            <Button
+              type='danger'
+              onClick={() => this.props.onReset()}
+              block
+            >
+              Reset
+            </Button>
+          </div>
         </ul>
       </div>
     )
@@ -203,20 +224,23 @@ class Settings extends Component {
 }
 
 Settings.defaultProps = {
-  fps: 60,
-  cluster: true,
-  alphaStart: 1,
-  animation: true,
-  velocityDecay: 0.1,
-  chargeStrength: -100,
-  collisionStrength: 0.5,
-  collisionRadiusOffset: 15,
-  attraceForceStrength: -100
+  settings: {
+    fps: 60,
+    cluster: true,
+    alphaStart: 1,
+    animation: true,
+    velocityDecay: 0.1,
+    chargeStrength: -100,
+    collisionStrength: 0.5,
+    collisionRadiusOffset: 15,
+    attraceForceStrength: -100
+  }
 }
 
 Settings.propTypes = {
   onChange: PropTypes.func.isRequired,
-  defaults: PropTypes.shape({
+  onReset: PropTypes.func.isRequired,
+  settings: PropTypes.shape({
     fps: PropTypes.number,
     cluster: PropTypes.bool,
     alphaStart: PropTypes.number,

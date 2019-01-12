@@ -32,29 +32,36 @@ const mapDispatchToProps = {
   getUserData
 }
 
+const defaultGraphSettings = {
+  fps: 60,
+  cluster: true,
+  alphaStart: 1,
+  animation: true,
+  velocityDecay: 0.1,
+  chargeStrength: -100,
+  collisionStrength: 0.5,
+  collisionRadiusOffset: 15,
+  attraceForceStrength: -100
+}
+
 class Dashboard extends Component {
   constructor (props) {
     super(props)
+
+    // get graph settings from localstorage
+    const settings = window.localStorage.getItem('graphSettings')
+
     this.state = {
       selectedShelf: null,
       selectedShelves: [],
       selectedMenu: 0,
-      graphSettings: {
-        fps: 60,
-        cluster: true,
-        alphaStart: 1,
-        animation: true,
-        velocityDecay: 0.1,
-        chargeStrength: -100,
-        collisionStrength: 0.5,
-        collisionRadiusOffset: 15,
-        attraceForceStrength: -100
-      }
+      graphSettings: settings ? JSON.parse(settings) : defaultGraphSettings
     }
-
+    console.log('Init Settings', this.state.graphSettings)
     this.onSelect = this.onSelect.bind(this)
     this.onCheck = this.onCheck.bind(this)
     this.onSettingsChange = this.onSettingsChange.bind(this)
+    this.onSettingsReset = this.onSettingsReset.bind(this)
   }
 
   componentDidMount () {
@@ -76,6 +83,18 @@ class Dashboard extends Component {
     this.setState({
       graphSettings: settings
     })
+    // Store settings on local storage
+    window.localStorage.setItem('graphSettings', JSON.stringify(settings))
+  }
+
+  onSettingsReset () {
+    this.setState({
+      graphSettings: defaultGraphSettings
+    })
+
+    // clear settings on local storage
+    window.localStorage.setItem('graphSettings', null)
+    window.location.reload()
   }
 
   render () {
@@ -220,7 +239,8 @@ const getMenu = (context) => {
         >
           <Settings
             onChange={context.onSettingsChange}
-            defaults={context.graphSettings}
+            onReset={context.onSettingsReset}
+            settings={context.state.graphSettings}
           />
           {/* {
             userData.user_shelves.map((shelf, idx) => (
