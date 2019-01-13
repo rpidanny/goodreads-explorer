@@ -22,22 +22,35 @@ const getUserInfo = action =>
 const getUserData = action =>
   wrapByLoader(function * () {
     try {
-      const response = yield call(Goodreads.getUserInfo, action.userId)
-      if (!response.error) {
-        const userData = response
-        const shelves = userData.user.user_shelves.user_shelf.map(shelf => shelf.name)
-        const bookOnShelves = yield all(
-          shelves.map(
-            shelf => call(Goodreads.getBooksOnShelf, action.userId, shelf)
-          )
-        )
-        userData.user.user_shelves = bookOnShelves.map((shelf, idx) => ({
-          name: shelves[idx],
-          books: shelf.books ? shelf.books : { book: [] }
-        }))
-        yield put(Actions.getUserDataSuccess(userData))
+      const cachedData = JSON.parse(window.localStorage.getItem(action.userId))
+
+      if (cachedData && ((Date.now() - cachedData.timestamp) < 3600000)) {
+        yield put(Actions.getUserDataSuccess(cachedData.data))
       } else {
-        yield put(Actions.errorOccured(response))
+        const response = yield call(Goodreads.getUserInfo, action.userId)
+        if (!response.error) {
+          const userData = response
+          const shelves = userData.user.user_shelves.user_shelf.map(shelf => shelf.name)
+          const bookOnShelves = yield all(
+            shelves.map(
+              shelf => call(Goodreads.getBooksOnShelf, action.userId, shelf)
+            )
+          )
+          userData.user.user_shelves = bookOnShelves.map((shelf, idx) => ({
+            name: shelves[idx],
+            books: shelf.books ? shelf.books : { book: [] }
+          }))
+          window.localStorage.setItem(
+            action.userId,
+            JSON.stringify({
+              data: userData,
+              timestamp: Date.now()
+            })
+          )
+          yield put(Actions.getUserDataSuccess(userData))
+        } else {
+          yield put(Actions.errorOccured(response))
+        }
       }
     } catch (err) {
       yield put(Actions.errorOccured(err))
