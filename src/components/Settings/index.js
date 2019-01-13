@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Checkbox, Slider, Button } from 'antd'
+import { Checkbox, Slider, Button, Tooltip } from 'antd'
 
 import './style.css'
 
@@ -140,7 +140,9 @@ class Settings extends Component {
             </div>
           </li>
           <li>
-            FPS ({fps})
+            <Tooltip title='How many times per second to render the graph.' placement='rightTop'>
+              FPS ({fps})
+            </Tooltip>
             <Slider
               defaultValue={fps}
               max={120}
@@ -150,7 +152,9 @@ class Settings extends Component {
             />
           </li>
           <li>
-            Alpha Start ({alphaStart})
+            <Tooltip title='Initial Alpha of simulation.' placement='rightTop'>
+              Alpha Start ({alphaStart})
+            </Tooltip>
             <Slider
               defaultValue={alphaStart}
               max={1}
@@ -160,7 +164,12 @@ class Settings extends Component {
             />
           </li>
           <li>
-            velocity Decay ({velocityDecay})
+            <Tooltip
+              title='The decay factor is akin to atmospheric friction; after the application of any forces during a tick, each node’s velocity is multiplied by 1 - decay. As with lowering the alpha decay rate, less velocity decay may converge on a better solution, but risks numerical instabilities and oscillation.'
+              placement='rightTop'
+            >
+              velocity Decay ({velocityDecay})
+            </Tooltip>
             <Slider
               defaultValue={velocityDecay}
               max={1}
@@ -170,7 +179,9 @@ class Settings extends Component {
             />
           </li>
           <li>
-            Charge Strength ({chargeStrength})
+            <Tooltip title='It can be used to simulate gravity (attraction) if the strength is positive, or electrostatic charge (repulsion) if the strength is negative.' placement='rightTop'>
+              Charge Strength ({chargeStrength})
+            </Tooltip>
             <Slider
               defaultValue={chargeStrength}
               max={500}
@@ -180,7 +191,9 @@ class Settings extends Component {
             />
           </li>
           <li>
-            Collision Strength ({collisionStrength})
+            <Tooltip title='Sets the collision force strength to the specified number.' placement='rightTop'>
+              Collision Strength ({collisionStrength})
+            </Tooltip>
             <Slider
               defaultValue={collisionStrength}
               max={1}
@@ -190,7 +203,9 @@ class Settings extends Component {
             />
           </li>
           <li>
-            Collision Radius Offset ({collisionRadiusOffset})
+            <Tooltip title='The collision force treats nodes as circles with a given radius, rather than points, and prevents nodes from overlapping.' placement='rightTop'>
+              Collision Radius Offset ({collisionRadiusOffset})
+            </Tooltip>
             <Slider
               defaultValue={collisionRadiusOffset}
               max={50}
@@ -200,7 +215,9 @@ class Settings extends Component {
             />
           </li>
           <li>
-            Attractive Force Strength ({attraceForceStrength})
+            <Tooltip title='Sets attractive force strength between nodes' placement='rightTop'>
+              Attractive Force Strength ({attraceForceStrength})
+            </Tooltip>
             <Slider
               defaultValue={attraceForceStrength}
               max={500}
@@ -210,7 +227,9 @@ class Settings extends Component {
             />
           </li>
           <li>
-            Cluster Radius Scale ({clusterRadiusScale})
+            <Tooltip title='Radius of the circle around which to cluster the nodes.' placement='rightTop'>
+              Cluster Radius Scale ({clusterRadiusScale})
+            </Tooltip>
             <Slider
               defaultValue={clusterRadiusScale}
               max={10}
