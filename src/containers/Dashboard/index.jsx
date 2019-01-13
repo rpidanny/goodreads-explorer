@@ -198,7 +198,7 @@ const getMenu = (context) => {
     return (
       <Menu
         mode='inline'
-        defaultOpenKeys={['explore']}
+        defaultOpenKeys={['shelves']}
         style={{
           // height: '100%',
           borderRight: 0
@@ -211,7 +211,6 @@ const getMenu = (context) => {
           title={
             <span><Icon type='book' />Shelves</span>
           }
-          selectable
         >
           <Tree
             checkable
@@ -227,13 +226,27 @@ const getMenu = (context) => {
                     <TreeNode
                       title={`${shelf.name} (${books.length})`}
                       key={shelf.name}
-                    />
+                      className='booksList'
+                    >
+                      {
+                        books.map(book => {
+                          return (
+                            <TreeNode
+                              title={`${book.title} (${book.published})`}
+                              key={book.title}
+                              disableCheckbox
+                            />
+                          )
+                        })
+                      }
+                    </TreeNode>
                   )
                 }
                 return (
                   <TreeNode
                     title={`${shelf.name} (0)`}
                     key={shelf.name}
+                    disabled
                   />
                 )
               })

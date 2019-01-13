@@ -17,3 +17,11 @@
   background: rgb(244, 245, 241);
   font-size: 12px;
 }
+
+.booksList {
+  overflow-x: auto;
+  li {
+    font-size: 10px;
+    padding: 0px;
+  }
+}
