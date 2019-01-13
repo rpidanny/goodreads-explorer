@@ -114,7 +114,7 @@ class Dashboard extends Component {
               <Link to={'/'}>
                 <img
                   src={goodReadsLogo}
-                  width='100%'
+                  width='250px'
                   alt='Goodreads'
                 />
               </Link>
