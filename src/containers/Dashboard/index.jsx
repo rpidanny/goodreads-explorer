@@ -174,6 +174,7 @@ const getUserComponent = (userData) => {
           name: userData.name || '',
           userName: userData.user_name || '',
           image: userData.image_url || '',
+          link: userData.link,
           description: typeof userData.about === 'string' ? userData.about : `Last active: ${userData.last_active}`
         }}
       />

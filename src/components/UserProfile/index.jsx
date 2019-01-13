@@ -16,7 +16,15 @@ const UserProfile = props => (
       avatar={
         <Avatar src={props.user.image} size='large' />
       }
-      title={props.user.name}
+      title={
+        <a
+          href={props.user.link}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          {props.user.name}
+        </a>
+      }
       description={props.user.description}
     />
   </Card>
