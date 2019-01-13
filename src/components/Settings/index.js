@@ -44,10 +44,6 @@ class Settings extends Component {
     () => this.props.onChange(this.state.settings))
   }
 
-  clearLocalStorage () {
-
-  }
-
   updateFps (val) {
     this.updateState({
       fps: val
