@@ -2,7 +2,7 @@ const minifyString = text => {
   return text.split(' ').slice(0, 3).map(word => word.charAt(0).toUpperCase()).join('')
 }
 
-export function getGraphData (userData) {
+export function getGraphData (userData, shelves) {
   let books = []
   let bookNodes = {}
   let authorNodes = {}
@@ -27,18 +27,20 @@ export function getGraphData (userData) {
   // })
 
   bookShelves.forEach(shelf => {
-    if (shelf.books.book) {
-      const tmpList = shelf.books.book.length ? shelf.books.book : [ shelf.books.book ]
-      tmpList.forEach(book => {
-        books.push(
-          {
-            ...book,
-            property: {
-              shelf: shelf.name
+    if (shelves.indexOf(shelf.name) > -1) {
+      if (shelf.books.book) {
+        const tmpList = shelf.books.book.length ? shelf.books.book : [ shelf.books.book ]
+        tmpList.forEach(book => {
+          books.push(
+            {
+              ...book,
+              property: {
+                shelf: shelf.name
+              }
             }
-          }
-        )
-      })
+          )
+        })
+      }
     }
   })
 
