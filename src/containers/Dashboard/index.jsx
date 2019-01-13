@@ -94,7 +94,7 @@ class Dashboard extends Component {
     })
 
     // clear settings on local storage
-    window.localStorage.setItem('graphSettings', null)
+    window.localStorage.removeItem('graphSettings')
     window.location.reload()
   }
 
