@@ -1,15 +1,16 @@
 import React from 'react'
 // import { Spin } from 'antd'
 
+import './style.css'
+
 // const FallBack = () => (
 //   <Spin
 //     className='App'
 //     spinning
-//     delay={500}
+//     delay={1}
+//     size='large'
 //   />
 // )
-
-import './style.css'
 
 const FallBack = () => <div className='suspenseFallback'>Loading...</div>
 

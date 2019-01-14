@@ -14,7 +14,7 @@ const App = lazy(() => import('./containers/App'))
 const store = configureStore()
 
 ReactDOM.render(
-  <Suspense fallback={Fallback}>
+  <Suspense fallback={<Fallback />}>
     <Provider store={store}><Router><App /></Router></Provider>
   </Suspense>, document.getElementById('root'))
 
