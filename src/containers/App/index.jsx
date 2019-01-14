@@ -52,7 +52,7 @@ class App extends Component {
           <Route
             exact
             path='/'
-            component={props => (
+            render={props => (
               <Suspense fallback={<Fallback />} >
                 <Home
                   searchHandler={this.searchHandler}
@@ -62,7 +62,7 @@ class App extends Component {
           />
           <Route
             path='/user/:userId'
-            component={props => (
+            render={props => (
               <Suspense fallback={<Fallback />} >
                 <Dashboard {...props} />
               </Suspense>
