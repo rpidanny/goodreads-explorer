@@ -14,7 +14,8 @@ import Settings from '../../components/Settings'
 import { getGraphData } from '../../utils/graphHelper'
 
 import bgImage from '../../components/NetworkGraph/examples/basic/tiny_grid.png'
-import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
+// import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
+import goodReadsLogo from '../../assets/images/good_reads_explorer.png'
 
 import './style.css'
 
@@ -205,7 +206,7 @@ const getMenu = (context) => {
           borderRight: 0
         }}
         theme='light'
-        selectable
+        // selectable
       >
         <SubMenu
           key='shelves'

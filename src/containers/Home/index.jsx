@@ -5,7 +5,8 @@ import { Row, Col, Layout, Input } from 'antd'
 
 import './style.css'
 
-import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
+// import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
+import goodReadsLogo from '../../assets/images/good_reads_explorer.png'
 
 const { Search } = Input
 
