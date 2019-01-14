@@ -231,11 +231,11 @@ const getMenu = (context) => {
                       className='booksList'
                     >
                       {
-                        books.map(book => {
+                        books.map((book, idx) => {
                           return (
                             <TreeNode
                               title={`${book.title} (${book.published})`}
-                              key={book.title}
+                              key={`${idx}_${book.title}`}
                               disableCheckbox
                             />
                           )
