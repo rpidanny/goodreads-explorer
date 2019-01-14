@@ -42,7 +42,7 @@ const Home = (props) => (
       target='_blank'
       rel='noopener noreferrer'
     >
-      <img className='forkme' src={forkMe} alt='GitHub' />
+      <img className='forkme' src={forkMe} alt='Fork me on GitHub' />
     </a>
   </div>
 )
