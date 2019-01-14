@@ -59,7 +59,7 @@ class App extends Component {
           />
           <Route
             path='/user/:userId'
-            component={props => (
+            render={props => (
               <Dashboard {...props} />
             )}
           />
