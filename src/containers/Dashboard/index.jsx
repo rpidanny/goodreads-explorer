@@ -10,6 +10,7 @@ import UserProfile from '../../components/UserProfile'
 import NetworkGraph from '../../components/NetworkGraph'
 import BookLibrary from '../../components/BookLibrary'
 import Settings from '../../components/Settings'
+import ErrorBoundary from '../../components/ErrorBoundary'
 
 import { getGraphData } from '../../utils/graphHelper'
 
@@ -103,47 +104,49 @@ class Dashboard extends Component {
     const { userData } = this.props
     // console.log(userData)
     return (
-      <Layout
-        className='dashboard'
-      >
-        <Layout>
-          <Sider className='sider' width={270} >
-            <div className='logo' style={{
-              padding: '10px',
-              background: '#fff'
-            }}>
-              <Link to={'/'}>
-                <img
-                  src={goodReadsLogo}
-                  width='250px'
-                  alt='Goodreads'
-                />
-              </Link>
-            </div>
-            {
-              getUserComponent(userData)
-            }
-            {
-              getMenu(this)
-            }
-          </Sider>
-          <Layout style={{ padding: '0 24px 24px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Books</Breadcrumb.Item>
-            </Breadcrumb>
-            <Content
-              className='mainContent'
-              style={{
-                backgroundImage: { bgImage }, padding: 0, margin: 0, height: '100%'
-              }}
-            >
-              { getContent(this) }
-            </Content>
+      <ErrorBoundary>
+        <Layout
+          className='dashboard'
+        >
+          <Layout>
+            <Sider className='sider' width={270} >
+              <div className='logo' style={{
+                padding: '10px',
+                background: '#fff'
+              }}>
+                <Link to={'/'}>
+                  <img
+                    src={goodReadsLogo}
+                    width='250px'
+                    alt='Goodreads'
+                  />
+                </Link>
+              </div>
+              {
+                getUserComponent(userData)
+              }
+              {
+                getMenu(this)
+              }
+            </Sider>
+            <Layout style={{ padding: '0 24px 24px' }}>
+              <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>User</Breadcrumb.Item>
+                <Breadcrumb.Item>Books</Breadcrumb.Item>
+              </Breadcrumb>
+              <Content
+                className='mainContent'
+                style={{
+                  backgroundImage: { bgImage }, padding: 0, margin: 0, height: '100%'
+                }}
+              >
+                { getContent(this) }
+              </Content>
+            </Layout>
           </Layout>
         </Layout>
-      </Layout>
+      </ErrorBoundary>
     )
   }
 }
