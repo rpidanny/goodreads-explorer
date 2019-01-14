@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import {
   withRouter,
   Route,
@@ -6,17 +6,17 @@ import {
   Redirect
 } from 'react-router-dom'
 import { connect } from 'react-redux'
+import Fallback from '../../components/Fallback'
 
 // antd components
 import { Spin } from 'antd'
 
 import 'antd/dist/antd.css'
+import './style.css'
 
 // containers
-import Home from '../Home'
-import Dashboard from '../Dashboard'
-
-import './style.css'
+const Home = lazy(() => import('../Home'))
+const Dashboard = lazy(() => import('../Dashboard'))
 
 const mapStateToProps = state => ({
   isLoading: state.app.isLoading
@@ -53,14 +53,20 @@ class App extends Component {
             exact
             path='/'
             component={props => (
-              <Home
-                searchHandler={this.searchHandler}
-              />
+              <Suspense fallback={Fallback} >
+                <Home
+                  searchHandler={this.searchHandler}
+                />
+              </Suspense>
             )}
           />
           <Route
             path='/user/:userId'
-            component={Dashboard}
+            component={props => (
+              <Suspense fallback={Fallback} >
+                <Dashboard {...props} />
+              </Suspense>
+            )}
           />
           <Redirect to='/' />
         </Switch>
