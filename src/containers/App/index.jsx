@@ -1,4 +1,5 @@
 import React, { Component, Suspense, lazy } from 'react'
+import PropTypes from 'prop-types'
 import {
   withRouter,
   Route,
@@ -34,7 +35,7 @@ class App extends Component {
     this.searchHandler = this.searchHandler.bind(this)
 
     // Google analytics
-    ReactGA.initialize('UA-132487735-1')
+    ReactGA.initialize('UA-132487735-1', { testMode: this.props.testMode })
     ReactGA.pageview(window.location.pathname + window.location.search)
   }
 
@@ -78,6 +79,14 @@ class App extends Component {
       </Spin>
     )
   }
+}
+
+App.defaultProps = {
+  testMode: false
+}
+
+App.propTypes = {
+  testMode: PropTypes.bool
 }
 
 export default withRouter(
