@@ -80,7 +80,7 @@ self.__precacheManifest = [
     "url": "/static/media/good_reads_explorer.eff85db6.png"
   },
   {
-    "revision": "13bda9fb47eb8118e5f21b62f9a3197a",
+    "revision": "bbe1b14340402d0b4b412c0fac1e9a6e",
     "url": "/index.html"
   }
 ];
