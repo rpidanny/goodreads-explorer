@@ -5,8 +5,7 @@ import Quotes from '../../data/quotes.json'
 import './style.css'
 
 const Quote = (props) => {
-  const quoteCount = Quotes.length
-  const index = Math.floor(Math.random() * quoteCount)
+  const index = Math.floor(Math.random() * Quotes.length)
   const quote = Quotes[index]
   return (
     <div className='quote'>
