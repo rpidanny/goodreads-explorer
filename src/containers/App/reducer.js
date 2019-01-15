@@ -1,9 +1,7 @@
 import * as ActionTypes from '../../utils/constants'
 
 const initialState = {
-  isLoading: 0,
-  userId: null,
-  userInfo: null
+  isLoading: 0
 }
 
 const app = (state = initialState, action = {}) => {
@@ -13,14 +11,6 @@ const app = (state = initialState, action = {}) => {
     }
     case ActionTypes.FETCH_END: {
       return { ...state, isLoading: state.isLoading - 1 }
-    }
-    case ActionTypes.FETCH_USER_INFO: {
-      const { userId } = action
-      return { ...state, userId }
-    }
-    case ActionTypes.FETCH_USER_INFO_SUCCESS: {
-      const { userInfo } = action
-      return { ...state, userInfo: userInfo.user }
     }
     default: {
       return state
