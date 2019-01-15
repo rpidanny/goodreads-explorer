@@ -28,28 +28,44 @@ const getUserData = action =>
         yield put(Actions.getUserDataSuccess(cachedData.data))
       } else {
         const response = yield call(Goodreads.getUserInfo, action.userId)
-        if (!response.error) {
+        if (response.user && !response.error) {
           const userData = response
-          const shelves = userData.user.user_shelves.user_shelf.map(shelf => shelf.name)
-          const bookOnShelves = yield all(
-            shelves.map(
-              shelf => call(Goodreads.getBooksOnShelf, action.userId, shelf)
+          if (userData.user.user_shelves) {
+            const shelves = userData.user.user_shelves.user_shelf.map(shelf => shelf.name)
+            const bookOnShelves = yield all(
+              shelves.map(
+                shelf => call(Goodreads.getBooksOnShelf, action.userId, shelf)
+              )
             )
-          )
-          userData.user.user_shelves = bookOnShelves.map((shelf, idx) => ({
-            name: shelves[idx],
-            books: shelf.books ? shelf.books : { book: [] }
-          }))
-          window.localStorage.setItem(
-            action.userId,
-            JSON.stringify({
-              data: userData,
-              timestamp: Date.now()
-            })
-          )
-          yield put(Actions.getUserDataSuccess(userData))
+            userData.user.user_shelves = bookOnShelves.map((shelf, idx) => ({
+              name: shelves[idx],
+              books: shelf.books ? shelf.books : { book: [] }
+            }))
+            window.localStorage.setItem(
+              action.userId,
+              JSON.stringify({
+                data: userData,
+                timestamp: Date.now()
+              })
+            )
+            yield put(Actions.getUserDataSuccess(userData))
+          } else {
+            yield put(Actions.userAccountIsPrivate({
+              title: 'Private Account',
+              message: `Sorry ${userData.user.name}, your account is private. Can't fetch your data.`
+            }))
+            yield put(Actions.getUserDataSuccess({
+              user: {
+                ...userData.user,
+                user_shelves: []
+              }
+            }))
+          }
         } else {
-          yield put(Actions.errorOccured(response))
+          yield put(Actions.networkErrorOccured({
+            title: 'Network Error',
+            message: response.message
+          }))
         }
       }
     } catch (err) {

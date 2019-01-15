@@ -3,7 +3,9 @@ import {
   FETCH_USER_INFO_SUCCESS,
   FETCH_USER_DATA,
   FETCH_USER_DATA_SUCCESS,
-  ERROR_OCCURED
+  ERROR_OCCURED,
+  PRIVATE_ACCOUNT_ERROR,
+  NETWORK_ERROR_OCCURED
 } from '../../utils/constants'
 
 export const errorOccured = err => ({
@@ -29,4 +31,14 @@ export const getUserData = userId => ({
 export const getUserDataSuccess = userData => ({
   type: FETCH_USER_DATA_SUCCESS,
   userData
+})
+
+export const userAccountIsPrivate = err => ({
+  type: PRIVATE_ACCOUNT_ERROR,
+  err
+})
+
+export const networkErrorOccured = err => ({
+  type: NETWORK_ERROR_OCCURED,
+  err
 })
