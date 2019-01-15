@@ -6,6 +6,7 @@ import {
   Redirect
 } from 'react-router-dom'
 import { connect } from 'react-redux'
+import ReactGA from 'react-ga'
 import Fallback from '../../components/Fallback'
 
 // antd components
@@ -31,6 +32,10 @@ class App extends Component {
     super(props)
 
     this.searchHandler = this.searchHandler.bind(this)
+
+    // Google analytics
+    ReactGA.initialize('UA-132487735-1')
+    ReactGA.pageview(window.location.pathname + window.location.search)
   }
 
   searchHandler (userId) {
