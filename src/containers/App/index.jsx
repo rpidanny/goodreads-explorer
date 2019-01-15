@@ -19,9 +19,12 @@ import './style.css'
 // containers
 const Dashboard = lazy(() => import('../Dashboard'))
 const Home = lazy(() => import('../Home'))
+const ErrorBoundary = lazy(() => import('../../components/ErrorBoundary'))
+const ErrorHandler = lazy(() => import('../../components/ErrorHandler'))
 
 const mapStateToProps = state => ({
-  isLoading: state.app.isLoading
+  isLoading: state.app.isLoading,
+  error: state.app.error
 })
 
 const mapDispatchToProps = {
@@ -49,34 +52,43 @@ class App extends Component {
 
   render () {
     return (
-      <Spin
-        className='App'
-        spinning={this.props.isLoading > 0}
-        delay={500}
-      >
-        <Switch>
-          <Route
-            exact
-            path='/'
-            render={props => (
-              <Suspense fallback={<Fallback />} >
-                <Home
-                  searchHandler={this.searchHandler}
-                />
-              </Suspense>
-            )}
-          />
-          <Route
-            path='/user/:userId'
-            render={props => (
-              <Suspense fallback={<Fallback />} >
-                <Dashboard {...props} />
-              </Suspense>
-            )}
-          />
-          <Redirect to='/' />
-        </Switch>
-      </Spin>
+      <Suspense fallback={<Fallback />} >
+        <ErrorBoundary>
+          <Spin
+            className='App'
+            spinning={this.props.isLoading > 0}
+            delay={500}
+          >
+            <Switch>
+              <Route
+                exact
+                path='/'
+                render={props => (
+                  <Suspense fallback={<Fallback />} >
+                    <Home
+                      searchHandler={this.searchHandler}
+                    />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path='/user/:userId'
+                render={props => (
+                  <Suspense fallback={<Fallback />} >
+                    <Dashboard {...props} />
+                  </Suspense>
+                )}
+              />
+              <Redirect to='/' />
+            </Switch>
+            {
+              this.props.error && (
+                <ErrorHandler error={this.props.error} />
+              )
+            }
+          </Spin>
+        </ErrorBoundary>
+      </Suspense>
     )
   }
 }
