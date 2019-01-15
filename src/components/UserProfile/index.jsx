@@ -25,7 +25,11 @@ const UserProfile = props => (
           {props.user.name}
         </a>
       }
-      description={props.user.description}
+      description={
+        props.user.description.length > 160
+          ? `${props.user.description.slice(0, 160)}...`
+          : props.user.description}
+      className='userCardMeta'
     />
   </Card>
 )

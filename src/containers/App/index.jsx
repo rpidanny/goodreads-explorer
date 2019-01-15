@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component, Suspense, lazy } from 'react'
+import PropTypes from 'prop-types'
 import {
   withRouter,
   Route,
@@ -6,17 +7,18 @@ import {
   Redirect
 } from 'react-router-dom'
 import { connect } from 'react-redux'
+import ReactGA from 'react-ga'
+import Fallback from '../../components/Fallback'
 
 // antd components
 import { Spin } from 'antd'
 
 import 'antd/dist/antd.css'
+import './style.css'
 
 // containers
-import Home from '../Home'
-import Dashboard from '../Dashboard'
-
-import './style.css'
+const Dashboard = lazy(() => import('../Dashboard'))
+const Home = lazy(() => import('../Home'))
 
 const mapStateToProps = state => ({
   isLoading: state.app.isLoading
@@ -31,6 +33,10 @@ class App extends Component {
     super(props)
 
     this.searchHandler = this.searchHandler.bind(this)
+
+    // Google analytics
+    ReactGA.initialize('UA-132487735-1', { testMode: this.props.testMode })
+    ReactGA.pageview(window.location.pathname + window.location.search)
   }
 
   searchHandler (userId) {
@@ -52,21 +58,35 @@ class App extends Component {
           <Route
             exact
             path='/'
-            component={props => (
-              <Home
-                searchHandler={this.searchHandler}
-              />
+            render={props => (
+              <Suspense fallback={<Fallback />} >
+                <Home
+                  searchHandler={this.searchHandler}
+                />
+              </Suspense>
             )}
           />
           <Route
             path='/user/:userId'
-            component={Dashboard}
+            render={props => (
+              <Suspense fallback={<Fallback />} >
+                <Dashboard {...props} />
+              </Suspense>
+            )}
           />
           <Redirect to='/' />
         </Switch>
       </Spin>
     )
   }
+}
+
+App.defaultProps = {
+  testMode: false
+}
+
+App.propTypes = {
+  testMode: PropTypes.bool
 }
 
 export default withRouter(

@@ -1,0 +1,11 @@
+.quote {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  .quoteText {
+    font-style: italic;
+  }
+  .quoteAuthorOrTitle {
+    font-weight: bold;
+  }
+}
