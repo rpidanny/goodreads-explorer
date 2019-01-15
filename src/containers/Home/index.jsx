@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy } from 'react'
 
 // antd components
 import { Row, Col, Layout, Input } from 'antd'
@@ -8,6 +8,8 @@ import './style.css'
 // import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
 import goodReadsLogo from '../../assets/images/good_reads_explorer.png'
 import forkMe from '../../assets/images/forkme_right_green.png'
+
+const Quote = lazy(() => import('../../components/Quote'))
 
 const { Search } = Input
 
@@ -24,6 +26,13 @@ const Home = (props) => (
           />
         </Col>
         <Col span={6} />
+      </Row>
+      <Row className='center'>
+        <Col span={5} />
+        <Col span={14}>
+          <Quote/>
+        </Col>
+        <Col span={5} />
       </Row>
       <Row className='center'>
         <Col span={8} />
