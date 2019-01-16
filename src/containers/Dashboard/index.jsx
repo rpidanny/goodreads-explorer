@@ -33,19 +33,6 @@ const mapDispatchToProps = {
   getUserData
 }
 
-const defaultGraphSettings = {
-  fps: 60,
-  cluster: true,
-  alphaStart: 1,
-  animation: true,
-  velocityDecay: 0.1,
-  chargeStrength: -100,
-  collisionStrength: 0.5,
-  collisionRadiusOffset: 15,
-  attraceForceStrength: -100,
-  clusterRadiusScale: 2
-}
-
 class Dashboard extends Component {
   constructor (props) {
     super(props)
