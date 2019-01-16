@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Button, Popover, Icon } from 'antd'
+import { Button, Popover } from 'antd'
 
 import Settings from '../../components/Settings'
 import NetworkGraph from '../../components/NetworkGraph'

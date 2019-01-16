@@ -6,9 +6,6 @@ import './style.css'
 
 const CheckboxGroup = Checkbox.Group
 
-// const plainOptions = ['Apple', 'Pear', 'Orange'];
-// const defaultCheckedList = ['Apple', 'Orange'];
-
 class MultiCheckBox extends Component {
   constructor (props) {
     super(props)
@@ -58,7 +55,6 @@ class MultiCheckBox extends Component {
           options={this.state.options}
           value={this.state.checkedList}
           onChange={this.onChange}
-          // buttonStyle='solid'
         />
       </div>
     )
