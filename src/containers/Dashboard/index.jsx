@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getUserInfo, getUserData } from './action'
@@ -6,10 +6,10 @@ import { getUserInfo, getUserData } from './action'
 // antd components
 import { Layout, Menu, Icon, Tree } from 'antd'
 
+import Fallback from '../../components/Fallback'
 import UserProfile from '../../components/UserProfile'
 import BookLibrary from '../../components/BookLibrary'
 import ErrorBoundary from '../../components/ErrorBoundary'
-import RelationshipGraph from '../RelationshipGraph'
 
 import { getGraphData } from '../../utils/graphHelper'
 
@@ -18,6 +18,8 @@ import bgImage from '../../components/NetworkGraph/examples/basic/tiny_grid.png'
 import goodReadsLogo from '../../assets/images/good_reads_explorer.png'
 
 import './style.css'
+
+const RelationshipGraph = lazy(() => import('../RelationshipGraph'))
 
 const { SubMenu } = Menu
 const { Content, Sider } = Layout
@@ -152,10 +154,12 @@ const getContent = (context) => {
     if (selectedMenu === 0) {
       const { nodes, links } = getGraphData(context.props.userData, context.state.selectedShelves)
       return (
-        <RelationshipGraph
-          nodes={nodes}
-          links={links}
-        />
+        <Suspense fallback={<Fallback />}>
+          <RelationshipGraph
+            nodes={nodes}
+            links={links}
+          />
+        </Suspense>
       )
     } else if (selectedMenu === 1) {
       return getBookLibrary(userData, selectedShelf)
