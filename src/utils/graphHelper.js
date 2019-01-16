@@ -1,10 +1,8 @@
-import memoize from 'memoize-one'
-
 const minifyString = text => {
   return text.split(' ').slice(0, 3).map(word => word.charAt(0).toUpperCase()).join('')
 }
 
-export const getGraphData = memoize((userData, shelves) => {
+export function getGraphData (userData, shelves) {
   let books = []
   let bookNodes = {}
   let authorNodes = {}
@@ -167,4 +165,4 @@ export const getGraphData = memoize((userData, shelves) => {
       }
     }))
   }
-})
+}

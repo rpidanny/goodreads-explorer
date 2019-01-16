@@ -50,9 +50,18 @@ class RelationshipGraph extends Component {
 
   componentDidMount () {
     const shelves = this.props.userData.user_shelves.map(shelf => {
-      return shelf.name
+      if (shelf.books.book) {
+        return {
+          name: shelf.name,
+          bookCount: shelf.books.book.length ? shelf.books.book.length : 1
+        }
+      }
+      return {
+        name: shelf.name,
+        bookCount: 0
+      }
     })
-    const selectedShelves = shelves.length > 0 ? [shelves[0]] : []
+    const selectedShelves = shelves.length > 0 ? [shelves[0].name] : []
     const { nodes, links } = getGraphData(this.props.userData, selectedShelves)
     this.setState({
       nodes,
@@ -148,8 +157,10 @@ class RelationshipGraph extends Component {
           content={
             <MultiCheckBox
               onChange={this.handleShelvesChange}
-              options={shelves}
+              options={shelves.map(shelf => shelf.name)}
               defaultCheckedList={selectedShelves}
+              optionLabel={shelves.map(shelf => `${shelf.name} (${shelf.bookCount})`)}
+              disable={shelves.map(shelf => shelf.bookCount === 0)}
             />
           }
           title={`Shelves (${shelves.length})`}
