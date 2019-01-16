@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { getUserInfo, getUserData } from './action'
 
 // antd components
-import { Layout, Menu, Icon, Tree } from 'antd'
+import { Layout, Menu, Icon, Tree, Button, Popover } from 'antd'
 
 import UserProfile from '../../components/UserProfile'
 import NetworkGraph from '../../components/NetworkGraph'
@@ -57,14 +57,22 @@ class Dashboard extends Component {
     this.state = {
       selectedShelf: null,
       selectedShelves: [],
-      selectedMenu: 0,
-      graphSettings: settings ? JSON.parse(settings) : defaultGraphSettings
+      graphSettings: settings ? JSON.parse(settings) : defaultGraphSettings,
+      settingsPopover: false,
+      openMenuKeys: [ 'relGraph' ]
     }
     console.log('Init Settings', this.state.graphSettings)
+
     this.onSelect = this.onSelect.bind(this)
     this.onCheck = this.onCheck.bind(this)
     this.onSettingsChange = this.onSettingsChange.bind(this)
     this.onSettingsReset = this.onSettingsReset.bind(this)
+    this.handleVisibleChange = this.handleVisibleChange.bind(this)
+    this.hideSettings = this.hideSettings.bind(this)
+    this.handleMenuOpenChange = this.handleMenuOpenChange.bind(this)
+    this.handleBookShelfSelect = this.handleBookShelfSelect.bind(this)
+
+    this.rootSubmenuKeys = ['relGraph', 'shelves']
   }
 
   componentDidMount () {
@@ -98,6 +106,29 @@ class Dashboard extends Component {
     // clear settings on local storage
     window.localStorage.removeItem('graphSettings')
     window.location.reload()
+  }
+
+  handleVisibleChange (visible) {
+    this.setState({ settingsPopover: visible })
+  }
+
+  hideSettings () {
+    this.setState({ settingsPopover: false })
+  }
+
+  handleMenuOpenChange (openKeys) {
+    const latestOpenKey = openKeys.find(key => this.state.openMenuKeys.indexOf(key) === -1)
+    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      this.setState({ openMenuKeys: openKeys })
+    } else {
+      this.setState({
+        openMenuKeys: latestOpenKey ? [latestOpenKey] : []
+      })
+    }
+  }
+
+  handleBookShelfSelect (event) {
+    console.log('Bookshelfselect', event)
   }
 
   render () {
@@ -137,7 +168,7 @@ class Dashboard extends Component {
               }
             </Sider>
             <Layout
-              // style={{ padding: '0 24px 24px' }}
+              style={{ padding: '24px 24px' }}
             >
               {/* <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -161,17 +192,52 @@ class Dashboard extends Component {
 }
 
 const getContent = (context) => {
-  const { selectedMenu, selectedShelf, graphSettings } = context.state
+  const { selectedShelf, graphSettings, openMenuKeys } = context.state
   const { userData } = context.props
+
+  const selectedMenu = context.rootSubmenuKeys.indexOf(openMenuKeys[0])
+
   if (context.props.userData) {
     if (selectedMenu === 0) {
       const { nodes, links } = getGraphData(context.props.userData, context.state.selectedShelves)
       return (
-        <NetworkGraph
-          nodes={nodes}
-          links={links}
-          {...graphSettings}
-        />
+        <div
+          style={{
+            width: '100%',
+            height: '100%'
+          }}
+        >
+          <NetworkGraph
+            nodes={nodes}
+            links={links}
+            {...graphSettings}
+          >
+            <Popover
+              content={
+                <Settings
+                  onChange={context.onSettingsChange}
+                  onReset={context.onSettingsReset}
+                  settings={context.state.graphSettings}
+                />
+              }
+              title='Title'
+              trigger='click'
+              visible={context.state.settingsPopover}
+              onVisibleChange={context.handleVisibleChange}
+              placement='bottomLeft'
+              arrowPointAtCenter
+            >
+              <Button
+                icon='setting'
+                style={{
+                  position: 'fixed',
+                  top: 40,
+                  right: 40
+                }}
+              />
+            </Popover>
+          </NetworkGraph>
+        </div>
       )
     } else if (selectedMenu === 1) {
       return getBookLibrary(userData, selectedShelf)
@@ -212,18 +278,20 @@ const getMenu = (context) => {
     return (
       <Menu
         mode='inline'
-        defaultOpenKeys={['shelves']}
+        openKeys={context.state.openMenuKeys}
         style={{
           // height: '100%',
           borderRight: 0
         }}
         theme='light'
-        // selectable
+        onOpenChange={context.handleMenuOpenChange}
+        onSelect={sel => console.log('selkect', sel)}
+        selectable
       >
         <SubMenu
-          key='shelves'
+          key='relGraph'
           title={
-            <span><Icon type='book' />Shelves</span>
+            <span><Icon type='global' />Relationship Graph</span>
           }
         >
           <Tree
@@ -268,23 +336,26 @@ const getMenu = (context) => {
           </Tree>
         </SubMenu>
         <SubMenu
-          key='settings'
-          title={<span><Icon type='setting' />Settings</span>}
+          key='shelves'
+          title={<span><Icon type='book' />Shelves</span>}
         >
-          <Settings
+          {/* <Settings
             onChange={context.onSettingsChange}
             onReset={context.onSettingsReset}
             settings={context.state.graphSettings}
-          />
-          {/* {
+          /> */}
+          {
             userData.user_shelves.map((shelf, idx) => (
               <Menu.Item key={idx}>
-                <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
+                {/* <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
                   {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
-                </Link>
+                </Link> */}
+                <a onClick={() => context.setState({ selectedShelf: shelf.name })} >
+                  {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
+                </a>
               </Menu.Item>
             ))
-          } */}
+          }
         </SubMenu>
       </Menu>
     )
