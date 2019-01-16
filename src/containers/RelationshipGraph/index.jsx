@@ -4,6 +4,9 @@ import { Button, Popover } from 'antd'
 
 import Settings from '../../components/Settings'
 import NetworkGraph from '../../components/NetworkGraph'
+import MultiCheckBox from '../../components/MultiCheckBox'
+
+import { getGraphData } from '../../utils/graphHelper'
 
 const defaultGraphSettings = {
   fps: 60,
@@ -27,16 +30,38 @@ class RelationshipGraph extends Component {
 
     this.state = {
       graphSettings: settings ? JSON.parse(settings) : defaultGraphSettings,
-      settingsPopover: false
+      settingsPopover: false,
+      shelvesSelectPopover: false,
+      nodes: [],
+      links: [],
+      shelves: [],
+      selectedShelves: []
     }
 
-    this.handleVisibleChange = this.handleVisibleChange.bind(this)
     this.hideSettings = this.hideSettings.bind(this)
     this.handleSettingsChange = this.handleSettingsChange.bind(this)
     this.handleSettingsReset = this.handleSettingsReset.bind(this)
+    this.handleSettingsVisibleChange = this.handleSettingsVisibleChange.bind(this)
+
+    this.hideShelvesSelect = this.hideShelvesSelect.bind(this)
+    this.handleShelvesChange = this.handleShelvesChange.bind(this)
+    this.handleShelvesSelectVisibleChange = this.handleShelvesSelectVisibleChange.bind(this)
   }
 
-  handleVisibleChange (visible) {
+  componentDidMount () {
+    const shelves = this.props.userData.user_shelves.map(shelf => {
+      return shelf.name
+    })
+    const { nodes, links } = getGraphData(this.props.userData, shelves)
+    this.setState({
+      nodes,
+      links,
+      shelves,
+      selectedShelves: shelves
+    })
+  }
+
+  handleSettingsVisibleChange (visible) {
     this.setState({ settingsPopover: visible })
   }
 
@@ -62,9 +87,32 @@ class RelationshipGraph extends Component {
     window.location.reload()
   }
 
+  hideShelvesSelect () {
+    this.setState({ shelvesSelectPopover: false })
+  }
+
+  handleShelvesSelectVisibleChange (visible) {
+    this.setState({ shelvesSelectPopover: visible })
+  }
+
+  handleShelvesChange (selectedShelves) {
+    const { nodes, links } = getGraphData(this.props.userData, selectedShelves)
+    this.setState({
+      nodes,
+      links,
+      selectedShelves
+    })
+  }
+
   render () {
-    const { nodes, links } = this.props
-    const { graphSettings, settingsPopover } = this.state
+    const {
+      nodes,
+      links,
+      graphSettings,
+      settingsPopover,
+      shelvesSelectPopover,
+      shelves
+    } = this.state
     return (
       <NetworkGraph
         nodes={nodes}
@@ -82,9 +130,8 @@ class RelationshipGraph extends Component {
           title='Settings'
           trigger='click'
           visible={settingsPopover}
-          onVisibleChange={this.handleVisibleChange}
+          onVisibleChange={this.handleSettingsVisibleChange}
           placement='bottomLeft'
-          arrowPointAtCenter
         >
           <Button
             icon='setting'
@@ -92,6 +139,29 @@ class RelationshipGraph extends Component {
               position: 'fixed',
               top: 40,
               right: 40
+            }}
+          />
+        </Popover>
+        <Popover
+          content={
+            <MultiCheckBox
+              onChange={this.handleShelvesChange}
+              options={shelves}
+              defaultCheckedList={shelves}
+            />
+          }
+          title='Shelves'
+          trigger='click'
+          visible={shelvesSelectPopover}
+          onVisibleChange={this.handleShelvesSelectVisibleChange}
+          placement='bottomLeft'
+        >
+          <Button
+            icon='book'
+            style={{
+              position: 'fixed',
+              top: 40,
+              right: 80
             }}
           />
         </Popover>

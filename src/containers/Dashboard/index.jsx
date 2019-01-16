@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom'
 import { getUserInfo, getUserData } from './action'
 
 // antd components
-import { Layout, Menu, Icon, Tree } from 'antd'
+import { Layout, Menu, Icon } from 'antd'
 
 import Fallback from '../../components/Fallback'
 import UserProfile from '../../components/UserProfile'
 import BookShelf from '../../components/BookShelf'
 import ErrorBoundary from '../../components/ErrorBoundary'
-
-import { getGraphData } from '../../utils/graphHelper'
 
 import bgImage from '../../components/NetworkGraph/examples/basic/tiny_grid.png'
 // import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
@@ -23,7 +21,6 @@ const RelationshipGraph = lazy(() => import('../RelationshipGraph'))
 
 const { SubMenu } = Menu
 const { Content, Sider } = Layout
-const { TreeNode } = Tree
 
 const mapStorageToProps = state => ({
   userInfo: state.dashboard.userInfo,
@@ -152,12 +149,10 @@ const getContent = (context) => {
 
   if (context.props.userData) {
     if (selectedMenu === 0) {
-      const { nodes, links } = getGraphData(context.props.userData, context.state.selectedShelves)
       return (
         <Suspense fallback={<Fallback />}>
           <RelationshipGraph
-            nodes={nodes}
-            links={links}
+            userData={context.props.userData}
           />
         </Suspense>
       )
@@ -201,6 +196,7 @@ const getMenu = (context) => {
       <Menu
         mode='inline'
         openKeys={context.state.openMenuKeys}
+        defaultSelectedKeys={['relationshipGraph']}
         style={{
           // height: '100%',
           borderRight: 0
@@ -208,54 +204,14 @@ const getMenu = (context) => {
         theme='light'
         onOpenChange={context.handleMenuOpenChange}
         onSelect={sel => console.log('select', sel)}
-        selectable
       >
         <SubMenu
           key='relGraph'
           title={
-            <span><Icon type='global' />Relationship Graph</span>
+            <span><Icon type='global' />Graphs</span>
           }
         >
-          <Tree
-            checkable
-            onSelect={context.onSelect}
-            onCheck={context.onCheck}
-            className='shelves'
-          >
-            {
-              userData.user_shelves.map(shelf => {
-                if (shelf.books.book) {
-                  const books = shelf.books.book.length ? shelf.books.book : [shelf.books.book]
-                  return (
-                    <TreeNode
-                      title={`${shelf.name} (${books.length})`}
-                      key={shelf.name}
-                      className='booksList'
-                    >
-                      {
-                        books.map((book, idx) => {
-                          return (
-                            <TreeNode
-                              title={`${book.title} (${book.published})`}
-                              key={`${idx}_${book.title}`}
-                              disableCheckbox
-                            />
-                          )
-                        })
-                      }
-                    </TreeNode>
-                  )
-                }
-                return (
-                  <TreeNode
-                    title={`${shelf.name} (0)`}
-                    key={shelf.name}
-                    disabled
-                  />
-                )
-              })
-            }
-          </Tree>
+          <Menu.Item key='relationshipGraph'>Relationship Graph</Menu.Item>
         </SubMenu>
         <SubMenu
           key='shelves'
