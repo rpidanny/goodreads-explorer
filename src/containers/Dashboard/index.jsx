@@ -350,7 +350,13 @@ const getMenu = (context) => {
                 {/* <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
                   {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
                 </Link> */}
-                <a onClick={() => context.setState({ selectedShelf: shelf.name })} >
+                <a
+                  onClick={event => {
+                    event.preventDefault()
+                    return context.setState({ selectedShelf: shelf.name })
+                  }}
+                  href='/#'
+                >
                   {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
                 </a>
               </Menu.Item>
