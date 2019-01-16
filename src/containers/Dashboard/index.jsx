@@ -1,18 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getUserInfo, getUserData } from './action'
 
 // antd components
-import { Layout, Menu, Breadcrumb, Icon, Tree } from 'antd'
+import { Layout, Menu, Icon } from 'antd'
 
+import Fallback from '../../components/Fallback'
 import UserProfile from '../../components/UserProfile'
-import NetworkGraph from '../../components/NetworkGraph'
-import BookLibrary from '../../components/BookLibrary'
-import Settings from '../../components/Settings'
+import BookShelf from '../../components/BookShelf'
 import ErrorBoundary from '../../components/ErrorBoundary'
-
-import { getGraphData } from '../../utils/graphHelper'
 
 import bgImage from '../../components/NetworkGraph/examples/basic/tiny_grid.png'
 // import goodReadsLogo from '../../assets/images/goodreads-logo-transparent.png'
@@ -20,9 +17,10 @@ import goodReadsLogo from '../../assets/images/good_reads_explorer.png'
 
 import './style.css'
 
+const RelationshipGraph = lazy(() => import('../RelationshipGraph'))
+
 const { SubMenu } = Menu
 const { Content, Sider } = Layout
-const { TreeNode } = Tree
 
 const mapStorageToProps = state => ({
   userInfo: state.dashboard.userInfo,
@@ -34,37 +32,23 @@ const mapDispatchToProps = {
   getUserData
 }
 
-const defaultGraphSettings = {
-  fps: 60,
-  cluster: true,
-  alphaStart: 1,
-  animation: true,
-  velocityDecay: 0.1,
-  chargeStrength: -100,
-  collisionStrength: 0.5,
-  collisionRadiusOffset: 15,
-  attraceForceStrength: -100,
-  clusterRadiusScale: 2
-}
-
 class Dashboard extends Component {
   constructor (props) {
     super(props)
 
-    // get graph settings from localstorage
-    const settings = window.localStorage.getItem('graphSettings')
-
     this.state = {
       selectedShelf: null,
       selectedShelves: [],
-      selectedMenu: 0,
-      graphSettings: settings ? JSON.parse(settings) : defaultGraphSettings
+      openMenuKeys: [ 'relGraph' ]
     }
     console.log('Init Settings', this.state.graphSettings)
+
     this.onSelect = this.onSelect.bind(this)
     this.onCheck = this.onCheck.bind(this)
-    this.onSettingsChange = this.onSettingsChange.bind(this)
-    this.onSettingsReset = this.onSettingsReset.bind(this)
+    this.handleMenuOpenChange = this.handleMenuOpenChange.bind(this)
+    this.handleBookShelfSelect = this.handleBookShelfSelect.bind(this)
+
+    this.rootSubmenuKeys = ['relGraph', 'shelves']
   }
 
   componentDidMount () {
@@ -82,22 +66,19 @@ class Dashboard extends Component {
     })
   }
 
-  onSettingsChange (settings) {
-    this.setState({
-      graphSettings: settings
-    })
-    // Store settings on local storage
-    window.localStorage.setItem('graphSettings', JSON.stringify(settings))
+  handleMenuOpenChange (openKeys) {
+    const latestOpenKey = openKeys.find(key => this.state.openMenuKeys.indexOf(key) === -1)
+    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      this.setState({ openMenuKeys: openKeys })
+    } else {
+      this.setState({
+        openMenuKeys: latestOpenKey ? [latestOpenKey] : []
+      })
+    }
   }
 
-  onSettingsReset () {
-    this.setState({
-      graphSettings: defaultGraphSettings
-    })
-
-    // clear settings on local storage
-    window.localStorage.removeItem('graphSettings')
-    window.location.reload()
+  handleBookShelfSelect (event) {
+    console.log('Bookshelfselect', event)
   }
 
   render () {
@@ -109,7 +90,14 @@ class Dashboard extends Component {
           className='dashboard'
         >
           <Layout>
-            <Sider className='sider' width={270} >
+            <Sider
+              breakpoint='lg'
+              collapsedWidth='0'
+              onBreakpoint={(broken) => { console.log(broken) }}
+              onCollapse={(collapsed, type) => { console.log(collapsed, type) }}
+              className='sider'
+              width={270}
+            >
               <div className='logo' style={{
                 padding: '10px',
                 background: '#fff'
@@ -129,12 +117,14 @@ class Dashboard extends Component {
                 getMenu(this)
               }
             </Sider>
-            <Layout style={{ padding: '0 24px 24px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
+            <Layout
+              style={{ padding: '24px 24px' }}
+            >
+              {/* <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>User</Breadcrumb.Item>
                 <Breadcrumb.Item>Books</Breadcrumb.Item>
-              </Breadcrumb>
+              </Breadcrumb> */}
               <Content
                 className='mainContent'
                 style={{
@@ -152,17 +142,19 @@ class Dashboard extends Component {
 }
 
 const getContent = (context) => {
-  const { selectedMenu, selectedShelf, graphSettings } = context.state
+  const { selectedShelf, openMenuKeys } = context.state
   const { userData } = context.props
+
+  const selectedMenu = context.rootSubmenuKeys.indexOf(openMenuKeys[0])
+
   if (context.props.userData) {
     if (selectedMenu === 0) {
-      const { nodes, links } = getGraphData(context.props.userData, context.state.selectedShelves)
       return (
-        <NetworkGraph
-          nodes={nodes}
-          links={links}
-          {...graphSettings}
-        />
+        <Suspense fallback={<Fallback />}>
+          <RelationshipGraph
+            userData={context.props.userData}
+          />
+        </Suspense>
       )
     } else if (selectedMenu === 1) {
       return getBookLibrary(userData, selectedShelf)
@@ -203,79 +195,46 @@ const getMenu = (context) => {
     return (
       <Menu
         mode='inline'
-        defaultOpenKeys={['shelves']}
+        openKeys={context.state.openMenuKeys}
+        defaultSelectedKeys={['relationshipGraph']}
         style={{
           // height: '100%',
           borderRight: 0
         }}
         theme='light'
-        // selectable
+        onOpenChange={context.handleMenuOpenChange}
+        onSelect={sel => console.log('select', sel)}
       >
         <SubMenu
-          key='shelves'
+          key='relGraph'
           title={
-            <span><Icon type='book' />Shelves</span>
+            <span><Icon type='global' />Graphs</span>
           }
         >
-          <Tree
-            checkable
-            onSelect={context.onSelect}
-            onCheck={context.onCheck}
-            className='shelves'
-          >
-            {
-              userData.user_shelves.map(shelf => {
-                if (shelf.books.book) {
-                  const books = shelf.books.book.length ? shelf.books.book : [shelf.books.book]
-                  return (
-                    <TreeNode
-                      title={`${shelf.name} (${books.length})`}
-                      key={shelf.name}
-                      className='booksList'
-                    >
-                      {
-                        books.map((book, idx) => {
-                          return (
-                            <TreeNode
-                              title={`${book.title} (${book.published})`}
-                              key={`${idx}_${book.title}`}
-                              disableCheckbox
-                            />
-                          )
-                        })
-                      }
-                    </TreeNode>
-                  )
-                }
-                return (
-                  <TreeNode
-                    title={`${shelf.name} (0)`}
-                    key={shelf.name}
-                    disabled
-                  />
-                )
-              })
-            }
-          </Tree>
+          <Menu.Item key='relationshipGraph'>Relationship Graph</Menu.Item>
         </SubMenu>
         <SubMenu
-          key='settings'
-          title={<span><Icon type='setting' />Settings</span>}
+          key='shelves'
+          title={<span><Icon type='book' />Shelves</span>}
         >
-          <Settings
-            onChange={context.onSettingsChange}
-            onReset={context.onSettingsReset}
-            settings={context.state.graphSettings}
-          />
-          {/* {
+          {
             userData.user_shelves.map((shelf, idx) => (
               <Menu.Item key={idx}>
-                <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
+                {/* <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
                   {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
-                </Link>
+                </Link> */}
+                <a
+                  onClick={event => {
+                    event.preventDefault()
+                    return context.setState({ selectedShelf: shelf.name })
+                  }}
+                  href='/#'
+                >
+                  {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
+                </a>
               </Menu.Item>
             ))
-          } */}
+          }
         </SubMenu>
       </Menu>
     )
@@ -297,7 +256,7 @@ const getBookLibrary = (userData, shelf) => {
             overflow: 'auto'
           }}
         >
-          <BookLibrary
+          <BookShelf
             books={books}
             margin={0}
             columns={7}

@@ -30,6 +30,7 @@ class Settings extends Component {
     this.updateCollisionStrength = this.updateCollisionStrength.bind(this)
     this.updateClusterRadiusScale = this.updateClusterRadiusScale.bind(this)
     this.updateCollisionRadiusOffset = this.updateCollisionRadiusOffset.bind(this)
+    this.updateClusterForceStrength = this.updateClusterForceStrength.bind(this)
     this.updateAttracForceStrength = this.updateAttracForceStrength.bind(this)
   }
 
@@ -104,6 +105,12 @@ class Settings extends Component {
     })
   }
 
+  updateClusterForceStrength (val) {
+    this.updateState({
+      clusterForceStrength: val
+    })
+  }
+
   render () {
     const {
       fps,
@@ -113,7 +120,8 @@ class Settings extends Component {
       collisionStrength,
       collisionRadiusOffset,
       clusterRadiusScale,
-      chargeStrength
+      chargeStrength,
+      clusterForceStrength
     } = this.state.settings
 
     // this.props.onChange(this.state)
@@ -236,6 +244,18 @@ class Settings extends Component {
               min={0.5}
               step={0.5}
               onAfterChange={this.updateClusterRadiusScale}
+            />
+          </li>
+          <li>
+            <Tooltip title='Strength of clustering of nodes.' placement='rightTop'>
+              Cluster Force Strength ({clusterForceStrength})
+            </Tooltip>
+            <Slider
+              defaultValue={clusterForceStrength}
+              max={1}
+              min={0}
+              step={0.01}
+              onAfterChange={this.updateClusterForceStrength}
             />
           </li>
           <div

@@ -2,7 +2,7 @@ import React from 'react'
 import Gallery from 'react-photo-gallery'
 import BookCover from '../BookCover'
 
-const BookLibrary = (props) => (
+const BookShelf = (props) => (
   <Gallery
     photos={
       props.books.map((book, idx) => ({
@@ -32,4 +32,4 @@ const BookLibrary = (props) => (
   />
 )
 
-export default BookLibrary
+export default BookShelf
