@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { getUserInfo, getUserData } from './action'
 
 // antd components
-import { Layout, Menu, Breadcrumb, Icon, Tree } from 'antd'
+import { Layout, Menu, Icon, Tree } from 'antd'
 
 import UserProfile from '../../components/UserProfile'
 import NetworkGraph from '../../components/NetworkGraph'
@@ -109,7 +109,14 @@ class Dashboard extends Component {
           className='dashboard'
         >
           <Layout>
-            <Sider className='sider' width={270} >
+            <Sider
+              breakpoint='lg'
+              collapsedWidth='0'
+              onBreakpoint={(broken) => { console.log(broken) }}
+              onCollapse={(collapsed, type) => { console.log(collapsed, type) }}
+              className='sider'
+              width={270}
+            >
               <div className='logo' style={{
                 padding: '10px',
                 background: '#fff'
@@ -129,12 +136,14 @@ class Dashboard extends Component {
                 getMenu(this)
               }
             </Sider>
-            <Layout style={{ padding: '0 24px 24px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
+            <Layout
+              // style={{ padding: '0 24px 24px' }}
+            >
+              {/* <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>User</Breadcrumb.Item>
                 <Breadcrumb.Item>Books</Breadcrumb.Item>
-              </Breadcrumb>
+              </Breadcrumb> */}
               <Content
                 className='mainContent'
                 style={{
