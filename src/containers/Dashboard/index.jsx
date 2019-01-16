@@ -220,7 +220,7 @@ const getContent = (context) => {
                   settings={context.state.graphSettings}
                 />
               }
-              title='Title'
+              title='Settings'
               trigger='click'
               visible={context.state.settingsPopover}
               onVisibleChange={context.handleVisibleChange}
