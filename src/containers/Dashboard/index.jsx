@@ -8,7 +8,7 @@ import { Layout, Menu, Icon, Tree } from 'antd'
 
 import Fallback from '../../components/Fallback'
 import UserProfile from '../../components/UserProfile'
-import BookLibrary from '../../components/BookLibrary'
+import BookShelf from '../../components/BookShelf'
 import ErrorBoundary from '../../components/ErrorBoundary'
 
 import { getGraphData } from '../../utils/graphHelper'
@@ -300,7 +300,7 @@ const getBookLibrary = (userData, shelf) => {
             overflow: 'auto'
           }}
         >
-          <BookLibrary
+          <BookShelf
             books={books}
             margin={0}
             columns={7}
