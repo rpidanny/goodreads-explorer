@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Button, Popover } from 'antd'
+import { Button, Popover, Icon } from 'antd'
 
 import Settings from '../../components/Settings'
 import NetworkGraph from '../../components/NetworkGraph'
@@ -52,12 +52,13 @@ class RelationshipGraph extends Component {
     const shelves = this.props.userData.user_shelves.map(shelf => {
       return shelf.name
     })
-    const { nodes, links } = getGraphData(this.props.userData, shelves)
+    const selectedShelves = shelves.length > 0 ? [shelves[0]] : []
+    const { nodes, links } = getGraphData(this.props.userData, selectedShelves)
     this.setState({
       nodes,
       links,
       shelves,
-      selectedShelves: shelves
+      selectedShelves
     })
   }
 
@@ -111,7 +112,8 @@ class RelationshipGraph extends Component {
       graphSettings,
       settingsPopover,
       shelvesSelectPopover,
-      shelves
+      shelves,
+      selectedShelves
     } = this.state
     return (
       <NetworkGraph
@@ -147,10 +149,10 @@ class RelationshipGraph extends Component {
             <MultiCheckBox
               onChange={this.handleShelvesChange}
               options={shelves}
-              defaultCheckedList={shelves}
+              defaultCheckedList={selectedShelves}
             />
           }
-          title='Shelves'
+          title={`Shelves (${shelves.length})`}
           trigger='click'
           visible={shelvesSelectPopover}
           onVisibleChange={this.handleShelvesSelectVisibleChange}
@@ -163,7 +165,9 @@ class RelationshipGraph extends Component {
               top: 40,
               right: 80
             }}
-          />
+          >
+            Shelves
+          </Button>
         </Popover>
       </NetworkGraph>
     )
