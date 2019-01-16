@@ -50,14 +50,9 @@ class Dashboard extends Component {
   constructor (props) {
     super(props)
 
-    // get graph settings from localstorage
-    const settings = window.localStorage.getItem('graphSettings')
-
     this.state = {
       selectedShelf: null,
       selectedShelves: [],
-      graphSettings: settings ? JSON.parse(settings) : defaultGraphSettings,
-      settingsPopover: false,
       openMenuKeys: [ 'relGraph' ]
     }
     console.log('Init Settings', this.state.graphSettings)
