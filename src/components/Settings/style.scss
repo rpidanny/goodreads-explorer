@@ -3,30 +3,34 @@
   border: 0;
   box-shadow: 0;
   border-radius: 0;
-  background: rgb(244, 245, 241);
-  font-size: 12px;
+  // background: rgb(244, 245, 241);
+  // font-size: 0.8em;
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    // font-size: 0.8em;
     li:first-child {
       padding-top: 7px;
       padding-bottom: 15px;
     }
     li {
-      padding: 7px 0;
-      padding-right: 10px;
+      padding: 0px 0;
+      // padding-right: 10px;
       margin: 0;
       list-style: none;
       white-space: nowrap;
       outline: 0;
-      margin-left: 24px;
+      // margin-left: 24px;
+    }
+    span {
+      font-size: 0.8em;
     }
   }
 }
 
 .settingsCheckbox {
   span {
-    font-size: 12px;
+    // font-size: 0.8em;
   }
 }
