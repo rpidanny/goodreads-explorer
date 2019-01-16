@@ -4,13 +4,12 @@ import { Link } from 'react-router-dom'
 import { getUserInfo, getUserData } from './action'
 
 // antd components
-import { Layout, Menu, Icon, Tree, Button, Popover } from 'antd'
+import { Layout, Menu, Icon, Tree } from 'antd'
 
 import UserProfile from '../../components/UserProfile'
-import NetworkGraph from '../../components/NetworkGraph'
 import BookLibrary from '../../components/BookLibrary'
-import Settings from '../../components/Settings'
 import ErrorBoundary from '../../components/ErrorBoundary'
+import RelationshipGraph from '../RelationshipGraph'
 
 import { getGraphData } from '../../utils/graphHelper'
 
@@ -65,10 +64,6 @@ class Dashboard extends Component {
 
     this.onSelect = this.onSelect.bind(this)
     this.onCheck = this.onCheck.bind(this)
-    this.onSettingsChange = this.onSettingsChange.bind(this)
-    this.onSettingsReset = this.onSettingsReset.bind(this)
-    this.handleVisibleChange = this.handleVisibleChange.bind(this)
-    this.hideSettings = this.hideSettings.bind(this)
     this.handleMenuOpenChange = this.handleMenuOpenChange.bind(this)
     this.handleBookShelfSelect = this.handleBookShelfSelect.bind(this)
 
@@ -88,32 +83,6 @@ class Dashboard extends Component {
     this.setState({
       selectedShelves: checkedKeys
     })
-  }
-
-  onSettingsChange (settings) {
-    this.setState({
-      graphSettings: settings
-    })
-    // Store settings on local storage
-    window.localStorage.setItem('graphSettings', JSON.stringify(settings))
-  }
-
-  onSettingsReset () {
-    this.setState({
-      graphSettings: defaultGraphSettings
-    })
-
-    // clear settings on local storage
-    window.localStorage.removeItem('graphSettings')
-    window.location.reload()
-  }
-
-  handleVisibleChange (visible) {
-    this.setState({ settingsPopover: visible })
-  }
-
-  hideSettings () {
-    this.setState({ settingsPopover: false })
   }
 
   handleMenuOpenChange (openKeys) {
@@ -192,7 +161,7 @@ class Dashboard extends Component {
 }
 
 const getContent = (context) => {
-  const { selectedShelf, graphSettings, openMenuKeys } = context.state
+  const { selectedShelf, openMenuKeys } = context.state
   const { userData } = context.props
 
   const selectedMenu = context.rootSubmenuKeys.indexOf(openMenuKeys[0])
@@ -201,43 +170,10 @@ const getContent = (context) => {
     if (selectedMenu === 0) {
       const { nodes, links } = getGraphData(context.props.userData, context.state.selectedShelves)
       return (
-        <div
-          style={{
-            width: '100%',
-            height: '100%'
-          }}
-        >
-          <NetworkGraph
-            nodes={nodes}
-            links={links}
-            {...graphSettings}
-          >
-            <Popover
-              content={
-                <Settings
-                  onChange={context.onSettingsChange}
-                  onReset={context.onSettingsReset}
-                  settings={context.state.graphSettings}
-                />
-              }
-              title='Settings'
-              trigger='click'
-              visible={context.state.settingsPopover}
-              onVisibleChange={context.handleVisibleChange}
-              placement='bottomLeft'
-              arrowPointAtCenter
-            >
-              <Button
-                icon='setting'
-                style={{
-                  position: 'fixed',
-                  top: 40,
-                  right: 40
-                }}
-              />
-            </Popover>
-          </NetworkGraph>
-        </div>
+        <RelationshipGraph
+          nodes={nodes}
+          links={links}
+        />
       )
     } else if (selectedMenu === 1) {
       return getBookLibrary(userData, selectedShelf)
@@ -285,7 +221,7 @@ const getMenu = (context) => {
         }}
         theme='light'
         onOpenChange={context.handleMenuOpenChange}
-        onSelect={sel => console.log('selkect', sel)}
+        onSelect={sel => console.log('select', sel)}
         selectable
       >
         <SubMenu
@@ -339,11 +275,6 @@ const getMenu = (context) => {
           key='shelves'
           title={<span><Icon type='book' />Shelves</span>}
         >
-          {/* <Settings
-            onChange={context.onSettingsChange}
-            onReset={context.onSettingsReset}
-            settings={context.state.graphSettings}
-          /> */}
           {
             userData.user_shelves.map((shelf, idx) => (
               <Menu.Item key={idx}>
