@@ -18,7 +18,8 @@ const defaultGraphSettings = {
   collisionStrength: 0.5,
   collisionRadiusOffset: 15,
   attraceForceStrength: -100,
-  clusterRadiusScale: 2
+  clusterRadiusScale: 2,
+  clusterForceStrength: 0.3
 }
 
 class RelationshipGraph extends Component {
