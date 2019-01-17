@@ -10,7 +10,20 @@ const columns = [
   {
     title: 'Title',
     dataIndex: 'title',
-    render: title => <a href={title.link} >{title.text}</a>
+    render: title => (
+      <div>
+        <img
+          src={title.img}
+          alt={title.text}
+          style={{
+            padding: 4
+          }}
+        />
+        <a href={title.link} >
+          {title.text}
+        </a>
+      </div>
+    )
   },
   {
     title: 'Published',
@@ -83,7 +96,8 @@ class BookLibrary extends Component {
                         published: book.published,
                         title: {
                           text: book.title,
-                          link: book.link
+                          link: book.link,
+                          img: book.small_image_url
                         },
                         averageRating: parseFloat(book.average_rating)
                       }))
