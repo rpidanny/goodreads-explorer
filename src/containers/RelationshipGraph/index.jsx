@@ -154,8 +154,8 @@ class RelationshipGraph extends Component {
               icon='setting'
               style={{
                 position: 'fixed',
-                top: 40,
-                right: 40
+                top: 20,
+                right: 20
               }}
             />
           </Popover>
@@ -179,8 +179,8 @@ class RelationshipGraph extends Component {
               icon='book'
               style={{
                 position: 'fixed',
-                top: 40,
-                right: 80
+                top: 20,
+                right: 60
               }}
             >
               Select Shelves
