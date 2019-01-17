@@ -178,7 +178,7 @@ class RelationshipGraph extends Component {
               right: 80
             }}
           >
-            Shelves
+            Select Shelves
           </Button>
         </Popover>
       </NetworkGraph>
