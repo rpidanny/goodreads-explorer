@@ -8,7 +8,6 @@ import { Layout, Menu, Icon } from 'antd'
 
 import Fallback from '../../components/Fallback'
 import UserProfile from '../../components/UserProfile'
-import BookShelf from '../../components/BookShelf'
 import ErrorBoundary from '../../components/ErrorBoundary'
 
 import bgImage from '../../components/NetworkGraph/examples/basic/tiny_grid.png'
@@ -18,6 +17,7 @@ import goodReadsLogo from '../../assets/images/good_reads_explorer.png'
 import './style.css'
 
 const RelationshipGraph = lazy(() => import('../RelationshipGraph'))
+const BookLibrary = lazy(() => import('../BookLibrary'))
 
 const { SubMenu } = Menu
 const { Content, Sider } = Layout
@@ -249,19 +249,11 @@ const getBookLibrary = (userData, shelf) => {
       if (!books.book) return <div />
       books = books.book.length ? books.book : [ books.book ]
       return (
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            overflow: 'auto'
-          }}
-        >
-          <BookShelf
+        <Suspense fallback={<Fallback />} >
+          <BookLibrary
             books={books}
-            margin={0}
-            columns={7}
           />
-        </div>
+        </Suspense>
       )
     }
     return (

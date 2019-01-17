@@ -1,0 +1,101 @@
+import React, { Component } from 'react'
+
+import { Radio, Table, Rate } from 'antd'
+
+import BookShelf from '../../components/BookShelf'
+
+import './style.css'
+
+const columns = [
+  {
+    title: 'Title',
+    dataIndex: 'title',
+    render: title => <a href={title.link} >{title.text}</a>
+  },
+  {
+    title: 'Published',
+    dataIndex: 'published'
+  },
+  {
+    title: 'Rating',
+    dataIndex: 'averageRating',
+    render: averageRating => <Rate value={averageRating} />
+  }
+]
+
+class BookLibrary extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      mode: 'image'
+    }
+
+    this.handleModeChange = this.handleModeChange.bind(this)
+  }
+
+  handleModeChange (mode) {
+    this.setState({
+      mode
+    })
+  }
+
+  render () {
+    const { mode } = this.state
+    const { books } = this.props
+    console.log(books)
+    return (
+      <div
+        className='bookLibrary'
+      >
+        <Radio.Group
+          defaultValue={this.state.mode}
+          buttonStyle='outline'
+          onChange={e => this.handleModeChange(e.target.value)}
+        >
+          <Radio.Button value='image'>Image</Radio.Button>
+          <Radio.Button value='table'>Table</Radio.Button>
+        </Radio.Group>
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            overflow: 'auto'
+          }}
+        >
+          {
+            mode === 'image'
+              ? (
+                <BookShelf
+                  books={this.props.books}
+                  margin={0}
+                  columns={7}
+                />
+              )
+              : (
+                <div
+                  className='libraryTable'
+                >
+                  <Table
+                    columns={columns}
+                    dataSource={
+                      books.map(book => ({
+                        published: book.published,
+                        title: {
+                          text: book.title,
+                          link: book.link
+                        },
+                        averageRating: parseFloat(book.average_rating)
+                      }))
+                    }
+                  />
+                </div>
+              )
+          }
+        </div>
+      </div>
+    )
+  }
+}
+
+export default BookLibrary
