@@ -37,13 +37,13 @@ class Dashboard extends Component {
     super(props)
 
     this.state = {
-      openMenuKeys: [ 'relGraph' ]
+      openMenuKeys: [ 'graphs' ]
     }
     console.log('Init Settings', this.state.graphSettings)
-
+    console.log('props', this.props)
     this.handleMenuOpenChange = this.handleMenuOpenChange.bind(this)
 
-    this.rootSubmenuKeys = ['relGraph', 'shelves']
+    this.rootSubmenuKeys = ['graphs', 'shelves']
   }
 
   componentDidMount () {
@@ -97,14 +97,7 @@ class Dashboard extends Component {
                 getMenu(this)
               }
             </Sider>
-            <Layout
-              // style={{ padding: '24px 24px' }}
-            >
-              {/* <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>User</Breadcrumb.Item>
-                <Breadcrumb.Item>Books</Breadcrumb.Item>
-              </Breadcrumb> */}
+            <Layout>
               <Content
                 className='mainContent'
                 style={{
@@ -182,7 +175,7 @@ const getMenu = (context) => {
       <Menu
         mode='inline'
         openKeys={context.state.openMenuKeys}
-        defaultSelectedKeys={['relationshipGraph']}
+        defaultSelectedKeys={['rgraph']}
         style={{
           // height: '100%',
           borderRight: 0
@@ -191,12 +184,12 @@ const getMenu = (context) => {
         onOpenChange={context.handleMenuOpenChange}
       >
         <SubMenu
-          key='relGraph'
+          key='graphs'
           title={
             <span><Icon type='global' />Graphs</span>
           }
         >
-          <Menu.Item key='relationshipGraph'>
+          <Menu.Item key='rgraph'>
             <Link to={`/user/${userData.id}/graph/rgraph`}>
               Relationship Graph
             </Link>
