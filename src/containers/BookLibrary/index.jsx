@@ -25,7 +25,11 @@ const columns = [
             padding: 4
           }}
         />
-        <a href={title.link} >
+        <a
+          href={title.link}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           {title.text}
         </a>
       </div>
