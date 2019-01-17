@@ -1,6 +1,6 @@
 import React, { Component, lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Route, Switch, Link } from 'react-router-dom'
 import { getUserInfo, getUserData } from './action'
 
 // antd components
@@ -37,33 +37,17 @@ class Dashboard extends Component {
     super(props)
 
     this.state = {
-      selectedShelf: null,
-      selectedShelves: [],
       openMenuKeys: [ 'relGraph' ]
     }
     console.log('Init Settings', this.state.graphSettings)
 
-    this.onSelect = this.onSelect.bind(this)
-    this.onCheck = this.onCheck.bind(this)
     this.handleMenuOpenChange = this.handleMenuOpenChange.bind(this)
-    this.handleBookShelfSelect = this.handleBookShelfSelect.bind(this)
 
     this.rootSubmenuKeys = ['relGraph', 'shelves']
   }
 
   componentDidMount () {
     this.props.getUserData(this.props.match.params.userId)
-  }
-
-  onSelect (selectedKeys, info) {
-    console.log('selected', selectedKeys, info)
-  }
-
-  onCheck (checkedKeys, info) {
-    console.log('onCheck', checkedKeys, info)
-    this.setState({
-      selectedShelves: checkedKeys
-    })
   }
 
   handleMenuOpenChange (openKeys) {
@@ -75,10 +59,6 @@ class Dashboard extends Component {
         openMenuKeys: latestOpenKey ? [latestOpenKey] : []
       })
     }
-  }
-
-  handleBookShelfSelect (event) {
-    console.log('Bookshelfselect', event)
   }
 
   render () {
@@ -142,23 +122,29 @@ class Dashboard extends Component {
 }
 
 const getContent = (context) => {
-  const { selectedShelf, openMenuKeys } = context.state
   const { userData } = context.props
 
-  const selectedMenu = context.rootSubmenuKeys.indexOf(openMenuKeys[0])
-
   if (context.props.userData) {
-    if (selectedMenu === 0) {
-      return (
-        <Suspense fallback={<Fallback />}>
-          <RelationshipGraph
-            userData={context.props.userData}
-          />
-        </Suspense>
-      )
-    } else if (selectedMenu === 1) {
-      return getBookLibrary(userData, selectedShelf)
-    }
+    return (
+      <Switch>
+        <Route
+          exact
+          path='/user/:userId/graph/:graph'
+          render={props => (
+            <Suspense fallback={<Fallback />}>
+              <RelationshipGraph
+                userData={context.props.userData}
+              />
+            </Suspense>
+          )}
+        />
+        <Route
+          exact
+          path='/user/:userId/shelf/:shelf'
+          render={props => getBookLibrary(userData, props.match.params.shelf)}
+        />
+      </Switch>
+    )
   }
 }
 
@@ -203,7 +189,6 @@ const getMenu = (context) => {
         }}
         theme='light'
         onOpenChange={context.handleMenuOpenChange}
-        onSelect={sel => console.log('select', sel)}
       >
         <SubMenu
           key='relGraph'
@@ -211,7 +196,11 @@ const getMenu = (context) => {
             <span><Icon type='global' />Graphs</span>
           }
         >
-          <Menu.Item key='relationshipGraph'>Relationship Graph</Menu.Item>
+          <Menu.Item key='relationshipGraph'>
+            <Link to={`/user/${userData.id}/graph/rgraph`}>
+              Relationship Graph
+            </Link>
+          </Menu.Item>
         </SubMenu>
         <SubMenu
           key='shelves'
@@ -220,18 +209,9 @@ const getMenu = (context) => {
           {
             userData.user_shelves.map((shelf, idx) => (
               <Menu.Item key={idx}>
-                {/* <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
+                <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
                   {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
-                </Link> */}
-                <a
-                  onClick={event => {
-                    event.preventDefault()
-                    return context.setState({ selectedShelf: shelf.name })
-                  }}
-                  href='/#'
-                >
-                  {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
-                </a>
+                </Link>
               </Menu.Item>
             ))
           }
@@ -239,6 +219,7 @@ const getMenu = (context) => {
       </Menu>
     )
   }
+  return <div />
 }
 
 const getBookLibrary = (userData, shelf) => {
