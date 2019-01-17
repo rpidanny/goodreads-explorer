@@ -118,7 +118,7 @@ class Dashboard extends Component {
               }
             </Sider>
             <Layout
-              style={{ padding: '24px 24px' }}
+              // style={{ padding: '24px 24px' }}
             >
               {/* <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -252,6 +252,7 @@ const getBookLibrary = (userData, shelf) => {
         <Suspense fallback={<Fallback />} >
           <BookLibrary
             books={books}
+            title={bookShelf.name.toUpperCase()}
           />
         </Suspense>
       )

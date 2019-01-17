@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-import { Radio, Table, Rate } from 'antd'
-
-import BookShelf from '../../components/BookShelf'
+import { Table, Rate, Layout } from 'antd'
 
 import './style.css'
+
+const { Header, Content } = Layout
 
 const columns = [
   {
@@ -22,7 +22,7 @@ const columns = [
           src={title.img}
           alt={title.text}
           style={{
-            padding: 4
+            paddingRight: 10
           }}
         />
         <a
@@ -51,79 +51,49 @@ const columns = [
 ]
 
 class BookLibrary extends Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      mode: 'table'
-    }
-
-    this.handleModeChange = this.handleModeChange.bind(this)
-  }
-
-  handleModeChange (mode) {
-    this.setState({
-      mode
-    })
-  }
-
   render () {
-    const { mode } = this.state
-    const { books } = this.props
+    const { books, title } = this.props
     console.log(books)
     return (
-      <div
-        className='bookLibrary'
-      >
-        <Radio.Group
-          defaultValue={this.state.mode}
-          buttonStyle='outline'
-          onChange={e => this.handleModeChange(e.target.value)}
+      <Layout>
+        <Header
+          className='libraryHeader'
+          style={{ position: 'fixed', zIndex: 1, width: '100%' }}
         >
-          <Radio.Button value='image'>Image</Radio.Button>
-          <Radio.Button value='table'>Table</Radio.Button>
-        </Radio.Group>
-        <div
+          <h4>{title}</h4>
+        </Header>
+        <Content
           style={{
-            width: '100%',
-            height: '100%',
-            overflow: 'auto'
+            marginTop: 64
           }}
         >
-          {
-            mode === 'image'
-              ? (
-                <BookShelf
-                  books={this.props.books}
-                  margin={0}
-                  columns={7}
-                />
-              )
-              : (
-                <div
-                  className='libraryTable'
-                >
-                  <Table
-                    columns={columns}
-                    dataSource={
-                      books.map((book, idx) => ({
-                        key: idx,
-                        idx: idx + 1,
-                        published: parseInt(book.published),
-                        title: {
-                          text: book.title,
-                          link: book.link,
-                          img: book.small_image_url
-                        },
-                        averageRating: parseFloat(book.average_rating)
-                      }))
-                    }
-                  />
-                </div>
-              )
-          }
-        </div>
-      </div>
+          <div
+            className='bookLibrary'
+          >
+            <Table
+              columns={columns}
+              dataSource={
+                books.map((book, idx) => ({
+                  key: idx,
+                  idx: idx + 1,
+                  published: parseInt(book.published),
+                  title: {
+                    text: book.title,
+                    link: book.link,
+                    img: book.small_image_url
+                  },
+                  averageRating: parseFloat(book.average_rating)
+                }))
+              }
+              // scroll={{ y: 500 }}
+              pagination={{
+                position: 'both'
+              }}
+              bordered
+            />
+          </div>
+        </Content>
+      </Layout>
     )
   }
 }

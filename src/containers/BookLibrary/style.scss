@@ -1,10 +1,22 @@
 .bookLibrary {
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
+  padding: 20px;
+  .ant-table {
+    background: #fff;
+    font-size: 0.9em;
+    td {
+      padding: 5px;
+      padding-left: 10px;
+    }
+  }
+  ul {
+    font-size: 0.9em;
+  }
 }
 
-.libraryTable {
-  margin-top: 20px;
-  background: #fff;
-  padding: 20px;
+.libraryHeader {
+  h4 {
+    color: #eee;
+  }
 }
