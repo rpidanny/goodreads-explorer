@@ -176,7 +176,7 @@ class RelationshipGraph extends Component {
             placement='bottomLeft'
           >
             <Button
-              icon='book'
+              icon='check-square'
               style={{
                 position: 'fixed',
                 top: 20,
