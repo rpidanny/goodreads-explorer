@@ -51,7 +51,7 @@ class BookLibrary extends Component {
     super(props)
 
     this.state = {
-      mode: 'image'
+      mode: 'table'
     }
 
     this.handleModeChange = this.handleModeChange.bind(this)
