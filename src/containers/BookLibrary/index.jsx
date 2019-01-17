@@ -10,7 +10,7 @@ const columns = [
   {
     title: 'Index',
     dataIndex: 'idx',
-    sorter: (a, b) => a.dataIndex - b.dataIndex,
+    sorter: (a, b) => a.idx - b.idx,
     defaultSortOrder: 'ascending'
   },
   {
