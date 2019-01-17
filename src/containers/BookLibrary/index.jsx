@@ -8,6 +8,12 @@ import './style.css'
 
 const columns = [
   {
+    title: 'Index',
+    dataIndex: 'idx',
+    sorter: (a, b) => a.dataIndex - b.dataIndex,
+    defaultSortOrder: 'ascending'
+  },
+  {
     title: 'Title',
     dataIndex: 'title',
     render: title => (
@@ -27,12 +33,16 @@ const columns = [
   },
   {
     title: 'Published',
-    dataIndex: 'published'
+    dataIndex: 'published',
+    sorter: (a, b) => a.published - b.published,
+    defaultSortOrder: 'ascending'
   },
   {
     title: 'Rating',
     dataIndex: 'averageRating',
-    render: averageRating => <Rate value={averageRating} />
+    render: averageRating => <Rate value={averageRating} />,
+    sorter: (a, b) => a.averageRating - b.averageRating,
+    defaultSortOrder: 'ascending'
   }
 ]
 
@@ -92,8 +102,10 @@ class BookLibrary extends Component {
                   <Table
                     columns={columns}
                     dataSource={
-                      books.map(book => ({
-                        published: book.published,
+                      books.map((book, idx) => ({
+                        key: idx,
+                        idx: idx + 1,
+                        published: parseInt(book.published),
                         title: {
                           text: book.title,
                           link: book.link,
