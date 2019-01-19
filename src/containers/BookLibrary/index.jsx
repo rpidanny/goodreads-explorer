@@ -63,7 +63,7 @@ class BookLibrary extends Component {
           className='libraryHeader'
           style={{ position: 'fixed', zIndex: 1, width: '100%' }}
         >
-          <h4>{title}</h4>
+          <h4>Books in: {title}</h4>
         </Header>
         <Content
           style={{
