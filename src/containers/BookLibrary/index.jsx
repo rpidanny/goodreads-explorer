@@ -11,7 +11,8 @@ const columns = [
     title: 'Index',
     dataIndex: 'idx',
     sorter: (a, b) => a.idx - b.idx,
-    defaultSortOrder: 'ascending'
+    defaultSortOrder: 'ascending',
+    width: '20px'
   },
   {
     title: 'Title',
@@ -39,14 +40,16 @@ const columns = [
     title: 'Published',
     dataIndex: 'published',
     sorter: (a, b) => a.published - b.published,
-    defaultSortOrder: 'ascending'
+    defaultSortOrder: 'ascending',
+    width: '100px'
   },
   {
     title: 'Rating',
     dataIndex: 'averageRating',
     render: averageRating => <Rate value={averageRating} />,
     sorter: (a, b) => a.averageRating - b.averageRating,
-    defaultSortOrder: 'ascending'
+    defaultSortOrder: 'ascending',
+    width: '140px'
   }
 ]
 
