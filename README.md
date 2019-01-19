@@ -1,8 +1,8 @@
-# goodreads-explorer
+# goodreads-explorer [![Build Status](https://travis-ci.org/rpidanny/goodreads-explorer.svg?branch=master)](https://travis-ci.org/rpidanny/goodreads-explorer)
 
-[Master](https://gre.abhishek.pro.np) | [Develop](https://gre-dev.abhishek.pro.np)
---- | ---
-[![Build Status](https://travis-ci.org/rpidanny/goodreads-explorer.svg?branch=master)](https://travis-ci.org/rpidanny/goodreads-explorer) | [![Build Status](https://travis-ci.org/rpidanny/goodreads-explorer.svg?branch=develop)](https://travis-ci.org/rpidanny/goodreads-explorer)
+![alt text](https://github.com/rpidanny/assets/raw/master/goodreads-explorer/gre.gif "Goodreads Explorer")
+
+A simple and clean way to visualize your books in [Goodreads](http://goodreads.com).
 
 ## Development
 
