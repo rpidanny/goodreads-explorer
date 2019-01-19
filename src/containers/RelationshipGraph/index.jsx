@@ -8,6 +8,8 @@ import MultiCheckBox from '../../components/MultiCheckBox'
 
 import { getGraphData } from '../../utils/graphHelper'
 
+import './style.css'
+
 const defaultGraphSettings = {
   fps: 60,
   cluster: true,
@@ -126,62 +128,66 @@ class RelationshipGraph extends Component {
       selectedShelves
     } = this.state
     return (
-      <NetworkGraph
-        nodes={nodes}
-        links={links}
-        {...graphSettings}
+      <div
+        className='relationshipGraph'
       >
-        <Popover
-          content={
-            <Settings
-              onChange={this.handleSettingsChange}
-              onReset={this.handleSettingsReset}
-              settings={graphSettings}
-            />
-          }
-          title='Settings'
-          trigger='click'
-          visible={settingsPopover}
-          onVisibleChange={this.handleSettingsVisibleChange}
-          placement='bottomLeft'
+        <NetworkGraph
+          nodes={nodes}
+          links={links}
+          {...graphSettings}
         >
-          <Button
-            icon='setting'
-            style={{
-              position: 'fixed',
-              top: 40,
-              right: 40
-            }}
-          />
-        </Popover>
-        <Popover
-          content={
-            <MultiCheckBox
-              onChange={this.handleShelvesChange}
-              options={shelves.map(shelf => shelf.name)}
-              defaultCheckedList={selectedShelves}
-              optionLabel={shelves.map(shelf => `${shelf.name} (${shelf.bookCount})`)}
-              disable={shelves.map(shelf => shelf.bookCount === 0)}
-            />
-          }
-          title={`Shelves (${shelves.length})`}
-          trigger='click'
-          visible={shelvesSelectPopover}
-          onVisibleChange={this.handleShelvesSelectVisibleChange}
-          placement='bottomLeft'
-        >
-          <Button
-            icon='book'
-            style={{
-              position: 'fixed',
-              top: 40,
-              right: 80
-            }}
+          <Popover
+            content={
+              <Settings
+                onChange={this.handleSettingsChange}
+                onReset={this.handleSettingsReset}
+                settings={graphSettings}
+              />
+            }
+            title='Settings'
+            trigger='click'
+            visible={settingsPopover}
+            onVisibleChange={this.handleSettingsVisibleChange}
+            placement='bottomLeft'
           >
-            Shelves
-          </Button>
-        </Popover>
-      </NetworkGraph>
+            <Button
+              icon='setting'
+              style={{
+                position: 'fixed',
+                top: 20,
+                right: 20
+              }}
+            />
+          </Popover>
+          <Popover
+            content={
+              <MultiCheckBox
+                onChange={this.handleShelvesChange}
+                options={shelves.map(shelf => shelf.name)}
+                defaultCheckedList={selectedShelves}
+                optionLabel={shelves.map(shelf => `${shelf.name} (${shelf.bookCount})`)}
+                disable={shelves.map(shelf => shelf.bookCount === 0)}
+              />
+            }
+            title={`Shelves (${shelves.length})`}
+            trigger='click'
+            visible={shelvesSelectPopover}
+            onVisibleChange={this.handleShelvesSelectVisibleChange}
+            placement='bottomLeft'
+          >
+            <Button
+              icon='check-square'
+              style={{
+                position: 'fixed',
+                top: 20,
+                right: 60
+              }}
+            >
+              Select Shelves
+            </Button>
+          </Popover>
+        </NetworkGraph>
+      </div>
     )
   }
 }

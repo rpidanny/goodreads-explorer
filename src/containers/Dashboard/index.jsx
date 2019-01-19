@@ -1,6 +1,6 @@
 import React, { Component, lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Route, Switch, Link } from 'react-router-dom'
 import { getUserInfo, getUserData } from './action'
 
 // antd components
@@ -8,7 +8,6 @@ import { Layout, Menu, Icon } from 'antd'
 
 import Fallback from '../../components/Fallback'
 import UserProfile from '../../components/UserProfile'
-import BookShelf from '../../components/BookShelf'
 import ErrorBoundary from '../../components/ErrorBoundary'
 
 import bgImage from '../../components/NetworkGraph/examples/basic/tiny_grid.png'
@@ -18,6 +17,7 @@ import goodReadsLogo from '../../assets/images/good_reads_explorer.png'
 import './style.css'
 
 const RelationshipGraph = lazy(() => import('../RelationshipGraph'))
+const BookLibrary = lazy(() => import('../BookLibrary'))
 
 const { SubMenu } = Menu
 const { Content, Sider } = Layout
@@ -37,33 +37,17 @@ class Dashboard extends Component {
     super(props)
 
     this.state = {
-      selectedShelf: null,
-      selectedShelves: [],
-      openMenuKeys: [ 'relGraph' ]
+      openMenuKeys: [ 'graphs' ]
     }
     console.log('Init Settings', this.state.graphSettings)
-
-    this.onSelect = this.onSelect.bind(this)
-    this.onCheck = this.onCheck.bind(this)
+    console.log('props', this.props)
     this.handleMenuOpenChange = this.handleMenuOpenChange.bind(this)
-    this.handleBookShelfSelect = this.handleBookShelfSelect.bind(this)
 
-    this.rootSubmenuKeys = ['relGraph', 'shelves']
+    this.rootSubmenuKeys = ['graphs', 'shelves']
   }
 
   componentDidMount () {
     this.props.getUserData(this.props.match.params.userId)
-  }
-
-  onSelect (selectedKeys, info) {
-    console.log('selected', selectedKeys, info)
-  }
-
-  onCheck (checkedKeys, info) {
-    console.log('onCheck', checkedKeys, info)
-    this.setState({
-      selectedShelves: checkedKeys
-    })
   }
 
   handleMenuOpenChange (openKeys) {
@@ -75,10 +59,6 @@ class Dashboard extends Component {
         openMenuKeys: latestOpenKey ? [latestOpenKey] : []
       })
     }
-  }
-
-  handleBookShelfSelect (event) {
-    console.log('Bookshelfselect', event)
   }
 
   render () {
@@ -117,14 +97,7 @@ class Dashboard extends Component {
                 getMenu(this)
               }
             </Sider>
-            <Layout
-              style={{ padding: '24px 24px' }}
-            >
-              {/* <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>User</Breadcrumb.Item>
-                <Breadcrumb.Item>Books</Breadcrumb.Item>
-              </Breadcrumb> */}
+            <Layout>
               <Content
                 className='mainContent'
                 style={{
@@ -142,23 +115,29 @@ class Dashboard extends Component {
 }
 
 const getContent = (context) => {
-  const { selectedShelf, openMenuKeys } = context.state
   const { userData } = context.props
 
-  const selectedMenu = context.rootSubmenuKeys.indexOf(openMenuKeys[0])
-
   if (context.props.userData) {
-    if (selectedMenu === 0) {
-      return (
-        <Suspense fallback={<Fallback />}>
-          <RelationshipGraph
-            userData={context.props.userData}
-          />
-        </Suspense>
-      )
-    } else if (selectedMenu === 1) {
-      return getBookLibrary(userData, selectedShelf)
-    }
+    return (
+      <Switch>
+        <Route
+          exact
+          path='/user/:userId/graph/:graph'
+          render={props => (
+            <Suspense fallback={<Fallback />}>
+              <RelationshipGraph
+                userData={context.props.userData}
+              />
+            </Suspense>
+          )}
+        />
+        <Route
+          exact
+          path='/user/:userId/shelf/:shelf'
+          render={props => getBookLibrary(userData, props.match.params.shelf)}
+        />
+      </Switch>
+    )
   }
 }
 
@@ -196,22 +175,25 @@ const getMenu = (context) => {
       <Menu
         mode='inline'
         openKeys={context.state.openMenuKeys}
-        defaultSelectedKeys={['relationshipGraph']}
+        defaultSelectedKeys={['rgraph']}
         style={{
           // height: '100%',
           borderRight: 0
         }}
         theme='light'
         onOpenChange={context.handleMenuOpenChange}
-        onSelect={sel => console.log('select', sel)}
       >
         <SubMenu
-          key='relGraph'
+          key='graphs'
           title={
             <span><Icon type='global' />Graphs</span>
           }
         >
-          <Menu.Item key='relationshipGraph'>Relationship Graph</Menu.Item>
+          <Menu.Item key='rgraph'>
+            <Link to={`/user/${userData.id}/graph/rgraph`}>
+              Relationship Graph
+            </Link>
+          </Menu.Item>
         </SubMenu>
         <SubMenu
           key='shelves'
@@ -220,18 +202,9 @@ const getMenu = (context) => {
           {
             userData.user_shelves.map((shelf, idx) => (
               <Menu.Item key={idx}>
-                {/* <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
+                <Link to={`/user/${userData.id}/shelf/${shelf.name}`}>
                   {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
-                </Link> */}
-                <a
-                  onClick={event => {
-                    event.preventDefault()
-                    return context.setState({ selectedShelf: shelf.name })
-                  }}
-                  href='/#'
-                >
-                  {`${shelf.name} (${shelf.books.book ? shelf.books.book.length || 1 : 0})`}
-                </a>
+                </Link>
               </Menu.Item>
             ))
           }
@@ -239,6 +212,7 @@ const getMenu = (context) => {
       </Menu>
     )
   }
+  return <div />
 }
 
 const getBookLibrary = (userData, shelf) => {
@@ -249,19 +223,12 @@ const getBookLibrary = (userData, shelf) => {
       if (!books.book) return <div />
       books = books.book.length ? books.book : [ books.book ]
       return (
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            overflow: 'auto'
-          }}
-        >
-          <BookShelf
+        <Suspense fallback={<Fallback />} >
+          <BookLibrary
             books={books}
-            margin={0}
-            columns={7}
+            title={bookShelf.name.toUpperCase()}
           />
-        </div>
+        </Suspense>
       )
     }
     return (

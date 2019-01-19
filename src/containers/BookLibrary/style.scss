@@ -1,0 +1,23 @@
+.bookLibrary {
+  height: 100%;
+  overflow: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  .ant-table {
+    background: #fff;
+    font-size: 0.9em;
+    td {
+      padding: 5px;
+      padding-left: 10px;
+    }
+  }
+  ul {
+    font-size: 0.9em;
+  }
+}
+
+.libraryHeader {
+  h4 {
+    color: #eee;
+  }
+}

@@ -26,3 +26,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
+
+## Contributors
+
+[![](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/images/0)](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/links/0)[![](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/images/1)](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/links/1)[![](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/images/2)](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/links/2)[![](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/images/3)](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/links/3)[![](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/images/4)](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/links/4)[![](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/images/5)](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/links/5)[![](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/images/6)](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/links/6)[![](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/images/7)](https://sourcerer.io/fame/rpidanny/rpidanny/goodreads-explorer/links/7)

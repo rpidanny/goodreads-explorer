@@ -43,7 +43,7 @@ class App extends Component {
   }
 
   searchHandler (userId) {
-    this.props.history.push(`/user/${userId}`)
+    this.props.history.push(`/user/${userId}/graph/rgraph`)
   }
 
   componentDidMount () {
