@@ -8,6 +8,8 @@
     "d3-scale": "^2.1.2",
     "d3-selection": "^1.3.2",
     "d3-zoom": "^1.7.3",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
     "lodash.uniqby": "^4.7.0",
     "memoize-one": "^5.0.0",
     "node-sass-chokidar": "^1.3.4",
@@ -26,13 +28,13 @@
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-js": "react-scripts start",
+    "start-js": "react-app-rewired start",
     "start": "npm-run-all -p watch-css start-js",
-    "build-js": "react-scripts build",
-    "build-js-stats": "react-scripts build -- --stats",
+    "build-js": "react-app-rewired build",
+    "build-js-stats": "react-app-rewired build -- --stats",
     "build": "npm-run-all build-css build-js",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-app-rewired eject",
     "analyze": "webpack-bundle-analyzer build/bundle-stats.json"
   },
   "eslintConfig": {
@@ -46,7 +48,10 @@
   ],
   "homepage": "https://gre-dev.abhishek.pro.np",
   "devDependencies": {
+    "babel-plugin-import": "^1.11.0",
+    "customize-cra": "^0.2.9",
     "jest-canvas-mock": "^1.1.0",
+    "react-app-rewired": "^2.0.2",
     "standard": "^12.0.1",
     "webpack-bundle-analyzer": "^3.0.3"
   }
