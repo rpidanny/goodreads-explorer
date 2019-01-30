@@ -1,7 +1,7 @@
 .dashboard {
   height: 100vh;
 
-  :first-child > div {
+  :first-child:first-child {
     overflow: hidden;
     overflow-y: scroll;
   }
