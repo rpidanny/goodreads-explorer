@@ -78,24 +78,26 @@ class Dashboard extends Component {
               className='sider'
               width={270}
             >
-              <div className='logo' style={{
-                padding: '10px',
-                background: '#fff'
-              }}>
-                <Link to={'/'}>
-                  <img
-                    src={goodReadsLogo}
-                    width='250px'
-                    alt='Goodreads'
-                  />
-                </Link>
+              <div className='sider-inner'>
+                <div className='logo' style={{
+                  padding: '10px',
+                  background: '#fff'
+                }}>
+                  <Link to={'/'}>
+                    <img
+                      src={goodReadsLogo}
+                      width='250px'
+                      alt='Goodreads'
+                    />
+                  </Link>
+                </div>
+                {
+                  getUserComponent(userData)
+                }
+                {
+                  getMenu(this)
+                }
               </div>
-              {
-                getUserComponent(userData)
-              }
-              {
-                getMenu(this)
-              }
             </Sider>
             <Layout>
               <Content

@@ -1,9 +1,14 @@
 .dashboard {
   height: 100vh;
-
-  .sider {
+  
+  .sider-inner {
     overflow: hidden;
     overflow-y: scroll;
+    max-height: 100vh;
+
+  }
+  .sider {
+    z-index: 9;
     max-height: 100vh;
   }
 }
