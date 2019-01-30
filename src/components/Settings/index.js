@@ -128,7 +128,7 @@ class Settings extends Component {
 
     return (
       <div
-        className='settings'
+        className={`settings ${this.props.className}`}
       >
         <ul>
           <li>
