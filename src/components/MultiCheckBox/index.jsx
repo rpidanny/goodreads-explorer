@@ -43,7 +43,7 @@ class MultiCheckBox extends Component {
 
   render () {
     return (
-      <div>
+      <div className={this.props.className}>
         <div style={{ borderBottom: '1px solid #E9E9E9' }}>
           <Checkbox
             indeterminate={this.state.indeterminate}
