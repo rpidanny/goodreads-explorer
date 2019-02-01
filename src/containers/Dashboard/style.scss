@@ -1,19 +1,22 @@
 .dashboard {
   height: 100vh;
+  
+  .sider-inner {
+    overflow: hidden;
+    overflow-y: scroll;
+    max-height: 100vh;
+
+  }
+  .sider {
+    z-index: 9;
+    max-height: 100vh;
+  }
 }
 .mainContent {
   // background: #fff;
   overflow: auto;
   width: 100%;
   height: 100%;
-}
-
-.sider {
-  // overflow-y: auto;
-  // overflow-x: hidden;
-  // overflow: auto;
-  // height: '100vh';
-  max-height: 100vh;
 }
 
 .shelves {

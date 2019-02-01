@@ -142,6 +142,7 @@ class RelationshipGraph extends Component {
                 onChange={this.handleSettingsChange}
                 onReset={this.handleSettingsReset}
                 settings={graphSettings}
+                className='graphPopover'
               />
             }
             title='Settings'
@@ -149,6 +150,7 @@ class RelationshipGraph extends Component {
             visible={settingsPopover}
             onVisibleChange={this.handleSettingsVisibleChange}
             placement='bottomLeft'
+            // className='settings-popover'
           >
             <Button
               icon='setting'
@@ -167,6 +169,7 @@ class RelationshipGraph extends Component {
                 defaultCheckedList={selectedShelves}
                 optionLabel={shelves.map(shelf => `${shelf.name} (${shelf.bookCount})`)}
                 disable={shelves.map(shelf => shelf.bookCount === 0)}
+                className='graphPopover'
               />
             }
             title={`Shelves (${shelves.length})`}
