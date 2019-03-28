@@ -25,8 +25,8 @@ const customRenderer = (tag, size, color) => (
         border: `2px solid ${color}`,
         margin: '3px',
         padding: '3px',
-        display: 'inline-block',
-        color: 'gray'
+        display: 'inline-block'
+        // color: 'gray'
       }}
     >
       {tag.value}
