@@ -17,6 +17,7 @@ import goodReadsLogo from '../../assets/images/good_reads_explorer.png'
 import './style.css'
 
 const RelationshipGraph = lazy(() => import('../RelationshipGraph'))
+const Statistics = lazy(() => import('../Statistics'))
 const BookLibrary = lazy(() => import('../BookLibrary'))
 
 const { SubMenu } = Menu
@@ -37,13 +38,13 @@ class Dashboard extends Component {
     super(props)
 
     this.state = {
-      openMenuKeys: [ 'graphs' ]
+      openMenuKeys: [ 'viz' ]
     }
     console.log('Init Settings', this.state.graphSettings)
     console.log('props', this.props)
     this.handleMenuOpenChange = this.handleMenuOpenChange.bind(this)
 
-    this.rootSubmenuKeys = ['graphs', 'shelves']
+    this.rootSubmenuKeys = ['viz', 'shelves']
   }
 
   componentDidMount () {
@@ -124,10 +125,21 @@ const getContent = (context) => {
       <Switch>
         <Route
           exact
-          path='/user/:userId/graph/:graph'
+          path='/user/:userId/viz/rgraph'
           render={props => (
             <Suspense fallback={<Fallback />}>
               <RelationshipGraph
+                userData={context.props.userData}
+              />
+            </Suspense>
+          )}
+        />
+        <Route
+          exact
+          path='/user/:userId/viz/stats'
+          render={props => (
+            <Suspense fallback={<Fallback />}>
+              <Statistics
                 userData={context.props.userData}
               />
             </Suspense>
@@ -186,14 +198,19 @@ const getMenu = (context) => {
         onOpenChange={context.handleMenuOpenChange}
       >
         <SubMenu
-          key='graphs'
+          key='viz'
           title={
-            <span><Icon type='global' />Graphs</span>
+            <span><Icon type='global' />Visualizations</span>
           }
         >
           <Menu.Item key='rgraph'>
-            <Link to={`/user/${userData.id}/graph/rgraph`}>
+            <Link to={`/user/${userData.id}/viz/rgraph`}>
               Relationship Graph
+            </Link>
+          </Menu.Item>
+          <Menu.Item key='stats'>
+            <Link to={`/user/${userData.id}/viz/stats`}>
+              Statistics
             </Link>
           </Menu.Item>
         </SubMenu>
