@@ -24,20 +24,26 @@ export function getBooksList (userData, shelves) {
   return books
 }
 
-export function getPublishedYearHist (books) {
+export function getHistogram (books, key) {
   const bins = {}
 
   books.forEach(book => {
-    if (!bins[book.published]) {
-      bins[book.published] = [
+    if (!bins[book[key]]) {
+      bins[book[key]] = [
         book
       ]
       // bins[book.published] = 1
     } else {
-      bins[book.published].push(book)
+      bins[book[key]].push(book)
       // bins[book.published] += 1
     }
   })
 
-  return bins
+  const keys = Object.keys(bins)
+  const data = Object.values(bins).map((year, idx) => ({
+    year: keys[idx],
+    value: year.length
+  }))
+
+  return data
 }

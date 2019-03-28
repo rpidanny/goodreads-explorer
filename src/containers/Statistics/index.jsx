@@ -5,7 +5,7 @@ import { Button, Popover, Row, Divider } from 'antd'
 import MultiCheckBox from '../../components/MultiCheckBox'
 import Histogram from '../../components/Histogram'
 
-import { getBooksList, getPublishedYearHist } from '../../utils/statsHelper'
+import { getBooksList, getHistogram } from '../../utils/statsHelper'
 
 import './style.css'
 
@@ -76,24 +76,16 @@ class Statistics extends Component {
       selectedShelves
     } = this.state
 
-    const publishedYearHist = getPublishedYearHist(books)
-    const pyKeys = Object.keys(publishedYearHist)
-    const pyData = Object.values(publishedYearHist).map((year, idx) => ({
-      year: pyKeys[idx],
-      value: year.length
-    }))
+    const publishedYearHist = getHistogram(books, 'published')
 
     console.log('Books: ', books)
     console.log('YearHist: ', publishedYearHist)
-    console.log('YearData: ', pyData)
-    console.log('YearKeys: ', pyKeys)
-
     return (
       <div className='statistics'>
         <Row>
           <h3 style={{ marginBottom: 16 }}>Histogram of Books by Published Year</h3>
           <Histogram
-            data={pyData}
+            data={publishedYearHist}
             xLabel='Published Year'
             yLabel='Number of Books'
           />
