@@ -17,6 +17,7 @@ import goodReadsLogo from '../../assets/images/good_reads_explorer.png'
 import './style.css'
 
 const RelationshipGraph = lazy(() => import('../RelationshipGraph'))
+const Statistics = lazy(() => import('../Statistics'))
 const BookLibrary = lazy(() => import('../BookLibrary'))
 
 const { SubMenu } = Menu
@@ -124,10 +125,21 @@ const getContent = (context) => {
       <Switch>
         <Route
           exact
-          path='/user/:userId/graph/:graph'
+          path='/user/:userId/viz/rgraph'
           render={props => (
             <Suspense fallback={<Fallback />}>
               <RelationshipGraph
+                userData={context.props.userData}
+              />
+            </Suspense>
+          )}
+        />
+        <Route
+          exact
+          path='/user/:userId/viz/stats'
+          render={props => (
+            <Suspense fallback={<Fallback />}>
+              <Statistics
                 userData={context.props.userData}
               />
             </Suspense>
@@ -194,6 +206,11 @@ const getMenu = (context) => {
           <Menu.Item key='rgraph'>
             <Link to={`/user/${userData.id}/viz/rgraph`}>
               Relationship Graph
+            </Link>
+          </Menu.Item>
+          <Menu.Item key='stats'>
+            <Link to={`/user/${userData.id}/viz/stats`}>
+              Statistics
             </Link>
           </Menu.Item>
         </SubMenu>
