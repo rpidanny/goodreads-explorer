@@ -90,6 +90,7 @@ class Statistics extends Component {
 
     return (
       <div className='statistics'>
+        <Histogram data={pyData} />
         <Popover
           content={
             <MultiCheckBox
@@ -120,7 +121,6 @@ class Statistics extends Component {
             Select Shelves
           </Button>
         </Popover>
-        <Histogram data={pyData} />
       </div>
     )
   }
