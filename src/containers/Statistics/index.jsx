@@ -4,6 +4,8 @@ import { Button, Popover } from 'antd'
 
 import MultiCheckBox from '../../components/MultiCheckBox'
 
+import { getBooksList } from '../../utils/statsHelper'
+
 import './style.css'
 
 class Statistics extends Component {
@@ -12,6 +14,7 @@ class Statistics extends Component {
 
     this.state = {
       shelvesSelectPopover: false,
+      books: [],
       shelves: [],
       selectedShelves: []
     }
@@ -35,16 +38,13 @@ class Statistics extends Component {
       }
     })
     const selectedShelves = shelves.length > 0 ? [shelves[0].name] : []
-    // const { nodes, links } = getGraphData(this.props.userData, selectedShelves)
-    // this.setState({
-    //   nodes,
-    //   links,
-    //   shelves,
-    //   selectedShelves
-    // })
+
+    const books = getBooksList(this.props.userData, selectedShelves)
+
     this.setState({
       shelves,
-      selectedShelves
+      selectedShelves,
+      books
     })
   }
 
@@ -57,20 +57,24 @@ class Statistics extends Component {
   }
 
   handleShelvesChange (selectedShelves) {
-    // const { nodes, links } = getGraphData(this.props.userData, selectedShelves)
-    // this.setState({
-    //   nodes,
-    //   links,
-    //   selectedShelves
-    // })
+    const books = getBooksList(this.props.userData, selectedShelves)
+
+    this.setState({
+      books,
+      selectedShelves
+    })
   }
 
   render () {
     const {
+      books,
       shelvesSelectPopover,
       shelves,
       selectedShelves
     } = this.state
+
+    console.log('Books: ', books)
+
     return (
       <div
         className='statistics'
