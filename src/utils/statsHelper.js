@@ -123,3 +123,79 @@ export function getRatingsData (books) {
 
   return data
 }
+
+export function getPagesData (books) {
+  const ratings = getHistogram(books, 'num_pages')
+  let bins = {
+    '0-100': 0,
+    '100-200': 0,
+    '200-300': 0,
+    '300-400': 0,
+    '400-500': 0,
+    '500-600': 0,
+    '600-700': 0,
+    '700-800': 0,
+    '800-900': 0,
+    '900-1000': 0,
+    '1000-1100': 0,
+    '1100-1200': 0,
+    '1200+': 0
+  }
+  ratings.forEach(rating => {
+    const key = Math.floor(parseFloat(rating.key) / 100)
+    switch (key) {
+      case 0:
+        bins['0-100'] += 1
+        break
+      case 1:
+        bins['100-200'] += 1
+        break
+      case 2:
+        bins['200-300'] += 1
+        break
+      case 3:
+        bins['300-400'] += 1
+        break
+      case 4:
+        bins['400-500'] += 1
+        break
+      case 5:
+        bins['500-600'] += 1
+        break
+      case 6:
+        bins['600-700'] += 1
+        break
+      case 7:
+        bins['700-800'] += 1
+        break
+      case 8:
+        bins['800-900'] += 1
+        break
+      case 9:
+        bins['900-1000'] += 1
+        break
+      case 10:
+        bins['1000-1100'] += 1
+        break
+      case 11:
+        bins['1100-1200'] += 1
+        break
+      case 12:
+        bins['1200+'] += 1
+        break
+      default:
+        break
+    }
+  })
+
+  const keys = Object.keys(bins)
+  const data = Object.values(bins).map((item, idx) => {
+    let itemKey = keys[idx]
+    return {
+      key: itemKey,
+      value: item
+    }
+  })
+
+  return data
+}
