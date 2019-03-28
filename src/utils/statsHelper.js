@@ -13,7 +13,8 @@ export function getBooksList (userData, shelves) {
               ...book,
               property: {
                 shelf: shelf.name
-              }
+              },
+              author: book.authors.author.name
             }
           )
         })
@@ -40,9 +41,9 @@ export function getHistogram (books, key) {
   })
 
   const keys = Object.keys(bins)
-  const data = Object.values(bins).map((year, idx) => ({
-    year: keys[idx],
-    value: year.length
+  const data = Object.values(bins).map((item, idx) => ({
+    key: keys[idx],
+    value: item.length
   }))
 
   return data

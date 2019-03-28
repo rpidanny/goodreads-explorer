@@ -10,7 +10,7 @@ const Quote = (props) => {
     <div className='barGraph'>
       <ResponsiveBar
         data={props.data}
-        indexBy='year'
+        indexBy='key'
         margin={config.margin}
         padding={0.3}
         colors='nivo'

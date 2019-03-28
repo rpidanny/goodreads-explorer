@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 
-import { Button, Popover, Row, Divider } from 'antd'
+import { Button, Popover, Row, Divider, Tag } from 'antd'
 
 import MultiCheckBox from '../../components/MultiCheckBox'
 import Histogram from '../../components/Histogram'
+import TagCloud from '../../components/TagCloud'
 
 import { getBooksList, getHistogram } from '../../utils/statsHelper'
 
@@ -77,9 +78,12 @@ class Statistics extends Component {
     } = this.state
 
     const publishedYearHist = getHistogram(books, 'published')
+    const authorHist = getHistogram(books, 'author')
 
     console.log('Books: ', books)
     console.log('YearHist: ', publishedYearHist)
+    console.log('authorHist: ', authorHist)
+
     return (
       <div className='statistics'>
         <Row>
@@ -91,6 +95,12 @@ class Statistics extends Component {
           />
         </Row>
         <Divider dashed />
+        <Row>
+          <h3 style={{ marginBottom: 16 }}>Authors</h3>
+          <TagCloud data={authorHist} />
+        </Row>
+        <Divider dashed />
+
         <Popover
           content={
             <MultiCheckBox
