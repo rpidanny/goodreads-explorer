@@ -8,7 +8,7 @@ import Histogram from '../../components/Histogram'
 import TagCloud from '../../components/TagCloud'
 import PieChart from '../../components/PieChart'
 
-import { getBooksList, getHistogram, getStats } from '../../utils/statsHelper'
+import { getBooksList, getHistogram, getStats, getRatingsData } from '../../utils/statsHelper'
 
 import './style.css'
 
@@ -92,8 +92,7 @@ class StatisticsContainer extends Component {
 
     const publishedYearHist = getHistogram(books, 'published')
     const authorHist = getHistogram(books, 'author')
-    const ratingHist = getHistogram(books, 'average_rating')
-      .sort((a, b) => (parseFloat(a.key) > parseFloat(b.key)) ? 1 : -1)
+    const ratingHist = getRatingsData(books)
     const numPagesHist = getHistogram(books, 'num_pages')
       .sort((a, b) => (parseInt(a.key) > parseInt(b.key)) ? 1 : -1)
 

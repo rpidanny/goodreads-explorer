@@ -79,3 +79,47 @@ export function getHistogram (books, key, keyProcessor = null) {
 
   return data
 }
+
+export function getRatingsData (books) {
+  const ratings = getHistogram(books, 'average_rating')
+  let bins = {
+    '0-1': 0,
+    '1-2': 0,
+    '2-3': 0,
+    '3-4': 0,
+    '4-5': 0
+  }
+  ratings.forEach(rating => {
+    const key = Math.floor(parseFloat(rating.key))
+    switch (key) {
+      case 0:
+        bins['0-1'] += 1
+        break
+      case 1:
+        bins['1-2'] += 1
+        break
+      case 2:
+        bins['2-3'] += 1
+        break
+      case 3:
+        bins['3-4'] += 1
+        break
+      case 4:
+        bins['4-5'] += 1
+        break
+      default:
+        break
+    }
+  })
+
+  const keys = Object.keys(bins)
+  const data = Object.values(bins).map((item, idx) => {
+    let itemKey = keys[idx]
+    return {
+      key: itemKey,
+      value: item
+    }
+  })
+
+  return data
+}
