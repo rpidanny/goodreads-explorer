@@ -81,11 +81,14 @@ class Statistics extends Component {
     const authorHist = getHistogram(books, 'author')
     const ratingHist = getHistogram(books, 'average_rating')
       .sort((a, b) => (parseFloat(a.key) > parseFloat(b.key)) ? 1 : -1)
+    const numPagesHist = getHistogram(books, 'num_pages')
+      .sort((a, b) => (parseInt(a.key) > parseInt(b.key)) ? 1 : -1)
 
     console.log('Books: ', books)
     console.log('YearHist: ', publishedYearHist)
     console.log('authorHist: ', authorHist)
     console.log('ratingHist', ratingHist)
+    console.log('numPagesHist', numPagesHist)
 
     return (
       <div className='statistics'>
@@ -108,6 +111,15 @@ class Statistics extends Component {
           <Histogram
             data={ratingHist}
             xLabel='Average Rating'
+            yLabel='Number of Books'
+          />
+        </Row>
+        <Divider dashed />
+        <Row>
+          <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Number of Pages</h3>
+          <Histogram
+            data={numPagesHist}
+            xLabel='Number of Pages'
             yLabel='Number of Books'
           />
         </Row>
