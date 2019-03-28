@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 import { Button, Popover } from 'antd'
 
 import MultiCheckBox from '../../components/MultiCheckBox'
+import Histogram from '../../components/Histogram'
 
-import { getBooksList } from '../../utils/statsHelper'
+import { getBooksList, getPublishedYearHist } from '../../utils/statsHelper'
 
 import './style.css'
 
@@ -21,7 +22,9 @@ class Statistics extends Component {
 
     this.hideShelvesSelect = this.hideShelvesSelect.bind(this)
     this.handleShelvesChange = this.handleShelvesChange.bind(this)
-    this.handleShelvesSelectVisibleChange = this.handleShelvesSelectVisibleChange.bind(this)
+    this.handleShelvesSelectVisibleChange = this.handleShelvesSelectVisibleChange.bind(
+      this
+    )
   }
 
   componentDidMount () {
@@ -73,19 +76,29 @@ class Statistics extends Component {
       selectedShelves
     } = this.state
 
+    const publishedYearHist = getPublishedYearHist(books)
+    const pyKeys = Object.keys(publishedYearHist)
+    const pyData = Object.values(publishedYearHist).map((year, idx) => ({
+      year: pyKeys[idx],
+      value: year.length
+    }))
+
     console.log('Books: ', books)
+    console.log('YearHist: ', publishedYearHist)
+    console.log('YearData: ', pyData)
+    console.log('YearKeys: ', pyKeys)
 
     return (
-      <div
-        className='statistics'
-      >
+      <div className='statistics'>
         <Popover
           content={
             <MultiCheckBox
               onChange={this.handleShelvesChange}
               options={shelves.map(shelf => shelf.name)}
               defaultCheckedList={selectedShelves}
-              optionLabel={shelves.map(shelf => `${shelf.name} (${shelf.bookCount})`)}
+              optionLabel={shelves.map(
+                shelf => `${shelf.name} (${shelf.bookCount})`
+              )}
               disable={shelves.map(shelf => shelf.bookCount === 0)}
               className='graphPopover'
             />
@@ -107,6 +120,7 @@ class Statistics extends Component {
             Select Shelves
           </Button>
         </Popover>
+        <Histogram data={pyData} />
       </div>
     )
   }

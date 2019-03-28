@@ -23,3 +23,21 @@ export function getBooksList (userData, shelves) {
 
   return books
 }
+
+export function getPublishedYearHist (books) {
+  const bins = {}
+
+  books.forEach(book => {
+    if (!bins[book.published]) {
+      bins[book.published] = [
+        book
+      ]
+      // bins[book.published] = 1
+    } else {
+      bins[book.published].push(book)
+      // bins[book.published] += 1
+    }
+  })
+
+  return bins
+}
