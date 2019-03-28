@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
 import { Button, Popover, Row, Col, Divider, Statistic, Card } from 'antd'
+import randomColor from 'randomcolor'
 
 import MultiCheckBox from '../../components/MultiCheckBox'
 import Histogram from '../../components/Histogram'
 import TagCloud from '../../components/TagCloud'
+import PieChart from '../../components/PieChart'
 
 import { getBooksList, getHistogram, getStats } from '../../utils/statsHelper'
 
@@ -77,6 +79,15 @@ class StatisticsContainer extends Component {
       selectedShelves
     } = this.state
 
+    const { user_shelves } = this.props.userData
+
+    const shelvesDistribution = user_shelves.map(shelf => ({
+      id: shelf.name,
+      label: shelf.name,
+      value: parseInt(shelf.books.end),
+      color: randomColor()
+    }))
+
     const stats = getStats(books)
 
     const publishedYearHist = getHistogram(books, 'published')
@@ -91,6 +102,7 @@ class StatisticsContainer extends Component {
     console.log('authorHist: ', authorHist)
     console.log('ratingHist', ratingHist)
     console.log('numPagesHist', numPagesHist)
+    console.log('Shelves', shelvesDistribution)
 
     console.log('stats', stats)
 
@@ -128,7 +140,16 @@ class StatisticsContainer extends Component {
             <TagCloud data={authorHist} />
           </Card>
         </Row>
+        <Divider />
+
+        <Row>
+          <Card>
+            <h3 style={{ marginBottom: 16, padding: 10 }}>Shelves</h3>
+            <PieChart data={shelvesDistribution} />
+          </Card>
+        </Row>
         <Divider dashed />
+
         <Row>
           <Card>
             <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Published Year</h3>

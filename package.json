@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@nivo/bar": "^0.52.0",
+    "@nivo/pie": "^0.52.0",
     "antd": "^3.15.2",
     "d3-force": "^2.0.0",
     "d3-scale": "^2.1.2",
