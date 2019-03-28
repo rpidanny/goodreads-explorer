@@ -25,26 +25,34 @@ export function getBooksList (userData, shelves) {
   return books
 }
 
-export function getHistogram (books, key) {
+export function getHistogram (books, key, keyProcessor = null) {
   const bins = {}
 
   books.forEach(book => {
-    if (!bins[book[key]]) {
-      bins[book[key]] = [
+    let itemKey = book[key]
+    if (keyProcessor) {
+      itemKey = keyProcessor(itemKey)
+    }
+
+    if (!bins[itemKey]) {
+      bins[itemKey] = [
         book
       ]
       // bins[book.published] = 1
     } else {
-      bins[book[key]].push(book)
+      bins[itemKey].push(book)
       // bins[book.published] += 1
     }
   })
 
   const keys = Object.keys(bins)
-  const data = Object.values(bins).map((item, idx) => ({
-    key: keys[idx],
-    value: item.length
-  }))
+  const data = Object.values(bins).map((item, idx) => {
+    let itemKey = keys[idx]
+    return {
+      key: itemKey,
+      value: item.length
+    }
+  })
 
   return data
 }
