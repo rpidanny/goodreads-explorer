@@ -109,7 +109,11 @@ class StatisticsContainer extends Component {
     return (
       <div className='statistics'>
         <Row gutter={16}>
-          <Col span={4} />
+          <Col span={4}>
+            <Card>
+              <Statistic title='Total Shelves' value={shelves.length} />
+            </Card>
+          </Col>
           <Col span={4}>
             <Card>
               <Statistic title='Total Books' value={stats.totalBooks} />
@@ -130,29 +134,25 @@ class StatisticsContainer extends Component {
               <Statistic title='Average Rating' value={stats.averageRating} />
             </Card>
           </Col>
-          <Col span={4} />
         </Row>
 
         <Divider />
         <Row>
-          <Card>
-            <h3 style={{ marginBottom: 16, padding: 10 }}>Authors</h3>
+          <Card title='Authors'>
             <TagCloud data={authorHist} />
           </Card>
         </Row>
         <Divider />
 
         <Row>
-          <Card>
-            <h3 style={{ marginBottom: 16, padding: 10 }}>Shelves</h3>
+          <Card title='Shelves' >
             <PieChart data={shelvesDistribution} />
           </Card>
         </Row>
         <Divider dashed />
 
         <Row>
-          <Card>
-            <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Published Year</h3>
+          <Card title='Histogram of Books by Published Year' >
             <Histogram
               data={publishedYearHist}
               xLabel='Published Year'
@@ -162,8 +162,7 @@ class StatisticsContainer extends Component {
         </Row>
         <Divider dashed />
         <Row>
-          <Card>
-            <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Average Rating</h3>
+          <Card title='Histogram of Books by Average Rating' >
             <Histogram
               data={ratingHist}
               xLabel='Average Rating'
@@ -173,8 +172,7 @@ class StatisticsContainer extends Component {
         </Row>
         <Divider dashed />
         <Row>
-          <Card>
-            <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Number of Pages</h3>
+          <Card title='Histogram of Books by Number of Pages' >
             <Histogram
               data={numPagesHist}
               xLabel='Number of Pages'
