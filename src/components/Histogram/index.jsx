@@ -20,8 +20,22 @@ const Quote = (props) => {
         borderColor='inherit:darker(1.6)'
         axisTop={null}
         axisRight={null}
-        axisBottom={config.axisBottom}
-        axisLeft={config.axisLeft}
+        axisBottom={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: props.xLabel,
+          legendPosition: 'middle',
+          legendOffset: 32
+        }}
+        axisLeft={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: props.yLabel,
+          legendPosition: 'middle',
+          legendOffset: -40
+        }}
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor='inherit:darker(1.6)'

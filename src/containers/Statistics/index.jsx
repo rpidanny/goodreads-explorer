@@ -90,7 +90,11 @@ class Statistics extends Component {
 
     return (
       <div className='statistics'>
-        <Histogram data={pyData} />
+        <Histogram
+          data={pyData}
+          xLabel='Published Year'
+          yLabel='Number of Books'
+        />
         <Popover
           content={
             <MultiCheckBox
