@@ -120,36 +120,46 @@ class StatisticsContainer extends Component {
           </Col>
           <Col span={4} />
         </Row>
+
+        <Divider />
         <Row>
-          <h3 style={{ marginBottom: 16, padding: 10 }}>Authors</h3>
-          <TagCloud data={authorHist} />
+          <Card>
+            <h3 style={{ marginBottom: 16, padding: 10 }}>Authors</h3>
+            <TagCloud data={authorHist} />
+          </Card>
         </Row>
         <Divider dashed />
         <Row>
-          <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Published Year</h3>
-          <Histogram
-            data={publishedYearHist}
-            xLabel='Published Year'
-            yLabel='Number of Books'
-          />
+          <Card>
+            <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Published Year</h3>
+            <Histogram
+              data={publishedYearHist}
+              xLabel='Published Year'
+              yLabel='Number of Books'
+            />
+          </Card>
         </Row>
         <Divider dashed />
         <Row>
-          <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Average Rating</h3>
-          <Histogram
-            data={ratingHist}
-            xLabel='Average Rating'
-            yLabel='Number of Books'
-          />
+          <Card>
+            <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Average Rating</h3>
+            <Histogram
+              data={ratingHist}
+              xLabel='Average Rating'
+              yLabel='Number of Books'
+            />
+          </Card>
         </Row>
         <Divider dashed />
         <Row>
-          <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Number of Pages</h3>
-          <Histogram
-            data={numPagesHist}
-            xLabel='Number of Pages'
-            yLabel='Number of Books'
-          />
+          <Card>
+            <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Number of Pages</h3>
+            <Histogram
+              data={numPagesHist}
+              xLabel='Number of Pages'
+              yLabel='Number of Books'
+            />
+          </Card>
         </Row>
         <Divider dashed />
 
