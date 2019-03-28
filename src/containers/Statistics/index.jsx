@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Button, Popover } from 'antd'
+import { Button, Popover, Row, Divider } from 'antd'
 
 import MultiCheckBox from '../../components/MultiCheckBox'
 import Histogram from '../../components/Histogram'
@@ -90,11 +90,15 @@ class Statistics extends Component {
 
     return (
       <div className='statistics'>
-        <Histogram
-          data={pyData}
-          xLabel='Published Year'
-          yLabel='Number of Books'
-        />
+        <Row>
+          <h3 style={{ marginBottom: 16 }}>Histogram of Books by Published Year</h3>
+          <Histogram
+            data={pyData}
+            xLabel='Published Year'
+            yLabel='Number of Books'
+          />
+        </Row>
+        <Divider dashed />
         <Popover
           content={
             <MultiCheckBox
