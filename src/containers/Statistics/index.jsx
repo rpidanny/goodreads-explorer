@@ -87,7 +87,7 @@ class Statistics extends Component {
     return (
       <div className='statistics'>
         <Row>
-          <h3 style={{ marginBottom: 16 }}>Histogram of Books by Published Year</h3>
+          <h3 style={{ marginBottom: 16, padding: 10 }}>Histogram of Books by Published Year</h3>
           <Histogram
             data={publishedYearHist}
             xLabel='Published Year'
@@ -96,7 +96,7 @@ class Statistics extends Component {
         </Row>
         <Divider dashed />
         <Row>
-          <h3 style={{ marginBottom: 16 }}>Authors</h3>
+          <h3 style={{ marginBottom: 16, padding: 10 }}>Authors</h3>
           <TagCloud data={authorHist} />
         </Row>
         <Divider dashed />
