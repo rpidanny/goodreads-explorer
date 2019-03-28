@@ -37,13 +37,13 @@ class Dashboard extends Component {
     super(props)
 
     this.state = {
-      openMenuKeys: [ 'graphs' ]
+      openMenuKeys: [ 'viz' ]
     }
     console.log('Init Settings', this.state.graphSettings)
     console.log('props', this.props)
     this.handleMenuOpenChange = this.handleMenuOpenChange.bind(this)
 
-    this.rootSubmenuKeys = ['graphs', 'shelves']
+    this.rootSubmenuKeys = ['viz', 'shelves']
   }
 
   componentDidMount () {
@@ -186,13 +186,13 @@ const getMenu = (context) => {
         onOpenChange={context.handleMenuOpenChange}
       >
         <SubMenu
-          key='graphs'
+          key='viz'
           title={
-            <span><Icon type='global' />Graphs</span>
+            <span><Icon type='global' />Visualizations</span>
           }
         >
           <Menu.Item key='rgraph'>
-            <Link to={`/user/${userData.id}/graph/rgraph`}>
+            <Link to={`/user/${userData.id}/viz/rgraph`}>
               Relationship Graph
             </Link>
           </Menu.Item>
