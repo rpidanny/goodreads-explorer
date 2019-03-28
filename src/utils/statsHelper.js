@@ -1,3 +1,6 @@
+
+const sum = (a) => a.reduce((a, b) => a + b, 0)
+
 export function getBooksList (userData, shelves) {
   let books = []
 
@@ -23,6 +26,26 @@ export function getBooksList (userData, shelves) {
   })
 
   return books
+}
+
+export function getStats (books) {
+  const numPages = books.map(book => {
+    return typeof book.num_pages === 'string' ? parseInt(book.num_pages) : 0
+  })
+  const ratings = books.map(book => {
+    return typeof book.average_rating === 'string' ? parseFloat(book.average_rating) : 0.0
+  })
+
+  const numBook = books.length
+  const totalPages = sum(numPages)
+  const totalRating = sum(ratings)
+
+  return {
+    totalBooks: books.length,
+    totalPages,
+    averagePages: totalPages / numBook,
+    averageRating: totalRating / numBook
+  }
 }
 
 export function getHistogram (books, key, keyProcessor = null) {

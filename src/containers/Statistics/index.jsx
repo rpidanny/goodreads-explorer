@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 
-import { Button, Popover, Row, Divider, Tag } from 'antd'
+import { Button, Popover, Row, Col, Divider, Statistic, Card } from 'antd'
 
 import MultiCheckBox from '../../components/MultiCheckBox'
 import Histogram from '../../components/Histogram'
 import TagCloud from '../../components/TagCloud'
 
-import { getBooksList, getHistogram } from '../../utils/statsHelper'
+import { getBooksList, getHistogram, getStats } from '../../utils/statsHelper'
 
 import './style.css'
 
-class Statistics extends Component {
+class StatisticsContainer extends Component {
   constructor (props) {
     super(props)
 
@@ -77,6 +77,8 @@ class Statistics extends Component {
       selectedShelves
     } = this.state
 
+    const stats = getStats(books)
+
     const publishedYearHist = getHistogram(books, 'published')
     const authorHist = getHistogram(books, 'author')
     const ratingHist = getHistogram(books, 'average_rating')
@@ -90,8 +92,34 @@ class Statistics extends Component {
     console.log('ratingHist', ratingHist)
     console.log('numPagesHist', numPagesHist)
 
+    console.log('stats', stats)
+
     return (
       <div className='statistics'>
+        <Row gutter={16}>
+          <Col span={4} />
+          <Col span={4}>
+            <Card>
+              <Statistic title='Total Books' value={stats.totalBooks} />
+            </Card>
+          </Col>
+          <Col span={4}>
+            <Card>
+              <Statistic title='Total Pages' value={stats.totalPages} />
+            </Card>
+          </Col>
+          <Col span={4}>
+            <Card>
+              <Statistic title='Average Pages' value={stats.averagePages} />
+            </Card>
+          </Col>
+          <Col span={4}>
+            <Card>
+              <Statistic title='Average Rating' value={stats.averageRating} />
+            </Card>
+          </Col>
+          <Col span={4} />
+        </Row>
         <Row>
           <h3 style={{ marginBottom: 16, padding: 10 }}>Authors</h3>
           <TagCloud data={authorHist} />
@@ -160,4 +188,4 @@ class Statistics extends Component {
   }
 }
 
-export default Statistics
+export default StatisticsContainer
