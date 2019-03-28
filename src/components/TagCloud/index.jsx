@@ -17,7 +17,7 @@ const TagCloudComponent = (props) => {
         color: 'gray',
         padding: 5,
         width: '100%',
-        height: '20vh'
+        height: '400px'
       }}>
       {
         props.data.map(data => {
