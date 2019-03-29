@@ -16,7 +16,8 @@ import {
   getRatingsData,
   getPagesData,
   getPublishedMonthData,
-  getMonthRatingData
+  getMonthRatingData,
+  getRatingsCorrelationData
 } from '../../utils/statsHelper'
 
 import './style.css'
@@ -118,6 +119,7 @@ class StatisticsContainer extends Component {
     }))
 
     const pubMonthRatingData = getMonthRatingData(books)
+    const ratingsCorrelationData = getRatingsCorrelationData(books)
 
     console.log('Books: ', books)
     console.log('YearHist: ', publishedYearHist)
@@ -187,6 +189,15 @@ class StatisticsContainer extends Component {
                 data={pubMonthRatingData}
                 xLabel='Published Month'
                 yLabel='Average Rating'
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Card title='Author Rating Vs Book Rating' >
+              <ScatterPlot
+                data={ratingsCorrelationData}
+                xLabel='Author Rating'
+                yLabel='Book Rating'
               />
             </Card>
           </Col>
