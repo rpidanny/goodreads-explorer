@@ -17,7 +17,7 @@ export function getBooksList (userData, shelves) {
               property: {
                 shelf: shelf.name
               },
-              author: book.authors.author ? book.authors.author.name : 'Unknown'
+              author: book.authors ? book.authors.author.name : 'Unknown'
             }
           )
         })
