@@ -7,6 +7,7 @@ import MultiCheckBox from '../../components/MultiCheckBox'
 import Histogram from '../../components/Histogram'
 import TagCloud from '../../components/TagCloud'
 import PieChart from '../../components/PieChart'
+import ScatterPlot from '../../components/ScatterPlot'
 
 import {
   getBooksList,
@@ -14,7 +15,8 @@ import {
   getStats,
   getRatingsData,
   getPagesData,
-  getPublishedMonthData
+  getPublishedMonthData,
+  getMonthRatingData
 } from '../../utils/statsHelper'
 
 import './style.css'
@@ -115,6 +117,8 @@ class StatisticsContainer extends Component {
       color: randomColor()
     }))
 
+    const pubMonthRatingData = getMonthRatingData(books)
+
     console.log('Books: ', books)
     console.log('YearHist: ', publishedYearHist)
     console.log('authorHist: ', authorHist)
@@ -172,6 +176,18 @@ class StatisticsContainer extends Component {
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Card title='Book Formats' >
               <PieChart data={formatDistribution} />
+            </Card>
+          </Col>
+        </Row>
+        <br />
+        <Row gutter={16} >
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Card title='Published Month Vs Average Rating' >
+              <ScatterPlot
+                data={pubMonthRatingData}
+                xLabel='Published Month'
+                yLabel='Average Rating'
+              />
             </Card>
           </Col>
         </Row>
