@@ -14,7 +14,7 @@ const store = configureStore()
 ReactDOM.render(
   <Provider store={store}>
     <Router
-      basename={process.env.PUBLIC_URL}
+      basename={process.env.PUBLIC_URL + '/'}
     >
       <App />
     </Router>
