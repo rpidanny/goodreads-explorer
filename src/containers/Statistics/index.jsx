@@ -107,27 +107,27 @@ class StatisticsContainer extends Component {
     return (
       <div className='statistics'>
         <Row gutter={16}>
-          <Col span={4}>
+          <Col xs={20} sm={16} md={12} lg={8} xl={4}>
             <Card>
               <Statistic title='Total Shelves' value={shelves.length} />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={20} sm={16} md={12} lg={8} xl={4}>
             <Card>
               <Statistic title='Total Books' value={stats.totalBooks} />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={20} sm={16} md={12} lg={8} xl={4}>
             <Card>
               <Statistic title='Total Pages' value={stats.totalPages} />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={20} sm={16} md={12} lg={8} xl={4}>
             <Card>
               <Statistic title='Average Pages' value={stats.averagePages} />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={20} sm={16} md={12} lg={8} xl={4}>
             <Card>
               <Statistic title='Average Rating' value={stats.averageRating} />
             </Card>
