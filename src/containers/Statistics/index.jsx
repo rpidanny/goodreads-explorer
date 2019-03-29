@@ -8,7 +8,14 @@ import Histogram from '../../components/Histogram'
 import TagCloud from '../../components/TagCloud'
 import PieChart from '../../components/PieChart'
 
-import { getBooksList, getHistogram, getStats, getRatingsData, getPagesData } from '../../utils/statsHelper'
+import {
+  getBooksList,
+  getHistogram,
+  getStats,
+  getRatingsData,
+  getPagesData,
+  getPublishedMonthData
+} from '../../utils/statsHelper'
 
 import './style.css'
 
@@ -99,6 +106,7 @@ class StatisticsContainer extends Component {
     )
     const ratingHist = getRatingsData(books)
     const numPagesHist = getPagesData(books)
+    const publishedMonthHist = getPublishedMonthData(books)
 
     const formatDistribution = formatHist.map(format => ({
       id: format.key,
@@ -167,8 +175,29 @@ class StatisticsContainer extends Component {
             </Card>
           </Col>
         </Row>
+
+        <Divider dashed />
+        <Row>
+          <Card title='Histogram of Books by Number of Pages' >
+            <Histogram
+              data={numPagesHist}
+              xLabel='Number of Pages'
+              yLabel='Number of Books'
+            />
+          </Card>
+        </Row>
         <Divider dashed />
 
+        <Row>
+          <Card title='Histogram of Books by Published Month' >
+            <Histogram
+              data={publishedMonthHist}
+              xLabel='Published Month'
+              yLabel='Number of Books'
+            />
+          </Card>
+        </Row>
+        <Divider dashed />
         <Row>
           <Card title='Histogram of Books by Published Year' >
             <Histogram
@@ -179,21 +208,12 @@ class StatisticsContainer extends Component {
           </Card>
         </Row>
         <Divider dashed />
+
         <Row>
           <Card title='Histogram of Books by Average Rating' >
             <Histogram
               data={ratingHist}
               xLabel='Average Rating'
-              yLabel='Number of Books'
-            />
-          </Card>
-        </Row>
-        <Divider dashed />
-        <Row>
-          <Card title='Histogram of Books by Number of Pages' >
-            <Histogram
-              data={numPagesHist}
-              xLabel='Number of Pages'
               yLabel='Number of Books'
             />
           </Card>
