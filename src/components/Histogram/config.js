@@ -2,7 +2,7 @@ export default {
   keys: ['hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut'],
   margin: {
     top: 50,
-    right: 130,
+    right: 50,
     bottom: 50,
     left: 60
   },

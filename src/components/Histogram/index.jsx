@@ -36,13 +36,14 @@ const Quote = (props) => {
           legendPosition: 'middle',
           legendOffset: -40
         }}
+        // axisLeft={null}
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor='inherit:darker(1.6)'
         animate={true}
         motionStiffness={90}
         motionDamping={15}
-        legends={config.legends}
+        // legends={config.legends}
       />
     </div>
   )
