@@ -290,3 +290,22 @@ export function getMonthRatingData (books) {
     }
   ])
 }
+
+export function getRatingsCorrelationData (books) {
+  const result = []
+  books.forEach(book => {
+    if (book.authors && typeof book.authors.author.average_rating === 'string' && typeof book.average_rating === 'string') {
+      result.push({
+        x: parseFloat(book.authors.author.average_rating),
+        y: parseFloat(book.average_rating)
+      })
+    }
+  })
+
+  return ([
+    {
+      id: 'Books',
+      data: result
+    }
+  ])
+}

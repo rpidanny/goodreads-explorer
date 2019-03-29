@@ -13,7 +13,7 @@ const Quote = (props) => {
         indexBy='key'
         margin={config.margin}
         padding={0.3}
-        colors='nivo'
+        colors={props.colors || 'nivo'}
         colorBy='id'
         defs={config.defs}
         fill={config.fill}
