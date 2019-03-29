@@ -90,10 +90,22 @@ class StatisticsContainer extends Component {
 
     const stats = getStats(books)
 
-    const publishedYearHist = getHistogram(books, 'published')
+    const publishedYearHist = getHistogram(books, 'published',
+      format => typeof format === 'string' ? format : 'Unknown'
+    )
     const authorHist = getHistogram(books, 'author')
+    const formatHist = getHistogram(books, 'format',
+      format => typeof format === 'string' ? format : 'Unknown'
+    )
     const ratingHist = getRatingsData(books)
     const numPagesHist = getPagesData(books)
+
+    const formatDistribution = formatHist.map(format => ({
+      id: format.key,
+      label: format.key,
+      value: format.value,
+      color: randomColor()
+    }))
 
     console.log('Books: ', books)
     console.log('YearHist: ', publishedYearHist)
@@ -101,33 +113,34 @@ class StatisticsContainer extends Component {
     console.log('ratingHist', ratingHist)
     console.log('numPagesHist', numPagesHist)
     console.log('Shelves', shelvesDistribution)
+    console.log('formatDistribution', formatHist)
 
     console.log('stats', stats)
 
     return (
       <div className='statistics'>
         <Row gutter={16}>
-          <Col span={4}>
+          <Col xs={24} sm={12} md={6} lg={4} xl={4}>
             <Card>
               <Statistic title='Total Shelves' value={shelves.length} />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={24} sm={12} md={6} lg={4} xl={4}>
             <Card>
               <Statistic title='Total Books' value={stats.totalBooks} />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={24} sm={12} md={6} lg={4} xl={4}>
             <Card>
               <Statistic title='Total Pages' value={stats.totalPages} />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={24} sm={12} md={6} lg={4} xl={4}>
             <Card>
               <Statistic title='Average Pages' value={stats.averagePages} />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={24} sm={12} md={6} lg={4} xl={4}>
             <Card>
               <Statistic title='Average Rating' value={stats.averageRating} />
             </Card>
@@ -142,10 +155,17 @@ class StatisticsContainer extends Component {
         </Row>
         <Divider />
 
-        <Row>
-          <Card title='Shelves' >
-            <PieChart data={shelvesDistribution} />
-          </Card>
+        <Row gutter={16}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Card title='Shelves' >
+              <PieChart data={shelvesDistribution} />
+            </Card>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Card title='Book Formats' >
+              <PieChart data={formatDistribution} />
+            </Card>
+          </Col>
         </Row>
         <Divider dashed />
 

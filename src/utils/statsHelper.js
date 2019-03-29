@@ -43,8 +43,8 @@ export function getStats (books) {
   return {
     totalBooks: books.length,
     totalPages,
-    averagePages: totalPages / numBook,
-    averageRating: totalRating / numBook
+    averagePages: (totalPages / numBook).toFixed(2),
+    averageRating: (totalRating / numBook).toFixed(2)
   }
 }
 
