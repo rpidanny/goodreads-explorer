@@ -17,7 +17,7 @@ const PieChart = props => {
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
-        colors='nivo'
+        colors={props.colors || 'nivo'}
         colorBy='id'
         borderWidth={1}
         borderColor='inherit:darker(0.2)'

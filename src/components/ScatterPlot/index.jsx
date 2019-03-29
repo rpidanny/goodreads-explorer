@@ -13,6 +13,7 @@ const ScatterPlot = props => {
     >
       <ResponsiveScatterPlot
         data={props.data}
+        colors={props.colors || 'dark2'}
         margin={{
           top: 60,
           right: 60,

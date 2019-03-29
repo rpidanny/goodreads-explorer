@@ -172,7 +172,7 @@ class StatisticsContainer extends Component {
         <Row gutter={16}>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Card title='Shelves' >
-              <PieChart data={shelvesDistribution} />
+              <PieChart data={shelvesDistribution} colors='accent' />
             </Card>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -198,6 +198,7 @@ class StatisticsContainer extends Component {
                 data={ratingsCorrelationData}
                 xLabel='Author Rating'
                 yLabel='Book Rating'
+                colors='pink_yellowGreen'
               />
             </Card>
           </Col>
