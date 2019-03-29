@@ -90,7 +90,9 @@ class StatisticsContainer extends Component {
 
     const stats = getStats(books)
 
-    const publishedYearHist = getHistogram(books, 'published')
+    const publishedYearHist = getHistogram(books, 'published',
+      format => typeof format === 'string' ? format : 'Unknown'
+    )
     const authorHist = getHistogram(books, 'author')
     const formatHist = getHistogram(books, 'format',
       format => typeof format === 'string' ? format : 'Unknown'
