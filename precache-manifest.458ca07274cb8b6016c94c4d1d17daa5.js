@@ -32,8 +32,8 @@ self.__precacheManifest = [
     "url": "/static/js/main.dd645611.chunk.js"
   },
   {
-    "revision": "2ec52d79f8fc577bc3c0",
-    "url": "/static/js/runtime~main.658a8d7b.js"
+    "revision": "c14ebfee076d71fcfa36",
+    "url": "/static/js/runtime~main.5e9fc7d8.js"
   },
   {
     "revision": "d92ebdf1477514407887",
@@ -60,12 +60,12 @@ self.__precacheManifest = [
     "url": "/static/js/12.8538296a.chunk.js"
   },
   {
-    "revision": "bee9b5ee87d3568b3b6b",
+    "revision": "9d30994d8511b21dd006",
     "url": "/static/css/13.e2bac6e9.chunk.css"
   },
   {
-    "revision": "bee9b5ee87d3568b3b6b",
-    "url": "/static/js/13.93d7e4d2.chunk.js"
+    "revision": "9d30994d8511b21dd006",
+    "url": "/static/js/13.424b0712.chunk.js"
   },
   {
     "revision": "35d7e1b605fd4a9b1af0",
@@ -128,7 +128,7 @@ self.__precacheManifest = [
     "url": "/static/media/good_reads_explorer.eff85db6.png"
   },
   {
-    "revision": "9786ad81852ff380aa6606abd0fc56b9",
+    "revision": "8bae1dadfd1e2b7e7f916322aad8044e",
     "url": "/index.html"
   }
 ];
