@@ -17,7 +17,7 @@ export function getBooksList (userData, shelves) {
               property: {
                 shelf: shelf.name
               },
-              author: book.authors.author.name
+              author: book.authors ? book.authors.author.name : 'Unknown'
             }
           )
         })
@@ -182,6 +182,78 @@ export function getPagesData (books) {
         break
       case 12:
         bins['1200+'] += 1
+        break
+      default:
+        break
+    }
+  })
+
+  const keys = Object.keys(bins)
+  const data = Object.values(bins).map((item, idx) => {
+    let itemKey = keys[idx]
+    return {
+      key: itemKey,
+      value: item
+    }
+  })
+
+  return data
+}
+
+export function getPublishedMonthData (books) {
+  const ratings = getHistogram(books, 'publication_month')
+  let bins = {
+    '1': 0,
+    '2': 0,
+    '3': 0,
+    '4': 0,
+    '5': 0,
+    '6': 0,
+    '7': 0,
+    '8': 0,
+    '9': 0,
+    '10': 0,
+    '11': 0,
+    '12': 0
+  }
+  ratings.forEach(rating => {
+    const key = parseInt(rating.key)
+    switch (key) {
+      case 1:
+        bins['1'] = rating.value
+        break
+      case 2:
+        bins['2'] = rating.value
+        break
+      case 3:
+        bins['3'] = rating.value
+        break
+      case 4:
+        bins['4'] = rating.value
+        break
+      case 5:
+        bins['5'] = rating.value
+        break
+      case 6:
+        bins['6'] = rating.value
+        break
+      case 7:
+        bins['7'] = rating.value
+        break
+      case 8:
+        bins['8'] = rating.value
+        break
+      case 9:
+        bins['9'] = rating.value
+        break
+      case 10:
+        bins['10'] = rating.value
+        break
+      case 11:
+        bins['11'] = rating.value
+        break
+      case 12:
+        bins['12'] = rating.value
         break
       default:
         break
