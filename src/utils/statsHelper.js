@@ -271,3 +271,41 @@ export function getPublishedMonthData (books) {
 
   return data
 }
+
+export function getMonthRatingData (books) {
+  const result = []
+  books.forEach(book => {
+    if (typeof book.publication_month === 'string' && typeof book.average_rating === 'string') {
+      result.push({
+        x: parseInt(book.publication_month),
+        y: parseFloat(book.average_rating)
+      })
+    }
+  })
+
+  return ([
+    {
+      id: 'Books',
+      data: result
+    }
+  ])
+}
+
+export function getRatingsCorrelationData (books) {
+  const result = []
+  books.forEach(book => {
+    if (book.authors && typeof book.authors.author.average_rating === 'string' && typeof book.average_rating === 'string') {
+      result.push({
+        x: parseFloat(book.authors.author.average_rating),
+        y: parseFloat(book.average_rating)
+      })
+    }
+  })
+
+  return ([
+    {
+      id: 'Books',
+      data: result
+    }
+  ])
+}

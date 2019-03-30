@@ -7,6 +7,7 @@ import MultiCheckBox from '../../components/MultiCheckBox'
 import Histogram from '../../components/Histogram'
 import TagCloud from '../../components/TagCloud'
 import PieChart from '../../components/PieChart'
+import ScatterPlot from '../../components/ScatterPlot'
 
 import {
   getBooksList,
@@ -14,7 +15,9 @@ import {
   getStats,
   getRatingsData,
   getPagesData,
-  getPublishedMonthData
+  getPublishedMonthData,
+  getMonthRatingData,
+  getRatingsCorrelationData
 } from '../../utils/statsHelper'
 
 import './style.css'
@@ -91,7 +94,7 @@ class StatisticsContainer extends Component {
     const shelvesDistribution = user_shelves.map(shelf => ({
       id: shelf.name,
       label: shelf.name,
-      value: parseInt(shelf.books.end),
+      value: shelf.books.total,
       color: randomColor()
     }))
 
@@ -114,6 +117,9 @@ class StatisticsContainer extends Component {
       value: format.value,
       color: randomColor()
     }))
+
+    const pubMonthRatingData = getMonthRatingData(books)
+    const ratingsCorrelationData = getRatingsCorrelationData(books)
 
     console.log('Books: ', books)
     console.log('YearHist: ', publishedYearHist)
@@ -166,12 +172,34 @@ class StatisticsContainer extends Component {
         <Row gutter={16}>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Card title='Shelves' >
-              <PieChart data={shelvesDistribution} />
+              <PieChart data={shelvesDistribution} colors='accent' />
             </Card>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Card title='Book Formats' >
               <PieChart data={formatDistribution} />
+            </Card>
+          </Col>
+        </Row>
+        <br />
+        <Row gutter={16} >
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Card title='Published Month Vs Average Rating' >
+              <ScatterPlot
+                data={pubMonthRatingData}
+                xLabel='Published Month'
+                yLabel='Average Rating'
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Card title='Author Rating Vs Book Rating' >
+              <ScatterPlot
+                data={ratingsCorrelationData}
+                xLabel='Author Rating'
+                yLabel='Book Rating'
+                colors='pink_yellowGreen'
+              />
             </Card>
           </Col>
         </Row>

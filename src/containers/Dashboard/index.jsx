@@ -189,7 +189,7 @@ const getMenu = (context) => {
       <Menu
         mode='inline'
         openKeys={context.state.openMenuKeys}
-        defaultSelectedKeys={['rgraph']}
+        defaultSelectedKeys={['stats']}
         style={{
           // height: '100%',
           borderRight: 0
@@ -203,14 +203,14 @@ const getMenu = (context) => {
             <span><Icon type='global' />Visualizations</span>
           }
         >
-          <Menu.Item key='rgraph'>
-            <Link to={`/user/${userData.id}/viz/rgraph`}>
-              Relationship Graph
-            </Link>
-          </Menu.Item>
           <Menu.Item key='stats'>
             <Link to={`/user/${userData.id}/viz/stats`}>
               Statistics
+            </Link>
+          </Menu.Item>
+          <Menu.Item key='rgraph'>
+            <Link to={`/user/${userData.id}/viz/rgraph`}>
+              Relationship Graph
             </Link>
           </Menu.Item>
         </SubMenu>

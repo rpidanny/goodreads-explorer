@@ -41,13 +41,17 @@ const getUserData = action =>
               name: shelves[idx],
               books: shelf.books ? shelf.books : { book: [] }
             }))
-            window.localStorage.setItem(
-              action.userId,
-              JSON.stringify({
-                data: userData,
-                timestamp: Date.now()
-              })
-            )
+            try {
+              window.localStorage.setItem(
+                action.userId,
+                JSON.stringify({
+                  data: userData,
+                  timestamp: Date.now()
+                })
+              )
+            } catch (err) {
+              console.log(err)
+            }
             yield put(Actions.getUserDataSuccess(userData))
           } else {
             yield put(Actions.userAccountIsPrivate({
