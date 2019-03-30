@@ -45,6 +45,12 @@ const Home = (props) => (
         </Col>
         <Col span={8} />
       </Row>
+      <Row>
+        <img
+          src='https://img.shields.io/badge/Made%20with%20%E2%9D%A4%20in-Nepal-%23dc3545.svg'
+          alt='Made with love in Nepal'
+        />
+      </Row>
     </Layout>
     <a
       href='https://github.com/rpidanny/goodreads-explorer'
