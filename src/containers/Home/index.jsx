@@ -58,7 +58,7 @@ const Home = (props) => (
           // right: 10
         }}
       >
-        <a href='https://www.buymeacoffee.com/NDqriA0O5' target="_blank">
+        <a href='https://www.buymeacoffee.com/NDqriA0O5' target="_blank" rel='noopener noreferrer'>
           <img src='https://www.buymeacoffee.com/assets/img/custom_images/black_img.png' alt='Buy Me A Coffee' />
         </a>
       </Affix>
