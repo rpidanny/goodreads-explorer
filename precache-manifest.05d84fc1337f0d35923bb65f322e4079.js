@@ -24,16 +24,16 @@ self.__precacheManifest = [
     "url": "/static/js/5.afbf4d39.chunk.js"
   },
   {
-    "revision": "af41437e9f43304f319e",
+    "revision": "a576885a6edd8fa581c0",
     "url": "/static/css/main.cf2e570e.chunk.css"
   },
   {
-    "revision": "af41437e9f43304f319e",
-    "url": "/static/js/main.daa881aa.chunk.js"
+    "revision": "a576885a6edd8fa581c0",
+    "url": "/static/js/main.403f0613.chunk.js"
   },
   {
-    "revision": "0dd94f97a922f242c54b",
-    "url": "/static/js/runtime~main.bdcc5801.js"
+    "revision": "19d0a7ce36e00e83b217",
+    "url": "/static/js/runtime~main.98eae56b.js"
   },
   {
     "revision": "36405add8d2c6004ca70",
@@ -76,12 +76,12 @@ self.__precacheManifest = [
     "url": "/static/js/14.72d1db05.chunk.js"
   },
   {
-    "revision": "2bafe6e6b336a2b32eed",
+    "revision": "8ec2f31aca3f7352e6ad",
     "url": "/static/css/15.2bfd62ac.chunk.css"
   },
   {
-    "revision": "2bafe6e6b336a2b32eed",
-    "url": "/static/js/15.3ee972a6.chunk.js"
+    "revision": "8ec2f31aca3f7352e6ad",
+    "url": "/static/js/15.f46cd4c5.chunk.js"
   },
   {
     "revision": "869874397058f10631e9",
@@ -128,7 +128,7 @@ self.__precacheManifest = [
     "url": "/static/media/good_reads_explorer.eff85db6.png"
   },
   {
-    "revision": "c67fcc8e183d475a6e6757c7ee6c6dc3",
+    "revision": "822a0b0499223789c320c28c6b1454e5",
     "url": "/index.html"
   }
 ];
