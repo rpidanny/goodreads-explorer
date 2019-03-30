@@ -94,7 +94,7 @@ class StatisticsContainer extends Component {
     const shelvesDistribution = user_shelves.map(shelf => ({
       id: shelf.name,
       label: shelf.name,
-      value: parseInt(shelf.books.end),
+      value: shelf.books.total,
       color: randomColor()
     }))
 
