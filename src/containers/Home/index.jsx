@@ -1,7 +1,7 @@
 import React, { lazy } from 'react'
 
 // antd components
-import { Row, Col, Layout, Input } from 'antd'
+import { Row, Col, Layout, Input, Affix } from 'antd'
 
 import './style.css'
 
@@ -45,6 +45,23 @@ const Home = (props) => (
         </Col>
         <Col span={8} />
       </Row>
+      <Row>
+        <img
+          src='https://img.shields.io/badge/Made%20with%20%E2%9D%A4%20in-Nepal-%23dc3545.svg'
+          alt='Made with love in Nepal'
+        />
+      </Row>
+      <Affix
+        style={{
+          position: 'absolute',
+          bottom: 10,
+          // right: 10
+        }}
+      >
+        <a href='https://www.buymeacoffee.com/NDqriA0O5' target="_blank" rel='noopener noreferrer'>
+          <img src='https://www.buymeacoffee.com/assets/img/custom_images/black_img.png' alt='Buy Me A Coffee' />
+        </a>
+      </Affix>
     </Layout>
     <a
       href='https://github.com/rpidanny/goodreads-explorer'
