@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,OACE,UAAW,CACX,iBAAkB,CAClB,cAAiB,CACjB,kBACE,iBAAoB,CACtB,2BACE,eAAmB","file":"17.3bb60984.chunk.css","sourcesContent":[".quote {\n  width: 100%;\n  text-align: center;\n  font-size: 12px; }\n  .quote .quoteText {\n    font-style: italic; }\n  .quote .quoteAuthorOrTitle {\n    font-weight: bold; }\n"]}
