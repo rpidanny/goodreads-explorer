@@ -50,7 +50,7 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "https://gre.abhishek.pro.np",
+  "homepage": "https://rpidanny.github.io/goodreads-explorer",
   "devDependencies": {
     "jest-canvas-mock": "^1.1.0",
     "standard": "^12.0.1",
