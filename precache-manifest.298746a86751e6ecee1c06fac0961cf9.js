@@ -1,14 +1,14 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "63b24bba400a3243ee0699ab3f3e7a74",
+    "revision": "91cf657f49cd9b6424c4f047aafa59a3",
     "url": "/goodreads-explorer/index.html"
   },
   {
-    "revision": "dba11edb29be0f676635",
+    "revision": "69600c4adb906e1e771b",
     "url": "/goodreads-explorer/static/css/13.1898fd6a.chunk.css"
   },
   {
-    "revision": "2566ba60df5f82f56549",
+    "revision": "c23c0e100b84048211dc",
     "url": "/goodreads-explorer/static/css/14.b1112a19.chunk.css"
   },
   {
@@ -56,12 +56,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/goodreads-explorer/static/js/12.74f18a99.chunk.js"
   },
   {
-    "revision": "dba11edb29be0f676635",
-    "url": "/goodreads-explorer/static/js/13.fe8ec07d.chunk.js"
+    "revision": "69600c4adb906e1e771b",
+    "url": "/goodreads-explorer/static/js/13.3f9edf51.chunk.js"
   },
   {
-    "revision": "2566ba60df5f82f56549",
-    "url": "/goodreads-explorer/static/js/14.8d9f3697.chunk.js"
+    "revision": "c23c0e100b84048211dc",
+    "url": "/goodreads-explorer/static/js/14.a9192ef6.chunk.js"
   },
   {
     "revision": "28dd0e80a2ea6c32a973",
@@ -128,8 +128,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/goodreads-explorer/static/js/main.9021e8ed.chunk.js"
   },
   {
-    "revision": "d06ef509880e57ead643",
-    "url": "/goodreads-explorer/static/js/runtime-main.9cc09719.js"
+    "revision": "6b0b880dbf05856f116b",
+    "url": "/goodreads-explorer/static/js/runtime-main.39f3fcab.js"
   },
   {
     "revision": "eff85db6aaed5480f0fa691e47cdede8",
