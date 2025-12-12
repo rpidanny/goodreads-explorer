@@ -1,1 +1,0 @@
-{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,sBACE,cAAe,CACf,eAAgB,CAChB,eAAgB,CAChB,SAAY,CAJd,UACE,UAAW,CACX,YAAe,CAFjB,2BACE,IACE,SAAc,CAAE,CAFpB,mBACE,IACE,SAAc,CAAE,CAFpB,UACE,UAAW,CACX,YAAe,CAFjB,YACE,YAAa,CACb,UAAW,CACX,WAAc","file":"13.2eec8589.chunk.css","sourcesContent":[".statistics {\n  padding: 20px;\n  width: 100%;\n  height: 100%; }\n"]}
