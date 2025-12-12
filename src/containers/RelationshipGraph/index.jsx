@@ -25,7 +25,7 @@ const defaultGraphSettings = {
 }
 
 class RelationshipGraph extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     // get graph settings from localstorage
@@ -51,7 +51,7 @@ class RelationshipGraph extends Component {
     this.handleShelvesSelectVisibleChange = this.handleShelvesSelectVisibleChange.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const shelves = this.props.userData.user_shelves.map(shelf => {
       if (shelf.books.book) {
         return {
@@ -64,7 +64,8 @@ class RelationshipGraph extends Component {
         bookCount: 0
       }
     })
-    const selectedShelves = shelves.length > 0 ? [shelves[0].name] : []
+    const readShelf = shelves.find(shelf => shelf.name === 'read')
+    const selectedShelves = readShelf ? ['read'] : (shelves.length > 0 ? [shelves[0].name] : [])
     const { nodes, links } = getGraphData(this.props.userData, selectedShelves)
     this.setState({
       nodes,
@@ -74,15 +75,15 @@ class RelationshipGraph extends Component {
     })
   }
 
-  handleSettingsVisibleChange (visible) {
+  handleSettingsVisibleChange(visible) {
     this.setState({ settingsPopover: visible })
   }
 
-  hideSettings () {
+  hideSettings() {
     this.setState({ settingsPopover: false })
   }
 
-  handleSettingsChange (settings) {
+  handleSettingsChange(settings) {
     this.setState({
       graphSettings: settings
     })
@@ -90,7 +91,7 @@ class RelationshipGraph extends Component {
     window.localStorage.setItem('graphSettings', JSON.stringify(settings))
   }
 
-  handleSettingsReset () {
+  handleSettingsReset() {
     this.setState({
       graphSettings: defaultGraphSettings
     })
@@ -100,15 +101,15 @@ class RelationshipGraph extends Component {
     window.location.reload()
   }
 
-  hideShelvesSelect () {
+  hideShelvesSelect() {
     this.setState({ shelvesSelectPopover: false })
   }
 
-  handleShelvesSelectVisibleChange (visible) {
+  handleShelvesSelectVisibleChange(visible) {
     this.setState({ shelvesSelectPopover: visible })
   }
 
-  handleShelvesChange (selectedShelves) {
+  handleShelvesChange(selectedShelves) {
     const { nodes, links } = getGraphData(this.props.userData, selectedShelves)
     this.setState({
       nodes,
@@ -117,7 +118,7 @@ class RelationshipGraph extends Component {
     })
   }
 
-  render () {
+  render() {
     const {
       nodes,
       links,
@@ -150,7 +151,7 @@ class RelationshipGraph extends Component {
             visible={settingsPopover}
             onVisibleChange={this.handleSettingsVisibleChange}
             placement='bottomLeft'
-            // className='settings-popover'
+          // className='settings-popover'
           >
             <Button
               icon='setting'

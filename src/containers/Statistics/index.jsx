@@ -23,7 +23,7 @@ import {
 import './style.css'
 
 class StatisticsContainer extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -40,7 +40,7 @@ class StatisticsContainer extends Component {
     )
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const shelves = this.props.userData.user_shelves.map(shelf => {
       if (shelf.books.book) {
         return {
@@ -53,7 +53,8 @@ class StatisticsContainer extends Component {
         bookCount: 0
       }
     })
-    const selectedShelves = shelves.length > 0 ? [shelves[0].name] : []
+    const readShelf = shelves.find(shelf => shelf.name === 'read')
+    const selectedShelves = readShelf ? ['read'] : (shelves.length > 0 ? [shelves[0].name] : [])
 
     const books = getBooksList(this.props.userData, selectedShelves)
 
@@ -64,15 +65,15 @@ class StatisticsContainer extends Component {
     })
   }
 
-  hideShelvesSelect () {
+  hideShelvesSelect() {
     this.setState({ shelvesSelectPopover: false })
   }
 
-  handleShelvesSelectVisibleChange (visible) {
+  handleShelvesSelectVisibleChange(visible) {
     this.setState({ shelvesSelectPopover: visible })
   }
 
-  handleShelvesChange (selectedShelves) {
+  handleShelvesChange(selectedShelves) {
     const books = getBooksList(this.props.userData, selectedShelves)
 
     this.setState({
@@ -81,7 +82,7 @@ class StatisticsContainer extends Component {
     })
   }
 
-  render () {
+  render() {
     const {
       books,
       shelvesSelectPopover,
